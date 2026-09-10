@@ -1,57 +1,94 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>Akaryakıt Takip Paneli</title>
-  <style>
-    :root{color-scheme:dark;--bg:#08111f;--panel:#0f1b2d;--card:#132238;--line:#263a56;--text:#eef4ff;--muted:#9fb0c7;--accent:#5eead4;--warn:#fbbf24;--bad:#fb7185;--good:#4ade80}
-    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#08111f,#0b1320 55%,#0a0f18);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.wrap{max-width:1200px;margin:auto;padding:24px}.top{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}.title{font-size:clamp(28px,4vw,46px);margin:6px 0 8px}.sub{color:var(--muted);max-width:760px;line-height:1.5}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#12243b;color:var(--text);padding:11px 14px;border-radius:12px;font-weight:700;cursor:pointer}.btn:hover{border-color:#53739c}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}.metric{background:rgba(19,34,56,.82);border:1px solid var(--line);border-radius:16px;padding:16px}.metric b{display:block;font-size:28px;margin-top:4px}.metric span{color:var(--muted);font-size:13px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:rgba(15,27,45,.85);border:1px solid var(--line);padding:12px;border-radius:16px;margin-bottom:14px}.search{flex:1;min-width:220px;background:#0b1728;color:var(--text);border:1px solid var(--line);padding:11px 12px;border-radius:11px;font-size:15px}.select{background:#0b1728;color:var(--text);border:1px solid var(--line);padding:11px 12px;border-radius:11px}.statusbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#0d1929;padding:8px 10px;border-radius:999px;font-size:13px;color:var(--muted)}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}.dot.bad{background:var(--bad)}.list{display:grid;gap:12px}.item{background:rgba(19,34,56,.82);border:1px solid var(--line);border-radius:16px;padding:16px}.item.new{border-color:#277a70;box-shadow:inset 3px 0 0 var(--accent)}.row{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.tags{display:flex;gap:8px;flex-wrap:wrap}.tag{font-size:11px;font-weight:900;letter-spacing:.04em;border:1px solid var(--line);border-radius:999px;padding:5px 8px}.tag.critical{border-color:#7f1d1d;color:#fecaca;background:#3f1118}.tag.official{border-color:#285f7e;color:#bae6fd;background:#0c2a3d}.tag.newtag{border-color:#17665e;color:#99f6e4;background:#0c3834}.date{font-size:13px;color:var(--muted)}h2{font-size:18px;margin:10px 0 8px;line-height:1.35}.summary{color:#c5d1e2;line-height:1.55;font-size:14px}.meta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}.link{display:inline-block;margin-top:12px;color:#a5f3fc;text-decoration:none;font-weight:800}.link:hover{text-decoration:underline}.empty,.error{padding:26px;border:1px dashed var(--line);border-radius:16px;color:var(--muted);text-align:center}.footer{margin-top:20px;color:var(--muted);font-size:12px;line-height:1.5}.fresh{color:var(--accent);font-weight:800}@media(max-width:800px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:16px}}@media(max-width:430px){.cards{grid-template-columns:1fr}.metric b{font-size:24px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#07111f" />
+<title>Akaryakıt Takip Paneli</title>
+<style>
+:root{color-scheme:dark;--bg:#07111f;--panel:#0d1a2b;--card:#102138;--card2:#0b1828;--line:#263b5a;--text:#eef5ff;--muted:#9fb1c9;--accent:#5eead4;--accent2:#22d3ee;--good:#4ade80;--warn:#fbbf24;--bad:#fb7185;--violet:#c4b5fd}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#0b2940 0,transparent 30%),linear-gradient(180deg,#07111f,#0a1421 60%,#09101a);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.wrap{max-width:1240px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--accent)}h1{font-size:clamp(30px,4vw,48px);margin:6px 0 8px;line-height:1.03}.sub{color:var(--muted);max-width:800px;line-height:1.55}.topActions{display:flex;gap:9px;flex-wrap:wrap}.btn{appearance:none;border:1px solid var(--line);background:#10243a;color:var(--text);border-radius:12px;padding:11px 14px;font-size:14px;font-weight:800;cursor:pointer}.btn:hover{border-color:#52749d}.btn.primary{border-color:#19796e;background:#0e3937;color:#bdfcf4}.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin:22px 0}.metric{background:linear-gradient(180deg,rgba(18,38,62,.95),rgba(14,29,48,.95));border:1px solid var(--line);border-radius:16px;padding:15px;min-height:104px}.metric .label{color:var(--muted);font-size:12px}.metric b{display:block;font-size:28px;margin:7px 0 2px}.metric small{color:var(--muted);font-size:11px}.metric.good b{color:#bbf7d0}.metric.alert b{color:#fecdd3}.metric.change b{color:#ddd6fe}.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:5px;margin-bottom:12px;scrollbar-width:thin}.tab{white-space:nowrap;border:1px solid var(--line);background:#0c1929;color:#c5d1df;border-radius:999px;padding:9px 12px;font-weight:800;font-size:13px;cursor:pointer}.tab.active{background:#103a37;border-color:#20796f;color:#bafdf4}.toolbar{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:9px;background:rgba(13,26,43,.9);border:1px solid var(--line);border-radius:15px;padding:11px;margin-bottom:12px}.input,.select{width:100%;background:#081522;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:14px}.health{background:rgba(13,26,43,.85);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:14px}.healthHead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:9px}.healthTitle{font-size:13px;font-weight:900}.healthMeta{font-size:12px;color:var(--muted)}.healthGrid{display:flex;gap:7px;flex-wrap:wrap}.healthPill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#091624;border-radius:999px;padding:7px 9px;font-size:12px;color:var(--muted)}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}.dot.bad{background:var(--bad)}.dot.warn{background:var(--warn)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:14px}.list{display:grid;gap:11px}.item{background:linear-gradient(180deg,rgba(16,33,56,.95),rgba(13,27,46,.95));border:1px solid var(--line);border-radius:16px;padding:16px}.item.new{border-color:#237b70;box-shadow:inset 3px 0 0 var(--accent)}.item.changed{border-color:#675b9a;box-shadow:inset 3px 0 0 var(--violet)}.item.critical{background:linear-gradient(180deg,rgba(48,24,35,.78),rgba(21,26,43,.95))}.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{font-size:10px;font-weight:950;letter-spacing:.04em;border:1px solid var(--line);border-radius:999px;padding:5px 8px}.tag.newtag{color:#99f6e4;background:#0b3732;border-color:#176d63}.tag.changedtag{color:#ddd6fe;background:#2b2550;border-color:#675b9a}.tag.critical{color:#fecdd3;background:#401420;border-color:#8c263b}.tag.important{color:#fde68a;background:#382d0b;border-color:#77601a}.tag.official{color:#bae6fd;background:#092e43;border-color:#215e7a}.tag.cat{color:#d7e3f2}.date{color:var(--muted);font-size:12px}.item h2{font-size:18px;line-height:1.35;margin:10px 0 7px}.summary{font-size:14px;color:#cbd7e6;line-height:1.55}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:11px}.link{display:inline-block;margin-top:11px;text-decoration:none;color:#a5f3fc;font-weight:850;font-size:13px}.link:hover{text-decoration:underline}.side{display:grid;gap:11px;align-content:start}.sideCard{border:1px solid var(--line);background:rgba(13,26,43,.9);border-radius:15px;padding:13px}.sideTitle{font-size:13px;font-weight:950;margin-bottom:9px}.sourceRow,.catRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:7px 0;border-bottom:1px solid rgba(38,59,90,.55);font-size:12px}.sourceRow:last-child,.catRow:last-child{border-bottom:0}.sourceRow span:first-child,.catRow span:first-child{color:#c7d4e4}.count{color:var(--muted);font-weight:800}.empty,.error{padding:26px;border:1px dashed var(--line);border-radius:16px;text-align:center;color:var(--muted)}.notice{display:none;margin:0 0 12px;padding:11px 13px;border:1px solid #765b18;background:#2c260f;color:#fde68a;border-radius:12px;font-size:12px}.footer{color:var(--muted);font-size:11px;line-height:1.5;margin-top:18px}.fresh{color:var(--accent);font-weight:900}
+@media(max-width:950px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{grid-template-columns:1fr 1fr}.toolbar .input{grid-column:1/-1}}
+@media(max-width:600px){.wrap{padding:15px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{min-height:94px}.metric:last-child{grid-column:1/-1}.side{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.toolbar .input{grid-column:auto}.item{padding:14px}}
+</style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top">
+  <header class="top">
     <div>
-      <div class="eyebrow">Akaryakıt Takip</div>
-      <h1 class="title">Sektör Mevzuat & Duyuru Paneli</h1>
-      <div class="sub">EPDK, PÜİS, TABGİS, PETDER, Türkiye LPG Derneği, UTTS ve ilgili resmî/sektörel kaynaklardaki değişiklikleri tek ekranda takip eder. Bu sayfayı her açtığında en güncel veri dosyası yeniden alınır.</div>
+      <div class="eyebrow">Akaryakıt Takip Merkezi</div>
+      <h1>Mevzuat & Sektör Radar</h1>
+      <div class="sub">EPDK, Resmî Gazete, GİB / YN ÖKC, Darphane / UTTS, PÜİS, TABGİS, PETDER, LPG Derneği ve TOBB kaynaklarındaki akaryakıt ve LPG gelişmelerini tek yerde izler.</div>
     </div>
-    <div class="actions"><button id="refresh" class="btn">Şimdi yenile</button><button id="markRead" class="btn">Tümünü görüldü say</button></div>
-  </div>
+    <div class="topActions"><button id="refresh" class="btn primary">En güncel veriyi yükle</button><button id="markRead" class="btn">Tümünü görüldü say</button></div>
+  </header>
 
-  <div class="cards">
-    <div class="metric"><span>Toplam kayıt</span><b id="total">—</b></div>
-    <div class="metric"><span>Son ziyaretinden beri yeni</span><b id="newCount">—</b></div>
-    <div class="metric"><span>Kritik / önemli</span><b id="critical">—</b></div>
-    <div class="metric"><span>Son veri güncellemesi</span><b id="updated" style="font-size:18px">—</b></div>
-  </div>
+  <section class="metrics">
+    <div class="metric"><div class="label">Toplam kayıt</div><b id="total">—</b><small>Arşivde tutulan içerik</small></div>
+    <div class="metric good"><div class="label">Yeni</div><b id="newCount">—</b><small>Son görüntülemenden beri</small></div>
+    <div class="metric change"><div class="label">Değişen</div><b id="changedCount">—</b><small>İçeriği güncellenen kayıt</small></div>
+    <div class="metric alert"><div class="label">Kritik / önemli</div><b id="criticalCount">—</b><small>Öncelikli inceleme</small></div>
+    <div class="metric"><div class="label">Son tarama</div><b id="updated" style="font-size:17px">—</b><small id="freshness">—</small></div>
+  </section>
 
-  <div class="toolbar">
-    <input id="q" class="search" placeholder="Başlık, özet veya kurum ara…" />
+  <div id="staleNotice" class="notice"></div>
+
+  <nav id="tabs" class="tabs" aria-label="Kayıt filtreleri">
+    <button class="tab active" data-tab="all">Tümü</button>
+    <button class="tab" data-tab="new">Yeni</button>
+    <button class="tab" data-tab="changed">Değişen</button>
+    <button class="tab" data-tab="critical">Kritik</button>
+    <button class="tab" data-tab="official">Resmî</button>
+    <button class="tab" data-tab="UTTS">UTTS</button>
+    <button class="tab" data-tab="ÖKC / POS">ÖKC / POS</button>
+    <button class="tab" data-tab="LPG">LPG</button>
+    <button class="tab" data-tab="Vergi / ÖTV">Vergi / ÖTV</button>
+    <button class="tab" data-tab="Mevzuat">Mevzuat</button>
+  </nav>
+
+  <section class="toolbar">
+    <input id="q" class="input" placeholder="Başlık, özet, kurum veya konu ara…" />
     <select id="source" class="select"><option value="">Tüm kurumlar</option></select>
-    <select id="level" class="select"><option value="">Tüm önem seviyeleri</option><option value="critical">Kritik / önemli</option><option value="normal">Normal</option></select>
-    <select id="newOnly" class="select"><option value="">Tümü</option><option value="new">Sadece yeni</option></select>
+    <select id="sort" class="select"><option value="date">Yayın tarihine göre</option><option value="seen">İlk görülme zamanına göre</option><option value="change">Son değişikliğe göre</option></select>
+  </section>
+
+  <section class="health">
+    <div class="healthHead"><div class="healthTitle">Kaynak Sağlığı</div><div class="healthMeta" id="healthMeta">—</div></div>
+    <div id="healthGrid" class="healthGrid"></div>
+  </section>
+
+  <div class="layout">
+    <main id="list" class="list"><div class="empty">Veriler yükleniyor…</div></main>
+    <aside class="side">
+      <div class="sideCard"><div class="sideTitle">Kurumlara göre</div><div id="sourceStats"></div></div>
+      <div class="sideCard"><div class="sideTitle">Konulara göre</div><div id="categoryStats"></div></div>
+    </aside>
   </div>
 
-  <div id="statusbar" class="statusbar"></div>
-  <div id="list" class="list"><div class="empty">Veriler yükleniyor…</div></div>
-  <div class="footer">Not: “Yeni” etiketi bu tarayıcıdaki son görüntüleme zamanına göre hesaplanır. Kaynak sayfalarından biri geçici olarak erişilemezse son başarılı kayıtlar korunur ve kaynak durumu yukarıda gösterilir.</div>
+  <div class="footer">“Yeni” ve “Değişen” işaretleri bu tarayıcıdaki son görüntüleme zamanına göre hesaplanır. Kaynak taraması GitHub Actions tarafından yaklaşık 15 dakikada bir çalışır; GitHub zamanlanmış işlerde birkaç dakikalık gecikme oluşturabilir. Bir kaynak geçici olarak erişilemezse önceki kayıtlar korunur.</div>
 </div>
 <script>
-const $=s=>document.querySelector(s); let DATA=null; let lastViewed=localStorage.getItem('akaryakit_last_viewed')||'1970-01-01T00:00:00Z';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let DATA=null, activeTab='all';
+let lastViewed=localStorage.getItem('akaryakit_last_viewed')||'1970-01-01T00:00:00Z';
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function dt(s){const d=new Date(s||0);return isNaN(d)?null:d}
 function fmtDate(s){if(!s)return 'Tarih yok';const d=new Date(s+'T12:00:00Z');return isNaN(d)?s:d.toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric'})}
-function fmtTs(s){if(!s)return '—';const d=new Date(s);return isNaN(d)?'—':d.toLocaleString('tr-TR',{dateStyle:'short',timeStyle:'short'})}
-function isNew(i){return new Date(i.first_seen||0)>new Date(lastViewed)}
-function esc(s){return String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function renderStatus(){const el=$('#statusbar');el.innerHTML='';(DATA.sources||[]).forEach(s=>{const p=document.createElement('span');p.className='pill';p.innerHTML=`<span class="dot ${s.ok?'':'bad'}"></span>${esc(s.source)} · ${s.ok?'erişildi':'hata'}${s.ok?' · '+s.count+' kayıt':''}`;el.appendChild(p)})}
-function populateSources(){const sel=$('#source');const cur=sel.value;const src=[...new Set((DATA.items||[]).map(x=>x.source).filter(Boolean))].sort();sel.innerHTML='<option value="">Tüm kurumlar</option>'+src.map(x=>`<option>${esc(x)}</option>`).join('');sel.value=cur}
-function render(){if(!DATA)return;const q=$('#q').value.trim().toLocaleLowerCase('tr-TR'),src=$('#source').value,lvl=$('#level').value,nf=$('#newOnly').value;let items=(DATA.items||[]).filter(i=>{const hay=((i.title||'')+' '+(i.summary||'')+' '+(i.source||'')).toLocaleLowerCase('tr-TR');return(!q||hay.includes(q))&&(!src||i.source===src)&&(!lvl||i.severity===lvl)&&(!nf||isNew(i))});
-$('#total').textContent=(DATA.items||[]).length;$('#newCount').textContent=(DATA.items||[]).filter(isNew).length;$('#critical').textContent=(DATA.items||[]).filter(i=>i.severity==='critical').length;$('#updated').textContent=fmtTs(DATA.updated_at);
-const list=$('#list');if(!items.length){list.innerHTML='<div class="empty">Bu filtrelerle eşleşen kayıt yok.</div>';return}list.innerHTML=items.map(i=>`<article class="item ${isNew(i)?'new':''}"><div class="row"><div class="tags">${isNew(i)?'<span class="tag newtag">YENİ</span>':''}${i.severity==='critical'?'<span class="tag critical">KRİTİK / ÖNEMLİ</span>':''}${i.official?'<span class="tag official">RESMÎ KAYNAK</span>':''}<span class="tag">${esc(i.source)}</span></div><div class="date">${fmtDate(i.date)}</div></div><h2>${esc(i.title)}</h2><div class="summary">${esc(i.summary||'')}</div><div class="meta"><span>İlk görüldü: ${fmtTs(i.first_seen)}</span><span>•</span><span>Son kontrol: ${fmtTs(i.last_seen)}</span></div><a class="link" href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">Kaynağı aç →</a></article>`).join('')}
-async function load(){const list=$('#list');list.innerHTML='<div class="empty">En güncel veri alınıyor…</div>';try{const r=await fetch('data.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('data.json bulunamadı');DATA=await r.json();populateSources();renderStatus();render()}catch(e){list.innerHTML='<div class="error">Veri henüz oluşturulmamış veya yayınlama yeni başlamış olabilir. Birkaç dakika sonra sayfayı yenileyin.<br><small>'+esc(e.message)+'</small></div>'}}
-['q','source','level','newOnly'].forEach(id=>$('#'+id).addEventListener(id==='q'?'input':'change',render));$('#refresh').addEventListener('click',load);$('#markRead').addEventListener('click',()=>{lastViewed=new Date().toISOString();localStorage.setItem('akaryakit_last_viewed',lastViewed);render()});window.addEventListener('beforeunload',()=>localStorage.setItem('akaryakit_last_viewed',new Date().toISOString()));load();
+function fmtTs(s){const d=dt(s);return d?d.toLocaleString('tr-TR',{dateStyle:'short',timeStyle:'short'}):'—'}
+function isNew(i){return !!i.first_seen && dt(i.first_seen)>dt(lastViewed)}
+function isChanged(i){return !!i.changed_at && dt(i.changed_at)>dt(lastViewed)}
+function sevRank(s){return s==='critical'?3:s==='important'?2:1}
+function renderMetrics(){const items=DATA.items||[];$('#total').textContent=items.length;$('#newCount').textContent=items.filter(isNew).length;$('#changedCount').textContent=items.filter(isChanged).length;$('#criticalCount').textContent=items.filter(i=>sevRank(i.severity)>=2).length;$('#updated').textContent=fmtTs(DATA.updated_at);const age=dt(DATA.updated_at)?Math.round((Date.now()-dt(DATA.updated_at))/60000):9999;$('#freshness').textContent=age<2?'Az önce güncellendi':age<60?age+' dk önce':Math.floor(age/60)+' sa önce';const n=$('#staleNotice');if(age>45){n.style.display='block';n.textContent='Uyarı: Son veri taraması '+age+' dakika önce yapılmış. GitHub Actions gecikmiş veya veri güncelleme akışı kontrol edilmelidir.'}else n.style.display='none'}
+function renderHealth(){const arr=DATA.sources||[], ok=arr.filter(x=>x.ok).length;$('#healthMeta').textContent=ok+'/'+arr.length+' kaynak erişilebilir';$('#healthGrid').innerHTML=arr.map(s=>`<span class="healthPill" title="${esc(s.error||'')}"><span class="dot ${s.ok?'':'bad'}"></span>${esc(s.source)} · ${s.ok?(s.count||0)+' kayıt':'erişim hatası'}</span>`).join('')}
+function statRows(id,key,cls){const m={};(DATA.items||[]).forEach(i=>{const k=i[key]||'Diğer';m[k]=(m[k]||0)+1});const rows=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,12);$(id).innerHTML=rows.map(([k,v])=>`<div class="${cls}"><span>${esc(k)}</span><span class="count">${v}</span></div>`).join('')||'<div class="count">Kayıt yok</div>'}
+function populateSources(){const cur=$('#source').value;const src=[...new Set((DATA.items||[]).map(i=>i.source).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));$('#source').innerHTML='<option value="">Tüm kurumlar</option>'+src.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');$('#source').value=src.includes(cur)?cur:''}
+function filtered(){const q=$('#q').value.trim().toLocaleLowerCase('tr-TR'), src=$('#source').value;let items=(DATA.items||[]).filter(i=>{const hay=[i.title,i.summary,i.source,i.source_name,i.category].join(' ').toLocaleLowerCase('tr-TR');if(q&&!hay.includes(q))return false;if(src&&i.source!==src)return false;if(activeTab==='new'&&!isNew(i))return false;if(activeTab==='changed'&&!isChanged(i))return false;if(activeTab==='critical'&&sevRank(i.severity)<2)return false;if(activeTab==='official'&&!i.official)return false;if(!['all','new','changed','critical','official'].includes(activeTab)&&i.category!==activeTab)return false;return true});const sort=$('#sort').value;items.sort((a,b)=>{if(sort==='seen')return String(b.first_seen||'').localeCompare(String(a.first_seen||''));if(sort==='change')return String(b.changed_at||b.first_seen||'').localeCompare(String(a.changed_at||a.first_seen||''));return String(b.date||'0000').localeCompare(String(a.date||'0000'))||sevRank(b.severity)-sevRank(a.severity)});return items}
+function renderList(){const items=filtered(), list=$('#list');if(!items.length){list.innerHTML='<div class="empty">Bu filtrelerle eşleşen kayıt yok.</div>';return}list.innerHTML=items.map(i=>{const nw=isNew(i), ch=isChanged(i), sev=i.severity||'normal';return `<article class="item ${nw?'new':''} ${ch?'changed':''} ${sev==='critical'?'critical':''}"><div class="row"><div class="tags">${nw?'<span class="tag newtag">YENİ</span>':''}${ch?'<span class="tag changedtag">DEĞİŞTİ</span>':''}${sev==='critical'?'<span class="tag critical">KRİTİK</span>':sev==='important'?'<span class="tag important">ÖNEMLİ</span>':''}${i.official?'<span class="tag official">RESMÎ</span>':''}<span class="tag">${esc(i.source)}</span><span class="tag cat">${esc(i.category||'Diğer')}</span></div><div class="date">${fmtDate(i.date)}</div></div><h2>${esc(i.title)}</h2><div class="summary">${esc(i.summary||'Özet bulunmuyor.')}</div><div class="meta"><span>İlk görüldü: ${fmtTs(i.first_seen)}</span>${i.changed_at?`<span>•</span><span>Değişti: ${fmtTs(i.changed_at)}</span>`:''}<span>•</span><span>Revizyon: ${Number(i.revision||0)}</span></div><a class="link" href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">Kaynağı aç →</a></article>`}).join('')}
+function renderAll(){renderMetrics();renderHealth();statRows('#sourceStats','source','sourceRow');statRows('#categoryStats','category','catRow');populateSources();renderList()}
+async function load(){const list=$('#list');list.innerHTML='<div class="empty">En güncel veri alınıyor…</div>';try{const r=await fetch('data.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('data.json yüklenemedi');DATA=await r.json();renderAll()}catch(e){list.innerHTML='<div class="error">Veri yüklenemedi. GitHub Pages veya veri güncelleme akışı geçici olarak erişilemiyor olabilir.<br><small>'+esc(e.message)+'</small></div>'}}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{$$('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeTab=b.dataset.tab;renderList()}));
+$('#q').addEventListener('input',renderList);$('#source').addEventListener('change',renderList);$('#sort').addEventListener('change',renderList);$('#refresh').addEventListener('click',load);$('#markRead').addEventListener('click',()=>{lastViewed=new Date().toISOString();localStorage.setItem('akaryakit_last_viewed',lastViewed);renderAll()});
+load();
 </script>
 </body>
 </html>
