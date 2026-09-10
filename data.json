@@ -1,0 +1,59 @@
+{
+  "updated_at": "2026-09-10T08:20:00+00:00",
+  "version": 1,
+  "sources": [
+    {"source":"EPDK","ok":true,"count":4,"checked_at":"2026-09-10T08:20:00+00:00"},
+    {"source":"PÜİS","ok":true,"count":4,"checked_at":"2026-09-10T08:20:00+00:00"},
+    {"source":"TABGİS","ok":true,"count":1,"checked_at":"2026-09-10T08:20:00+00:00"},
+    {"source":"PETDER","ok":true,"count":1,"checked_at":"2026-09-10T08:20:00+00:00"},
+    {"source":"LPG Derneği","ok":true,"count":2,"checked_at":"2026-09-10T08:20:00+00:00"},
+    {"source":"UTTS","ok":false,"count":0,"checked_at":"2026-09-10T08:20:00+00:00","error":"İlk web kontrolünde kaynak zaman aşımına uğradı; otomatik tarama tekrar deneyecek."}
+  ],
+  "items": [
+    {
+      "id":"seed-puis-zero-atk",
+      "title":"Üyelerimize Sıfır Atık Belgesi konusunda duyuru",
+      "url":"https://www.puis.org.tr/haberler/",
+      "date":"2026-09-03",
+      "summary":"PÜİS, Sıfır Atık Belgesi geçerlilik süresinin 5 yıl olduğunu ve üyelerin belge süresi dolmadan en az 3 ay önce yenileme başvurusu yapması gerektiğini duyurdu.",
+      "source":"PÜİS","source_name":"PÜİS Haberler","official":false,"severity":"critical",
+      "first_seen":"2026-09-10T08:20:00+00:00","last_seen":"2026-09-10T08:20:00+00:00"
+    },
+    {
+      "id":"seed-puis-pos",
+      "title":"Akaryakıt satışında kullanılan POS cihazları hakkında önemli duyuru",
+      "url":"https://www.puis.org.tr/haberler/",
+      "date":"2026-08-28",
+      "summary":"PÜİS, akaryakıt satışında kullanılan POS cihazlarının ÖKC ile entegrasyonu nedeniyle uygulanan cezalar ve bazı POS başvurularının reddedilmesi konusunda GİB ile görüşüldüğünü açıkladı.",
+      "source":"PÜİS","source_name":"PÜİS Haberler","official":false,"severity":"critical",
+      "first_seen":"2026-09-10T08:20:00+00:00","last_seen":"2026-09-10T08:20:00+00:00"
+    },
+    {
+      "id":"seed-epdk-tp-lpg",
+      "title":"TP Petrol Dağıtım A.Ş. LPG otogaz bayilerine yönelik önemli duyuru",
+      "url":"https://www.epdk.gov.tr/Detay/Icerik/4-0-1/duyurular",
+      "date":"2026-07-30",
+      "summary":"EPDK duyurularında TP Petrol Dağıtım A.Ş. LPG otogaz bayilerini ilgilendiren lisans/geçiş sürecine ilişkin önemli duyuru yayımlandı.",
+      "source":"EPDK","source_name":"EPDK Duyurular","official":true,"severity":"critical",
+      "first_seen":"2026-09-10T08:20:00+00:00","last_seen":"2026-09-10T08:20:00+00:00"
+    },
+    {
+      "id":"seed-epdk-sector-report",
+      "title":"2026 yılı Haziran ayı sektör raporları yayımlandı",
+      "url":"https://www.epdk.gov.tr/Detay/Icerik/4-0-1/duyurular",
+      "date":"2026-08-14",
+      "summary":"EPDK, 2026 Haziran dönemi sektör raporlarını yayımladı. Petrol ve LPG piyasasına ilişkin aylık veriler bu kapsamda takip edilebilir.",
+      "source":"EPDK","source_name":"EPDK Duyurular","official":true,"severity":"normal",
+      "first_seen":"2026-09-10T08:20:00+00:00","last_seen":"2026-09-10T08:20:00+00:00"
+    },
+    {
+      "id":"seed-lpg-report",
+      "title":"LPG Piyasası Mayıs 2026 sektör raporu yayımlandı",
+      "url":"https://www.tlpgder.org.tr/default.aspx",
+      "date":"2026-07-20",
+      "summary":"Türkiye LPG Derneği, EPDK'nın Mayıs 2026 LPG Piyasası Sektör Raporu'nun yayımlandığını duyurdu.",
+      "source":"LPG Derneği","source_name":"Türkiye LPG Derneği","official":false,"severity":"normal",
+      "first_seen":"2026-09-10T08:20:00+00:00","last_seen":"2026-09-10T08:20:00+00:00"
+    }
+  ]
+}
