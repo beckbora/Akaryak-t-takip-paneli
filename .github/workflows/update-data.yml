@@ -3,7 +3,7 @@ name: Update sector data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '2,17,32,47 * * * *'
 
 permissions:
   contents: write
@@ -15,6 +15,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,5 +33,6 @@ jobs:
             echo "No data changes"
           else
             git commit -m "Update sector data"
+            git pull --rebase origin main
             git push
           fi
