@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/live.html" }
+  ],
+  "functions": {
+    "api/scan.py": {
+      "maxDuration": 60
+    }
+  }
+}
