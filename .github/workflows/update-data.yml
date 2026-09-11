@@ -3,10 +3,12 @@ name: Update sector data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '2,17,32,47 * * * *'
+    - cron: '2,12,22,32,42,52 * * * *'
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: update-sector-data
@@ -14,17 +16,26 @@ concurrency:
 
 jobs:
   update:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: 'pip'
-      - run: pip install -r requirements.txt
-      - run: python scrape.py
-      - name: Commit changes
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Scan sector sources
+        run: python scrape.py
+
+      - name: Commit latest data
         run: |
           git config user.name "akaryakit-takip-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -36,3 +47,17 @@ jobs:
             git pull --rebase origin main
             git push
           fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload fresh dashboard
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy fresh dashboard
+        id: deployment
+        uses: actions/deploy-pages@v4
