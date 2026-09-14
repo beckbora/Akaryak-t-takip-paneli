@@ -1,11 +1,21 @@
 import json
+import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import requests
 
-from scrape import SOURCES, HEADERS, candidates, uid, merge_seen, category, severity
+from scrape import (
+    SOURCES,
+    HEADERS,
+    KEYWORDS,
+    candidates,
+    uid,
+    merge_seen,
+    category,
+    severity,
+)
 
 ROOT = Path(__file__).resolve().parent
 RG_HEADERS = {
@@ -46,60 +56,150 @@ def fetch_one(src):
         }
 
 
-def resmi_gazete_live(days=5):
-    now = datetime.now(timezone.utc)
+def _plain_markdown_line(raw):
+    line = re.sub(r'!\[[^\]]*\]\([^)]*\)', '', raw)
+    line = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'\1', line)
+    line = re.sub(r'^[#>*\-\s]+', '', line)
+    line = re.sub(r'\s+', ' ', line).strip()
+    return line
+
+
+def _rg_markdown_items(text, day, direct_url):
     source = {'name': 'Resmî Gazete', 'group': 'Resmî Gazete', 'official': True}
-    found = []
-    ok_days = 0
+    out = []
+    seen = set()
+    for raw in text.splitlines():
+        title = _plain_markdown_line(raw)
+        if len(title) < 18 or len(title) > 520:
+            continue
+        low = title.casefold()
+        if not any(k in low for k in KEYWORDS):
+            continue
+        if title in seen:
+            continue
+        seen.add(title)
+        link_match = re.search(r'\[[^\]]+\]\((https?://[^)]+)\)', raw)
+        href = link_match.group(1) if link_match else direct_url
+        item = {
+            'title': title[:260],
+            'url': href,
+            'date': day.strftime('%Y-%m-%d'),
+            'summary': title[:700],
+            'source': 'Resmî Gazete',
+            'source_name': 'Resmî Gazete',
+            'official': True,
+            'severity': severity(title),
+            'category': category(title),
+        }
+        out.append(item)
+    return out[:60]
+
+
+def _fetch_rg_day(day):
+    ymd = day.strftime('%Y%m%d')
+    direct_urls = [
+        f'https://resmigazete.gov.tr/{day:%d.%m.%Y}',
+        f'https://www.resmigazete.gov.tr/{day:%d.%m.%Y}',
+        f'https://resmigazete.gov.tr/eskiler/{day:%Y}/{day:%m}/{ymd}.htm',
+    ]
     errors = []
 
-    for delta in range(days):
-        day = now - timedelta(days=delta)
-        ymd = day.strftime('%Y%m%d')
-        urls = [
-            f'https://resmigazete.gov.tr/{day:%d.%m.%Y}',
-            f'https://resmigazete.gov.tr/eskiler/{day:%Y}/{day:%m}/{ymd}.htm',
-        ]
-        html = None
-        used_url = None
+    # 1) Direct official-site attempt.
+    for url in direct_urls:
+        try:
+            r = requests.get(url, headers=RG_HEADERS, timeout=3.2, allow_redirects=True)
+            if r.status_code == 404:
+                continue
+            r.raise_for_status()
+            if len(r.text) < 500:
+                continue
+            src = {'name': 'Resmî Gazete', 'group': 'Resmî Gazete', 'official': True, 'url': r.url or url}
+            return candidates(src, r.text), (r.url or url), 'direct', errors
+        except Exception as exc:
+            errors.append(f'direct {url}: {str(exc)[:100]}')
 
-        for url in urls:
+    # 2) Fallback through Jina Reader when cloud IP -> Resmî Gazete times out.
+    direct_url = direct_urls[0]
+    proxy_urls = [
+        f'https://r.jina.ai/https://resmigazete.gov.tr/{day:%d.%m.%Y}',
+        f'https://r.jina.ai/http://resmigazete.gov.tr/{day:%d.%m.%Y}',
+    ]
+    for proxy_url in proxy_urls:
+        try:
+            r = requests.get(
+                proxy_url,
+                headers={'User-Agent': RG_HEADERS['User-Agent'], 'Accept': 'text/plain'},
+                timeout=8,
+            )
+            if r.status_code in (404, 422):
+                continue
+            r.raise_for_status()
+            txt = r.text
+            lower = txt.casefold()
+            if len(txt) < 200 or 'target url returned error 404' in lower:
+                continue
+            return _rg_markdown_items(txt, day, direct_url), direct_url, 'proxy', errors
+        except Exception as exc:
+            errors.append(f'proxy {proxy_url}: {str(exc)[:100]}')
+
+    return [], direct_url, None, errors
+
+
+def resmi_gazete_live(days=11):
+    now = datetime.now(timezone.utc)
+    found = []
+    reached = 0
+    direct_days = 0
+    proxy_days = 0
+    all_errors = []
+
+    # Parallel date checks keep the live scan fast even when the official site times out.
+    dates = [now - timedelta(days=i) for i in range(days)]
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        jobs = {pool.submit(_fetch_rg_day, day): day for day in dates}
+        for job in as_completed(jobs):
+            day = jobs[job]
             try:
-                r = requests.get(url, headers=RG_HEADERS, timeout=5, allow_redirects=True)
-                if r.status_code == 404:
-                    continue
-                r.raise_for_status()
-                if len(r.text) < 500:
-                    continue
-                html = r.text
-                used_url = r.url or url
-                break
+                items, used_url, mode, errors = job.result()
             except Exception as exc:
-                errors.append(f'{url}: {str(exc)[:120]}')
+                all_errors.append(str(exc)[:160])
+                continue
+            all_errors.extend(errors)
+            if mode:
+                reached += 1
+                if mode == 'direct':
+                    direct_days += 1
+                else:
+                    proxy_days += 1
+            for item in items:
+                item['source'] = 'Resmî Gazete'
+                item['source_name'] = 'Resmî Gazete'
+                item['official'] = True
+                if not item.get('date'):
+                    item['date'] = day.strftime('%Y-%m-%d')
+                found.append(item)
 
-        if not html:
-            continue
-
-        ok_days += 1
-        src = {**source, 'url': used_url}
-        for item in candidates(src, html):
-            item['source'] = 'Resmî Gazete'
-            item['source_name'] = 'Resmî Gazete'
-            item['official'] = True
-            if not item.get('date'):
-                item['date'] = day.strftime('%Y-%m-%d')
-            found.append(item)
+    # Deduplicate across daily/proxy responses.
+    unique = {}
+    for item in found:
+        key = (item.get('title', '').casefold(), item.get('date'))
+        unique[key] = item
+    found = list(unique.values())
 
     status = {
         'source': 'Resmî Gazete',
         'source_name': 'Resmî Gazete',
-        'ok': ok_days > 0,
+        'ok': reached > 0,
         'count': len(found),
         'checked_at': now.isoformat(),
-        'days_reached': ok_days,
+        'days_reached': reached,
+        'direct_days': direct_days,
+        'proxy_days': proxy_days,
     }
-    if ok_days == 0 and errors:
-        status['error'] = errors[0][:180]
+    if reached == 0 and all_errors:
+        status['error'] = all_errors[-1][:180]
+    elif proxy_days > 0:
+        status['note'] = f'Doğrudan bağlantı kısıtlı; {proxy_days} gün güvenli metin fallback ile okundu.'
     return found, status
 
 
@@ -132,7 +232,7 @@ def scan_now():
                 fresh.append(merge_seen(item, existing.get(item_id), now))
 
     try:
-        rg_items, rg_status = resmi_gazete_live(days=5)
+        rg_items, rg_status = resmi_gazete_live(days=11)
         statuses.append(rg_status)
         for item in rg_items:
             item['source_url'] = 'https://resmigazete.gov.tr/'
@@ -171,5 +271,5 @@ def scan_now():
         'live': True,
         'items': items[:700],
         'sources': statuses,
-        'version': 4,
+        'version': 5,
     }
