@@ -9,7 +9,12 @@ import requests
 from bs4 import BeautifulSoup
 
 SOURCES = [
-    {"key":"epdk","name":"EPDK Duyurular","url":"https://www.epdk.gov.tr/Detay/Icerik/4-0-1/duyurular","group":"EPDK","official":True},
+    {"key":"epdk","name":"EPDK Duyurular","url":"https://www.epdk.gov.tr/Detay/Icerik/4-0-1/duyurular","group":"EPDK","official":True,"market":"Genel","record_type":"Duyuru"},
+    {"key":"epdk_petrol_mevzuat","name":"EPDK Petrol Piyasası Mevzuatı","url":"https://www.epdk.gov.tr/Detay/Icerik/23-2-1008/mevzuat","group":"EPDK","official":True,"market":"Petrol","record_type":"Mevzuat","epdk_focus":True},
+    {"key":"epdk_lpg_mevzuat","name":"EPDK LPG Piyasası Mevzuatı","url":"https://www.epdk.gov.tr/Detay/Icerik/23-2-1002/mevzuat","group":"EPDK","official":True,"market":"LPG","record_type":"Mevzuat","epdk_focus":True},
+    {"key":"epdk_petrol_karar","name":"EPDK Petrol Piyasası Kurul Kararları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-0-1172/petrol-piyasasi-kurul-kararlari","group":"EPDK","official":True,"market":"Petrol","record_type":"Kurul Kararı","epdk_focus":True},
+    {"key":"epdk_lpg_karar","name":"EPDK LPG Piyasası Kurul Kararları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-0-1173/lpg-piyasasi-kurul-kararlari","group":"EPDK","official":True,"market":"LPG","record_type":"Kurul Kararı","epdk_focus":True},
+    {"key":"epdk_denetim","name":"EPDK Petrol/LPG Denetim Kararları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-136/kurul-kararlari","group":"EPDK","official":True,"market":"Petrol/LPG","record_type":"Denetim","epdk_focus":True},
     {"key":"gib","name":"GİB Yeni Nesil ÖKC","url":"https://ynokc.gib.gov.tr/Home/DuyuruArsiv","group":"GİB / YN ÖKC","official":True},
     {"key":"darphane","name":"Darphane Duyurular","url":"https://www.darphane.gov.tr/","group":"Darphane / UTTS","official":True},
     {"key":"utts","name":"UTTS","url":"https://www.utts.gov.tr/","group":"UTTS","official":True},
@@ -26,7 +31,8 @@ KEYWORDS = [
     "tto","tim","ttb","tts","özk","okc","ö.k.c","ödeme kaydedici","odeme kaydedici","yn ökc",
     "pos","pompa","tabanca","lisans","epdk","kurul kararı","kurul karari","tebliğ","teblig",
     "yönetmelik","yonetmelik","ceza","tarife","ötv","otv","zorunlu petrol stoku","sıfır atık","sifir atik",
-    "petrol ürünleri","petrol urunleri","sorumlu müdür","sorumlu mudur"
+    "petrol ürünleri","petrol urunleri","sorumlu müdür","sorumlu mudur","ulusal marker","gelir payı",
+    "asgari mesafe","analiz ve muayene","izleme sistemi","dağıtıcılar arası","dagiticilar arasi"
 ]
 
 CRITICAL_WORDS = [
@@ -36,7 +42,7 @@ CRITICAL_WORDS = [
 IMPORTANT_WORDS = [
     "utts","ulusal taşıt tanıma","ulusal tasit tanima","okc","ödeme kaydedici","odeme kaydedici","pos",
     "kurul kararı","kurul karari","tebliğ","teblig","yönetmelik","yonetmelik","tarife","lisans",
-    "denetim","sıfır atık","sifir atik","zorunlu petrol stoku"
+    "denetim","sıfır atık","sifir atik","zorunlu petrol stoku","ulusal marker","lpg izleme sistemi"
 ]
 
 DATE_RE = re.compile(
@@ -45,11 +51,22 @@ DATE_RE = re.compile(
 )
 MONTHS = {"ocak":1,"şubat":2,"mart":3,"nisan":4,"mayıs":5,"haziran":6,"temmuz":7,"ağustos":8,"eylül":9,"ekim":10,"kasım":11,"aralık":12}
 HEADERS = {
-    "User-Agent":"Mozilla/5.0 (compatible; AkaryakitTakip/2.0; +https://github.com/beckbora/Akaryak-t-takip-paneli)",
+    "User-Agent":"Mozilla/5.0 (compatible; AkaryakitTakip/3.0; +https://github.com/beckbora/Akaryak-t-takip-paneli)",
     "Accept-Language":"tr-TR,tr;q=0.9,en;q=0.5",
 }
 SESSION = requests.Session()
 SESSION.headers.update(HEADERS)
+
+EPDK_GENERIC_TITLES = {
+    "mevzuat","lisans işlemleri","tarifeler","elektronik lisans işlemleri","bilgiler",
+    "petrol piyasası","lpg piyasası","kurul kararları","petrol piyasası kurul kararları",
+    "lpg piyasası kurul kararları","tüm mevzuat listesi","tümünü kapat","önceki","sonraki","kapat",
+}
+EPDK_FOCUS_TERMS = [
+    "petrol","akaryakıt","akaryakit","lpg","otogaz","lisans","tarife","kurul kararı","kurul karari",
+    "yönetmelik","yonetmelik","tebliğ","teblig","denetim","otomasyon","marker","stok","promosyon",
+    "sorumlu müdür","sorumlu mudur","izleme sistemi","asgari mesafe","gelir payı","analiz ve muayene",
+]
 
 
 def clean(s):
@@ -63,6 +80,13 @@ def norm(s):
 def relevant(text):
     t = norm(text)
     return any(k in t for k in KEYWORDS)
+
+
+def source_relevant(source, text):
+    if not source.get("epdk_focus"):
+        return relevant(text)
+    t = norm(text)
+    return bool(parse_date(text)) or any(k in t for k in EPDK_FOCUS_TERMS)
 
 
 def severity(text):
@@ -117,17 +141,27 @@ def canonical_url(url):
 
 def make_item(source, title, href, context):
     text = clean(f"{title} {context}")
-    return {
+    item = {
         "title": clean(title)[:260],
         "url": canonical_url(href),
         "date": parse_date(context) or parse_date(title),
         "summary": clean(context)[:700],
         "source": source["group"],
         "source_name": source["name"],
+        "source_key": source.get("key"),
         "official": source["official"],
         "severity": severity(text),
         "category": category(text),
     }
+    if source.get("market"):
+        item["market"] = source["market"]
+    if source.get("record_type"):
+        item["record_type"] = source["record_type"]
+    if source.get("epdk_focus"):
+        item["epdk_focus"] = True
+        if source.get("record_type") in {"Mevzuat", "Kurul Kararı"} and item["category"] == "Akaryakıt":
+            item["category"] = "Mevzuat"
+    return item
 
 
 def candidates(source, html):
@@ -144,16 +178,19 @@ def candidates(source, html):
         context_node = a.find_parent(["article", "li", "tr", "div"]) or a.parent
         context = clean(context_node.get_text(" ", strip=True) if context_node else title)
         text = f"{title} {context}"
-        if len(title) < 7 or title.casefold() in {"devamını oku","detay","haberin devamı","tıklayınız","tum haberler","tüm haberler","tüm duyurular"}:
+        low_title = title.casefold()
+        if len(title) < 7 or low_title in {"devamını oku","detay","haberin devamı","tıklayınız","tum haberler","tüm haberler","tüm duyurular"}:
             continue
-        if not relevant(text):
+        if source.get("epdk_focus") and low_title in EPDK_GENERIC_TITLES:
+            continue
+        if not source_relevant(source, text):
             continue
         seen_urls.add(href)
         out.append(make_item(source, title, href, context))
 
     for node in soup.find_all(["tr", "li", "article"]):
         txt = clean(node.get_text(" ", strip=True))
-        if len(txt) < 25 or len(txt) > 1100 or not relevant(txt):
+        if len(txt) < 25 or len(txt) > 1400 or not source_relevant(source, txt):
             continue
         dt = parse_date(txt)
         if not dt:
@@ -169,7 +206,7 @@ def candidates(source, html):
             continue
         out.append(make_item(source, title, href, txt))
 
-    return out[:80]
+    return out[:120 if source.get("epdk_focus") else 80]
 
 
 def resmi_gazete_candidates(days=10):
@@ -226,6 +263,8 @@ def fingerprint(item):
         str(item.get("date") or ""),
         str(item.get("severity") or ""),
         str(item.get("category") or ""),
+        str(item.get("market") or ""),
+        str(item.get("record_type") or ""),
     ])
     return hashlib.sha1(body.encode("utf-8")).hexdigest()[:18]
 
@@ -310,14 +349,14 @@ def main():
         key=lambda x: (x.get("date") or "0000-00-00", x.get("changed_at") or x.get("first_seen") or ""),
         reverse=True,
     )
-    items = items[:700]
+    items = items[:900]
 
     data = {
         "updated_at":now,
         "items":items,
         "sources":statuses,
-        "version":2,
-        "scan_interval_minutes":15,
+        "version":3,
+        "scan_interval_minutes":10,
     }
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Wrote {len(items)} items from {len(statuses)} monitored sources")
