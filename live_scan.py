@@ -1,13 +1,18 @@
 import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import requests
 
-from scrape import SOURCES, HEADERS, candidates, uid, merge_seen, resmi_gazete_candidates, category, severity
+from scrape import SOURCES, HEADERS, candidates, uid, merge_seen, category, severity
 
 ROOT = Path(__file__).resolve().parent
+RG_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0 Safari/537.36',
+    'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.7,en;q=0.5',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+}
 
 
 def read_saved():
@@ -41,6 +46,63 @@ def fetch_one(src):
         }
 
 
+def resmi_gazete_live(days=5):
+    now = datetime.now(timezone.utc)
+    source = {'name': 'Resmî Gazete', 'group': 'Resmî Gazete', 'official': True}
+    found = []
+    ok_days = 0
+    errors = []
+
+    for delta in range(days):
+        day = now - timedelta(days=delta)
+        ymd = day.strftime('%Y%m%d')
+        urls = [
+            f'https://resmigazete.gov.tr/{day:%d.%m.%Y}',
+            f'https://resmigazete.gov.tr/eskiler/{day:%Y}/{day:%m}/{ymd}.htm',
+        ]
+        html = None
+        used_url = None
+
+        for url in urls:
+            try:
+                r = requests.get(url, headers=RG_HEADERS, timeout=5, allow_redirects=True)
+                if r.status_code == 404:
+                    continue
+                r.raise_for_status()
+                if len(r.text) < 500:
+                    continue
+                html = r.text
+                used_url = r.url or url
+                break
+            except Exception as exc:
+                errors.append(f'{url}: {str(exc)[:120]}')
+
+        if not html:
+            continue
+
+        ok_days += 1
+        src = {**source, 'url': used_url}
+        for item in candidates(src, html):
+            item['source'] = 'Resmî Gazete'
+            item['source_name'] = 'Resmî Gazete'
+            item['official'] = True
+            if not item.get('date'):
+                item['date'] = day.strftime('%Y-%m-%d')
+            found.append(item)
+
+    status = {
+        'source': 'Resmî Gazete',
+        'source_name': 'Resmî Gazete',
+        'ok': ok_days > 0,
+        'count': len(found),
+        'checked_at': now.isoformat(),
+        'days_reached': ok_days,
+    }
+    if ok_days == 0 and errors:
+        status['error'] = errors[0][:180]
+    return found, status
+
+
 def scan_now():
     saved = read_saved()
     existing = {i.get('id'): i for i in saved.get('items', []) if i.get('id')}
@@ -70,10 +132,10 @@ def scan_now():
                 fresh.append(merge_seen(item, existing.get(item_id), now))
 
     try:
-        rg_items, rg_status = resmi_gazete_candidates(days=3)
+        rg_items, rg_status = resmi_gazete_live(days=5)
         statuses.append(rg_status)
         for item in rg_items:
-            item['source_url'] = 'https://www.resmigazete.gov.tr/'
+            item['source_url'] = 'https://resmigazete.gov.tr/'
             item_id = uid(item)
             fresh.append(merge_seen(item, existing.get(item_id), now))
     except Exception as exc:
@@ -109,5 +171,5 @@ def scan_now():
         'live': True,
         'items': items[:700],
         'sources': statuses,
-        'version': 3,
+        'version': 4,
     }
