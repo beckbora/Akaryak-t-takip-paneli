@@ -8,7 +8,7 @@ from live_scan import scan_now
 ROOT = Path(__file__).resolve().parents[1]
 DASHBOARD = ROOT / 'live.html'
 
-app = FastAPI()
+app = FastAPI(title='Petrol Piyasası Takip')
 
 
 @app.get('/')
@@ -23,7 +23,7 @@ def dashboard_file():
 
 @app.get('/api')
 def api_root():
-    return {'status': 'ready', 'service': 'Akaryakit Takip live scan'}
+    return {'status': 'ready', 'service': 'Petrol Piyasasi Takip live scan'}
 
 
 @app.get('/api/scan')
