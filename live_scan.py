@@ -106,7 +106,6 @@ def resmi_gazete_live(days=14):
     today = now.date()
     official_url = f'https://resmigazete.gov.tr/{today:%d.%m.%Y}'
 
-    # Quick official attempt. If Vercel IP is blocked, immediately switch to mirror.
     try:
         r = requests.get(official_url, headers=RG_HEADERS, timeout=2.5, allow_redirects=True)
         if r.ok and len(r.text) > 500:
@@ -127,7 +126,6 @@ def resmi_gazete_live(days=14):
     except Exception:
         pass
 
-    # Cloud-safe fallback. Recent daily indexes are read in parallel.
     found = []
     reached = 0
     errors = []
@@ -162,14 +160,27 @@ def resmi_gazete_live(days=14):
     return found, status
 
 
+def _baseline_seen(item):
+    if item.get('date'):
+        return f"{item['date']}T12:00:00+00:00"
+    return '2000-01-01T00:00:00+00:00'
+
+
 def scan_now():
     saved = read_saved()
-    existing = {i.get('id'): i for i in saved.get('items', []) if i.get('id')}
+    saved_items = saved.get('items', [])
+    existing = {i.get('id'): i for i in saved_items if i.get('id')}
+    known_source_names = {i.get('source_name') for i in saved_items if i.get('source_name')}
+    baseline_epdk_sources = {
+        src['name'] for src in SOURCES
+        if src.get('epdk_focus') and src['name'] not in known_source_names
+    }
+
     now = datetime.now(timezone.utc).isoformat()
     fresh = []
     statuses = []
 
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=10) as pool:
         jobs = {pool.submit(fetch_one, src): src for src in SOURCES}
         for job in as_completed(jobs):
             src = jobs[job]
@@ -184,7 +195,11 @@ def scan_now():
             for item in items:
                 item['source_url'] = src['url']
                 item_id = uid(item)
-                fresh.append(merge_seen(item, existing.get(item_id), now))
+                previous = existing.get(item_id)
+                merged_item = merge_seen(item, previous, now)
+                if not previous and src['name'] in baseline_epdk_sources:
+                    merged_item['first_seen'] = _baseline_seen(item)
+                fresh.append(merged_item)
 
     try:
         rg_items, rg_status = resmi_gazete_live(days=14)
@@ -215,6 +230,6 @@ def scan_now():
         reverse=True,
     )
     return {
-        'updated_at': now, 'live': True, 'items': items[:700],
-        'sources': statuses, 'version': 6,
+        'updated_at': now, 'live': True, 'items': items[:900],
+        'sources': statuses, 'version': 7,
     }
