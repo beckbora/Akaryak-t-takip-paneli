@@ -33,7 +33,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Scan sector sources
-        run: python scrape.py
+        run: python update_data.py
 
       - name: Commit latest data
         run: |
