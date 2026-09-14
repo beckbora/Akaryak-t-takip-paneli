@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from api.scan import scan_now
+from live_scan import scan_now
 
 app = FastAPI()
 
