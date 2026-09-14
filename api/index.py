@@ -1,9 +1,24 @@
+from pathlib import Path
+
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 
 from live_scan import scan_now
 
+ROOT = Path(__file__).resolve().parents[1]
+DASHBOARD = ROOT / 'live.html'
+
 app = FastAPI()
+
+
+@app.get('/')
+def dashboard_root():
+    return FileResponse(DASHBOARD, media_type='text/html; charset=utf-8')
+
+
+@app.get('/live.html')
+def dashboard_file():
+    return FileResponse(DASHBOARD, media_type='text/html; charset=utf-8')
 
 
 @app.get('/api')
