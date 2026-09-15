@@ -1,10 +1,278 @@
 {
-  "updated_at": null,
-  "current": [],
+  "updated_at": "2026-09-15T08:07:48.387597+00:00",
+  "current": [
+    {
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "gasoline": 80.12,
+      "diesel": 95.46,
+      "lpg": 34.39,
+      "currency": "TL",
+      "unit": "L",
+      "source": "Petrol Ofisi",
+      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    },
+    {
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "gasoline": 80.26,
+      "diesel": 95.6,
+      "lpg": 34.99,
+      "currency": "TL",
+      "unit": "L",
+      "source": "Petrol Ofisi",
+      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    },
+    {
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "gasoline": 81.25,
+      "diesel": 96.75,
+      "lpg": 35.09,
+      "currency": "TL",
+      "unit": "L",
+      "source": "Petrol Ofisi",
+      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    },
+    {
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "gasoline": 81.52,
+      "diesel": 97.02,
+      "lpg": 34.99,
+      "currency": "TL",
+      "unit": "L",
+      "source": "Petrol Ofisi",
+      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    },
+    {
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "gasoline": 80.98,
+      "diesel": 96.27,
+      "lpg": 34.29,
+      "currency": "TL",
+      "unit": "L",
+      "source": "Petrol Ofisi",
+      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari",
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    },
+    {
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "gasoline": 80.95,
+      "diesel": 96.46,
+      "lpg": 34.79,
+      "currency": "TL",
+      "unit": "L",
+      "source": "Petrol Ofisi",
+      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari",
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    }
+  ],
   "live_changes": [],
   "changes": [],
-  "history": [],
+  "history": [
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "fuel": "Benzin 95",
+      "price": 80.12,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "fuel": "Motorin",
+      "price": 95.46,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "fuel": "LPG/Otogaz",
+      "price": 34.39,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "fuel": "Benzin 95",
+      "price": 80.26,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "fuel": "Motorin",
+      "price": 95.6,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "fuel": "LPG/Otogaz",
+      "price": 34.99,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "fuel": "Benzin 95",
+      "price": 81.25,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "fuel": "Motorin",
+      "price": 96.75,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "fuel": "LPG/Otogaz",
+      "price": 35.09,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "fuel": "Benzin 95",
+      "price": 81.52,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "fuel": "Motorin",
+      "price": 97.02,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "fuel": "LPG/Otogaz",
+      "price": 34.99,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "fuel": "Benzin 95",
+      "price": 80.98,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "fuel": "Motorin",
+      "price": 96.27,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "fuel": "LPG/Otogaz",
+      "price": 34.29,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "fuel": "Benzin 95",
+      "price": 80.95,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "fuel": "Motorin",
+      "price": 96.46,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T08:07:48.387597+00:00",
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "fuel": "LPG/Otogaz",
+      "price": 34.79,
+      "source": "Petrol Ofisi"
+    }
+  ],
   "epdk_history": [],
-  "sources": [],
-  "version": 1
+  "epdk_year_history": [],
+  "annual_trends": {
+    "gasoline": {
+      "label": "Benzin 95",
+      "points": []
+    },
+    "diesel": {
+      "label": "Motorin",
+      "points": []
+    }
+  },
+  "sources": [
+    {
+      "source": "Petrol Ofisi güncel pompa fiyatları",
+      "ok": true,
+      "count": 6,
+      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+    },
+    {
+      "source": "EPDK günlük Petrol & LPG fiyat bültenleri",
+      "ok": false,
+      "count": 0,
+      "checked_at": "2026-09-15T08:07:54.557524+00:00",
+      "error": "400 Client Error: Bad Request for url: https://apigateway.epdk.gov.tr/petrolBayiSatisFiyatBulten"
+    },
+    {
+      "source": "EPDK 1 yıllık Benzin & Motorin trendi",
+      "ok": false,
+      "count": 0,
+      "checked_at": "2026-09-15T08:08:02.940683+00:00",
+      "error": "400 Client Error: Bad Request for url: https://apigateway.epdk.gov.tr/petrolBayiSatisFiyatBulten"
+    }
+  ],
+  "version": 2
 }
