@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-15T08:07:48.387597+00:00",
+  "updated_at": "2026-09-15T08:11:12.621835+00:00",
   "current": [
     {
       "location": "İstanbul Anadolu",
@@ -11,7 +11,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     },
     {
       "location": "İstanbul Avrupa",
@@ -23,7 +23,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     },
     {
       "location": "Ankara",
@@ -35,7 +35,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     },
     {
       "location": "İzmir",
@@ -47,7 +47,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     },
     {
       "location": "Sakarya (Adapazarı)",
@@ -59,7 +59,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     },
     {
       "location": "Tekirdağ",
@@ -71,7 +71,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     }
   ],
   "live_changes": [],
@@ -240,16 +240,1596 @@
       "source": "Petrol Ofisi"
     }
   ],
-  "epdk_history": [],
-  "epdk_year_history": [],
+  "epdk_history": [
+    {
+      "date": "2026-09-02",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 44.18625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-02",
+      "fuel": "Gazyağı",
+      "price": 81.45143,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-02",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 59.27875,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-02",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 74.36875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-02",
+      "fuel": "Motorin",
+      "price": 81.1025,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-02",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 40.41857,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-03",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 44.18625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-03",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-03",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 59.27875,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-03",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 74.36875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-03",
+      "fuel": "Motorin",
+      "price": 81.1025,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-03",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 40.41857,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-04",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-04",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-04",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-04",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.87375,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-04",
+      "fuel": "Motorin",
+      "price": 88.86,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-04",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-05",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-05",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-05",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-05",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.89625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-05",
+      "fuel": "Motorin",
+      "price": 88.885,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-05",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-06",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-06",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-06",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-06",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.89625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-06",
+      "fuel": "Motorin",
+      "price": 88.885,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-06",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-07",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-07",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-07",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-07",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.89625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-07",
+      "fuel": "Motorin",
+      "price": 88.885,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-07",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-08",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-08",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-08",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-08",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.9075,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-08",
+      "fuel": "Motorin",
+      "price": 88.89625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-08",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-09",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-09",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-09",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-09",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.91875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-09",
+      "fuel": "Motorin",
+      "price": 88.9075,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-09",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-10",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-10",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-10",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-10",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.93,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-10",
+      "fuel": "Motorin",
+      "price": 88.91875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-10",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-11",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 46.05375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-11",
+      "fuel": "Gazyağı",
+      "price": 85.62571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-11",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 63.74625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-11",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 76.9525,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-11",
+      "fuel": "Motorin",
+      "price": 88.94,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-11",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.81,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-12",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 49.2575,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-12",
+      "fuel": "Gazyağı",
+      "price": 94.70571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-12",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 68.6675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-12",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 80.20625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-12",
+      "fuel": "Motorin",
+      "price": 88.9775,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-12",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 46.13429,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-13",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 49.2575,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-13",
+      "fuel": "Gazyağı",
+      "price": 94.70571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-13",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 68.6675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-13",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 80.20625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-13",
+      "fuel": "Motorin",
+      "price": 88.9775,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-13",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 46.13429,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-14",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 49.2575,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-14",
+      "fuel": "Gazyağı",
+      "price": 94.70571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-14",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 68.6675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-14",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 80.20625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-14",
+      "fuel": "Motorin",
+      "price": 88.9775,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-14",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 46.13429,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 49.2575,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Gazyağı",
+      "price": 94.70571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 68.6675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 80.26625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Motorin",
+      "price": 95.615,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 46.13429,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    }
+  ],
+  "epdk_year_history": [
+    {
+      "date": "2025-09-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 28.84088,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-09-15",
+      "fuel": "Gazyağı",
+      "price": 43.40162,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-09-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 33.90732,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-09-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 53.02375,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-09-15",
+      "fuel": "Motorin",
+      "price": 54.36875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-09-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 25.2726,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-10-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 29.69338,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-10-15",
+      "fuel": "Gazyağı",
+      "price": 44.71734,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-10-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 34.59607,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-10-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 52.12875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-10-15",
+      "fuel": "Motorin",
+      "price": 53.20625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-10-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 27.69402,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-11-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 29.7525,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-11-15",
+      "fuel": "Gazyağı",
+      "price": 47.71571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-11-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 35.73,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-11-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 54.84375,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-11-15",
+      "fuel": "Motorin",
+      "price": 57.58625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-11-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 27.24714,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-12-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 27.12625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-12-15",
+      "fuel": "Gazyağı",
+      "price": 44.90571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-12-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 32.875,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-12-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 54.3775,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-12-15",
+      "fuel": "Motorin",
+      "price": 53.03125,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2025-12-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 24.36571,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-01-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 28.415,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-01-15",
+      "fuel": "Gazyağı",
+      "price": 47.71143,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-01-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 34.175,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-01-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 53.19875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-01-15",
+      "fuel": "Motorin",
+      "price": 54.77625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-01-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 26.17714,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-02-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 29.98172,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-02-15",
+      "fuel": "Gazyağı",
+      "price": 49.19286,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-02-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 36.3207,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-02-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 57.03875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-02-15",
+      "fuel": "Motorin",
+      "price": 57.77,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-02-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 28.10509,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-03-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 43.40375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-03-15",
+      "fuel": "Gazyağı",
+      "price": 83.2,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-03-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 54.625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-03-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 61.41375,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-03-15",
+      "fuel": "Motorin",
+      "price": 65.89375,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-03-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.38857,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-04-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 44.46625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-04-15",
+      "fuel": "Gazyağı",
+      "price": 87.82857,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-04-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 59.19375,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-04-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 62.655,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-04-15",
+      "fuel": "Motorin",
+      "price": 75.58125,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-04-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 42.38857,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-05-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 48.97875,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-05-15",
+      "fuel": "Gazyağı",
+      "price": 77.48714,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-05-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 59.675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-05-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 64.9625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-05-15",
+      "fuel": "Motorin",
+      "price": 67.39875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-05-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 44.62857,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-06-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 43.91,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-06-15",
+      "fuel": "Gazyağı",
+      "price": 68.71,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-06-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 54.13125,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-06-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 63.00375,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-06-15",
+      "fuel": "Motorin",
+      "price": 66.3675,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-06-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 41.10286,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-07-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 39.885,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-07-15",
+      "fuel": "Gazyağı",
+      "price": 70.26286,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-07-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 51.995,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-07-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 64.50875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-07-15",
+      "fuel": "Motorin",
+      "price": 69.94125,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-07-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 35.71571,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-08-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 41.90625,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-08-15",
+      "fuel": "Gazyağı",
+      "price": 77.96429,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-08-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 57.8075,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-08-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 71.435,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-08-15",
+      "fuel": "Motorin",
+      "price": 79.66875,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-08-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 39.22857,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 49.2575,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Gazyağı",
+      "price": 94.70571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 68.6675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 80.26625,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Motorin",
+      "price": 95.615,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-15",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 46.13429,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    }
+  ],
   "annual_trends": {
     "gasoline": {
       "label": "Benzin 95",
-      "points": []
+      "start_date": "2025-09-15",
+      "start_price": 53.02,
+      "end_date": "2026-09-15",
+      "end_price": 80.27,
+      "delta": 27.24,
+      "percent": 51.37,
+      "direction": "zam",
+      "points": [
+        {
+          "date": "2025-09-15",
+          "price": 53.02375
+        },
+        {
+          "date": "2025-10-15",
+          "price": 52.12875
+        },
+        {
+          "date": "2025-11-15",
+          "price": 54.84375
+        },
+        {
+          "date": "2025-12-15",
+          "price": 54.3775
+        },
+        {
+          "date": "2026-01-15",
+          "price": 53.19875
+        },
+        {
+          "date": "2026-02-15",
+          "price": 57.03875
+        },
+        {
+          "date": "2026-03-15",
+          "price": 61.41375
+        },
+        {
+          "date": "2026-04-15",
+          "price": 62.655
+        },
+        {
+          "date": "2026-05-15",
+          "price": 64.9625
+        },
+        {
+          "date": "2026-06-15",
+          "price": 63.00375
+        },
+        {
+          "date": "2026-07-15",
+          "price": 64.50875
+        },
+        {
+          "date": "2026-08-15",
+          "price": 71.435
+        },
+        {
+          "date": "2026-09-15",
+          "price": 80.26625
+        }
+      ]
     },
     "diesel": {
       "label": "Motorin",
-      "points": []
+      "start_date": "2025-09-15",
+      "start_price": 54.37,
+      "end_date": "2026-09-15",
+      "end_price": 95.61,
+      "delta": 41.25,
+      "percent": 75.87,
+      "direction": "zam",
+      "points": [
+        {
+          "date": "2025-09-15",
+          "price": 54.36875
+        },
+        {
+          "date": "2025-10-15",
+          "price": 53.20625
+        },
+        {
+          "date": "2025-11-15",
+          "price": 57.58625
+        },
+        {
+          "date": "2025-12-15",
+          "price": 53.03125
+        },
+        {
+          "date": "2026-01-15",
+          "price": 54.77625
+        },
+        {
+          "date": "2026-02-15",
+          "price": 57.77
+        },
+        {
+          "date": "2026-03-15",
+          "price": 65.89375
+        },
+        {
+          "date": "2026-04-15",
+          "price": 75.58125
+        },
+        {
+          "date": "2026-05-15",
+          "price": 67.39875
+        },
+        {
+          "date": "2026-06-15",
+          "price": 66.3675
+        },
+        {
+          "date": "2026-07-15",
+          "price": 69.94125
+        },
+        {
+          "date": "2026-08-15",
+          "price": 79.66875
+        },
+        {
+          "date": "2026-09-15",
+          "price": 95.615
+        }
+      ]
     }
   },
   "sources": [
@@ -257,22 +1837,20 @@
       "source": "Petrol Ofisi güncel pompa fiyatları",
       "ok": true,
       "count": 6,
-      "checked_at": "2026-09-15T08:07:48.387613+00:00"
+      "checked_at": "2026-09-15T08:11:12.621849+00:00"
     },
     {
-      "source": "EPDK günlük Petrol & LPG fiyat bültenleri",
-      "ok": false,
-      "count": 0,
-      "checked_at": "2026-09-15T08:07:54.557524+00:00",
-      "error": "400 Client Error: Bad Request for url: https://apigateway.epdk.gov.tr/petrolBayiSatisFiyatBulten"
+      "source": "EPDK resmi akaryakıt fiyat bülteni",
+      "ok": true,
+      "count": 84,
+      "checked_at": "2026-09-15T08:11:19.481124+00:00"
     },
     {
       "source": "EPDK 1 yıllık Benzin & Motorin trendi",
-      "ok": false,
-      "count": 0,
-      "checked_at": "2026-09-15T08:08:02.940683+00:00",
-      "error": "400 Client Error: Bad Request for url: https://apigateway.epdk.gov.tr/petrolBayiSatisFiyatBulten"
+      "ok": true,
+      "count": 78,
+      "checked_at": "2026-09-15T08:11:22.197078+00:00"
     }
   ],
-  "version": 2
+  "version": 3
 }
