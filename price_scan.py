@@ -1,5 +1,6 @@
 import json
 import re
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta, date
 from pathlib import Path
@@ -26,8 +27,13 @@ PO_EXTRA = [
     },
 ]
 
-EPDK_PETROL_URL = 'https://apigateway.epdk.gov.tr/petrolBayiSatisFiyatBulten'
-EPDK_LPG_URL = 'https://apigateway.epdk.gov.tr/lpgBayiSatisFiyatBultenGunluk'
+# EPDK official XML/SOAP service for the average dealer prices of the eight
+# distributors with the highest transaction volume. EPDK documents sorguNo=71
+# with a date parameter in DD/MM/YYYY format.
+EPDK_SOAP_ENDPOINTS = [
+    'https://lisansws.epdk.gov.tr/services/bildirimPetrol8FirmaBulten.bildirimPetrol8FirmaBultenHttpSoap11Endpoint',
+    'https://lisansws.epdk.gov.tr/services/bildirimPetrol8FirmaBulten',
+]
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0 Safari/537.36',
@@ -90,6 +96,7 @@ def parse_po_table(html, wanted_keys, location_key=None, location_name=None, sou
         if row_key not in wanted:
             continue
         values = [first_number(c) for c in cells[1:]]
+        # Petrol Ofisi table order: Benzin 95, Diesel, Gazyağı, Kalorifer, Fuel Oil, Otogaz
         if len(values) < 6 or values[0] is None or values[1] is None or values[5] is None:
             continue
         key = location_key or row_key
@@ -158,39 +165,85 @@ def fetch_po_prices():
     return rows, status
 
 
-def fetch_epdk_day(endpoint, day, market):
-    date_str = day.strftime('%Y-%m-%d')
-    try:
-        r = requests.get(
-            endpoint,
-            headers={**HEADERS, 'Accept': 'application/json', 'Content-Type': 'application/json'},
-            json={'raporTarihi': date_str},
-            timeout=7,
-        )
-        r.raise_for_status()
-        payload = r.json()
-        data = payload.get('data') or []
-        out = []
-        for row in data:
-            fuel = str(row.get('Yakıt') or row.get('Yakit') or '').strip()
-            price = row.get('Fiyat')
-            if not fuel or price is None:
-                continue
-            try:
-                price = float(str(price).replace(',', '.'))
-            except Exception:
-                continue
-            out.append({
-                'date': str(row.get('Tarih') or date_str)[:10],
-                'fuel': fuel,
-                'price': round(price, 5),
-                'unit': str(row.get('Ölçü Birimi') or row.get('Olcu Birimi') or ''),
-                'market': market,
-                'source': 'EPDK',
-            })
-        return out, None
-    except Exception as exc:
-        return [], str(exc)[:160]
+def local_name(tag):
+    return str(tag).split('}', 1)[-1]
+
+
+def soap_inner_result(response_text):
+    root = ET.fromstring(response_text)
+    for elem in root.iter():
+        if local_name(elem.tag).casefold() == 'return' and elem.text:
+            return elem.text.strip()
+    return None
+
+
+def parse_epdk_petrol_inner(inner_xml, query_day):
+    if not inner_xml:
+        return []
+    root = ET.fromstring(inner_xml)
+    out = []
+    for node in root.iter():
+        if local_name(node.tag) != 'PetrolPiyasasiEnYuksekHacimliSekizFirmaninAkaryakitFiyatlari':
+            continue
+        values = {}
+        for child in list(node):
+            values[local_name(child.tag)] = (child.text or '').strip()
+        fuel = values.get('YakitTipi', '')
+        unit = values.get('Birim', '')
+        price = values.get('Fiyat')
+        if not fuel or price is None:
+            continue
+        try:
+            price = float(str(price).replace(',', '.'))
+        except Exception:
+            continue
+        out.append({
+            'date': query_day.isoformat(),
+            'fuel': fuel,
+            'price': round(price, 6),
+            'unit': unit,
+            'market': 'Petrol',
+            'source': 'EPDK',
+            'dataset': 'En yüksek işlem hacimli 8 firma ortalama bayi fiyatı',
+        })
+    return out
+
+
+def fetch_epdk_petrol_day(day):
+    date_str = day.strftime('%d/%m/%Y')
+    body = f'''<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gen="http://genel.service.ws.epvys.g222.tubitak.gov.tr/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <gen:genelSorgu>
+      <sorguNo>71</sorguNo>
+      <parametreler>{date_str}</parametreler>
+    </gen:genelSorgu>
+  </soapenv:Body>
+</soapenv:Envelope>'''
+    errors = []
+    for endpoint in EPDK_SOAP_ENDPOINTS:
+        try:
+            r = requests.post(
+                endpoint,
+                headers={
+                    **HEADERS,
+                    'Content-Type': 'text/xml; charset=utf-8',
+                    'SOAPAction': 'genelSorgu',
+                    'Accept': 'text/xml, application/xml',
+                },
+                data=body.encode('utf-8'),
+                timeout=12,
+            )
+            r.raise_for_status()
+            inner = soap_inner_result(r.text)
+            rows = parse_epdk_petrol_inner(inner, day)
+            if rows:
+                return rows, None
+            errors.append(f'{endpoint}: boş cevap')
+        except Exception as exc:
+            errors.append(f'{endpoint}: {str(exc)[:120]}')
+    return [], (errors[-1] if errors else 'EPDK SOAP verisi alınamadı')[:180]
 
 
 def fetch_epdk_history(saved_history, days=2):
@@ -198,11 +251,8 @@ def fetch_epdk_history(saved_history, days=2):
     dates = [today - timedelta(days=i) for i in range(days)]
     found = []
     errors = []
-    jobs = []
-    with ThreadPoolExecutor(max_workers=min(10, max(2, days * 2))) as pool:
-        for day in dates:
-            jobs.append(pool.submit(fetch_epdk_day, EPDK_PETROL_URL, day, 'Petrol'))
-            jobs.append(pool.submit(fetch_epdk_day, EPDK_LPG_URL, day, 'LPG'))
+    with ThreadPoolExecutor(max_workers=min(7, max(2, days))) as pool:
+        jobs = [pool.submit(fetch_epdk_petrol_day, day) for day in dates]
         for job in as_completed(jobs):
             rows, err = job.result()
             found.extend(rows)
@@ -211,15 +261,17 @@ def fetch_epdk_history(saved_history, days=2):
 
     merged = {}
     for row in (saved_history or []) + found:
-        key = (row.get('date'), row.get('market'), row.get('fuel'))
+        if row.get('market') != 'Petrol':
+            continue
+        key = (row.get('date'), row.get('fuel'))
         if all(key):
             merged[key] = row
     history = list(merged.values())
-    history.sort(key=lambda x: (x.get('date', ''), x.get('market', ''), x.get('fuel', '')))
+    history.sort(key=lambda x: (x.get('date', ''), x.get('fuel', '')))
     cutoff = (today - timedelta(days=400)).isoformat()
     history = [x for x in history if x.get('date', '') >= cutoff]
     status = {
-        'source': 'EPDK günlük Petrol & LPG fiyat bültenleri',
+        'source': 'EPDK resmi akaryakıt fiyat bülteni',
         'ok': bool(found) or bool(saved_history),
         'count': len(found),
         'checked_at': now_iso(),
@@ -233,15 +285,14 @@ def month_back(base, months):
     total = base.year * 12 + (base.month - 1) - months
     y, m0 = divmod(total, 12)
     m = m0 + 1
-    # The 15th avoids month-end invalid dates and usually has a bulletin.
-    return date(y, m, min(base.day, 15))
+    return date(y, m, 15)
 
 
 def fetch_epdk_nearest_petrol(target_day):
     offsets = [0, -1, 1, -2, 2, -3, 3]
     errors = []
     for off in offsets:
-        rows, err = fetch_epdk_day(EPDK_PETROL_URL, target_day + timedelta(days=off), 'Petrol')
+        rows, err = fetch_epdk_petrol_day(target_day + timedelta(days=off))
         if rows:
             return rows, None
         if err:
@@ -254,7 +305,7 @@ def fetch_epdk_year_history(saved_history):
     targets = [month_back(today, i) for i in range(12, -1, -1)]
     found = []
     errors = []
-    with ThreadPoolExecutor(max_workers=7) as pool:
+    with ThreadPoolExecutor(max_workers=5) as pool:
         jobs = {pool.submit(fetch_epdk_nearest_petrol, d): d for d in targets}
         for job in as_completed(jobs):
             rows, err = job.result()
@@ -439,7 +490,7 @@ def scan_prices(history_days=2, include_year=True):
         'epdk_year_history': year_history,
         'annual_trends': annual_trends,
         'sources': [po_status, epdk_status, year_status],
-        'version': 2,
+        'version': 3,
     }
 
 
