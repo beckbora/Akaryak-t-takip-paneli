@@ -55,7 +55,7 @@ def first_number(text):
 def fetch_po_prices():
     checked = now_iso()
     try:
-        r = requests.get(PO_URL, headers=HEADERS, timeout=12)
+        r = requests.get(PO_URL, headers=HEADERS, timeout=9)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, 'html.parser')
         rows = []
@@ -99,7 +99,7 @@ def fetch_epdk_day(endpoint, day, market):
             endpoint,
             headers={**HEADERS, 'Accept': 'application/json', 'Content-Type': 'application/json'},
             json={'raporTarihi': date_str},
-            timeout=10,
+            timeout=7,
         )
         r.raise_for_status()
         payload = r.json()
@@ -127,13 +127,13 @@ def fetch_epdk_day(endpoint, day, market):
         return [], str(exc)[:160]
 
 
-def fetch_epdk_history(saved_history, days=14):
+def fetch_epdk_history(saved_history, days=2):
     today = datetime.now(timezone.utc).date()
     dates = [today - timedelta(days=i) for i in range(days)]
     found = []
     errors = []
     jobs = []
-    with ThreadPoolExecutor(max_workers=10) as pool:
+    with ThreadPoolExecutor(max_workers=min(10, max(2, days * 2))) as pool:
         for day in dates:
             jobs.append(pool.submit(fetch_epdk_day, EPDK_PETROL_URL, day, 'Petrol'))
             jobs.append(pool.submit(fetch_epdk_day, EPDK_LPG_URL, day, 'LPG'))
@@ -150,7 +150,6 @@ def fetch_epdk_history(saved_history, days=14):
             merged[key] = row
     history = list(merged.values())
     history.sort(key=lambda x: (x.get('date', ''), x.get('market', ''), x.get('fuel', '')))
-    # Keep roughly six months of official history if it accumulates.
     cutoff = (today - timedelta(days=190)).isoformat()
     history = [x for x in history if x.get('date', '') >= cutoff]
     status = {
@@ -226,7 +225,6 @@ def merge_history(saved_history, current, detected_at):
                 'price': row[field],
                 'source': row.get('source', 'Petrol Ofisi'),
             }
-            # One observation per location/fuel/day unless the price changes during the day.
             last = next((x for x in reversed(history) if x.get('location_key') == rec['location_key'] and x.get('fuel') == label), None)
             if not last or last.get('date') != day or abs(float(last.get('price', 0)) - float(rec['price'])) >= 0.01:
                 history.append(rec)
@@ -235,7 +233,7 @@ def merge_history(saved_history, current, detected_at):
     return history[-2000:]
 
 
-def scan_prices():
+def scan_prices(history_days=2):
     saved = read_saved()
     detected_at = now_iso()
     current, po_status = fetch_po_prices()
@@ -245,7 +243,7 @@ def scan_prices():
     live_changes = build_changes(saved.get('current') or [], current, detected_at)
     changes = merge_changes(saved.get('changes') or [], live_changes)
     history = merge_history(saved.get('history') or [], current, detected_at) if current else (saved.get('history') or [])
-    epdk_history, epdk_status = fetch_epdk_history(saved.get('epdk_history') or [], days=14)
+    epdk_history, epdk_status = fetch_epdk_history(saved.get('epdk_history') or [], days=history_days)
 
     return {
         'updated_at': detected_at,
@@ -260,7 +258,7 @@ def scan_prices():
 
 
 def write_prices():
-    data = scan_prices()
+    data = scan_prices(history_days=14)
     PRICE_DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
     print(f"Wrote {len(data.get('current', []))} current city rows and {len(data.get('changes', []))} price changes")
     return data
