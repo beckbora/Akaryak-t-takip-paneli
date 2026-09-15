@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from live_scan import scan_now
 from price_scan import scan_prices
@@ -14,24 +14,33 @@ PRICE_DATA = ROOT / 'prices.json'
 app = FastAPI(title='Petrol Piyasası Takip')
 
 
+def sector_html():
+    html = DASHBOARD.read_text(encoding='utf-8')
+    nav = '''<nav style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px"><a href="/" style="color:#cafff8;text-decoration:none;border:1px solid #20796f;background:#103a37;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">Mevzuat &amp; Sektör Radar</a><a href="/fiyatlar" style="color:#cbd7e6;text-decoration:none;border:1px solid #263b5a;background:#0c1929;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">⛽ Fiyat Radar</a></nav>'''
+    marker = '<header class="top">'
+    if marker in html:
+        html = html.replace(marker, nav + marker, 1)
+    return html
+
+
 @app.get('/')
 def dashboard_root():
-    return FileResponse(DASHBOARD, media_type='text/html; charset=utf-8')
+    return HTMLResponse(sector_html(), headers={'Cache-Control': 'no-store, max-age=0'})
 
 
 @app.get('/live.html')
 def dashboard_file():
-    return FileResponse(DASHBOARD, media_type='text/html; charset=utf-8')
+    return HTMLResponse(sector_html(), headers={'Cache-Control': 'no-store, max-age=0'})
 
 
 @app.get('/fiyatlar')
 def prices_dashboard():
-    return FileResponse(PRICE_DASHBOARD, media_type='text/html; charset=utf-8')
+    return FileResponse(PRICE_DASHBOARD, media_type='text/html; charset=utf-8', headers={'Cache-Control': 'no-store, max-age=0'})
 
 
 @app.get('/prices.html')
 def prices_dashboard_file():
-    return FileResponse(PRICE_DASHBOARD, media_type='text/html; charset=utf-8')
+    return FileResponse(PRICE_DASHBOARD, media_type='text/html; charset=utf-8', headers={'Cache-Control': 'no-store, max-age=0'})
 
 
 @app.get('/prices.json')
