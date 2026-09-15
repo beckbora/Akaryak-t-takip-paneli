@@ -2,6 +2,16 @@ name: Update sector data
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'price_scan.py'
+      - 'live_scan.py'
+      - 'scrape.py'
+      - 'update_prices.py'
+      - 'update_data.py'
+      - 'requirements.txt'
+      - '.github/workflows/update-data.yml'
   schedule:
     - cron: '2,12,22,32,42,52 * * * *'
 
