@@ -64,6 +64,11 @@ def live_scan():
 @app.get('/api/prices')
 def live_prices():
     try:
-        return JSONResponse(content=scan_prices(), headers={'Cache-Control': 'no-store, max-age=0'})
+        # One-year EPDK history is refreshed by the scheduled job and read from prices.json.
+        # Live button stays fast by checking only current/short-period sources.
+        return JSONResponse(
+            content=scan_prices(history_days=2, include_year=False),
+            headers={'Cache-Control': 'no-store, max-age=0'},
+        )
     except Exception as exc:
         return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
