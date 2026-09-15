@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-15T09:02:46.658882+00:00",
+  "updated_at": "2026-09-15T09:32:57.436673+00:00",
   "current": [
     {
       "location": "İstanbul Anadolu",
@@ -11,7 +11,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     },
     {
       "location": "İstanbul Avrupa",
@@ -23,7 +23,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     },
     {
       "location": "Ankara",
@@ -35,7 +35,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     },
     {
       "location": "İzmir",
@@ -47,7 +47,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     },
     {
       "location": "Sakarya (Adapazarı)",
@@ -59,7 +59,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     },
     {
       "location": "Tekirdağ",
@@ -71,7 +71,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari",
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     }
   ],
   "live_changes": [],
@@ -1837,19 +1837,19 @@
       "source": "Petrol Ofisi güncel pompa fiyatları",
       "ok": true,
       "count": 6,
-      "checked_at": "2026-09-15T09:02:46.658895+00:00"
+      "checked_at": "2026-09-15T09:32:57.436688+00:00"
     },
     {
       "source": "EPDK resmi akaryakıt fiyat bülteni",
       "ok": true,
       "count": 84,
-      "checked_at": "2026-09-15T09:03:06.838157+00:00"
+      "checked_at": "2026-09-15T09:33:03.743153+00:00"
     },
     {
       "source": "EPDK 1 yıllık Benzin & Motorin trendi",
       "ok": true,
       "count": 78,
-      "checked_at": "2026-09-15T09:03:09.784977+00:00"
+      "checked_at": "2026-09-15T09:33:06.292275+00:00"
     }
   ],
   "version": 3
