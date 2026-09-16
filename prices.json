@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-16T21:21:36.088568+00:00",
+  "updated_at": "2026-09-16T21:39:46.076036+00:00",
   "current": [
     {
       "location": "İstanbul Anadolu",
@@ -11,7 +11,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     },
     {
       "location": "İstanbul Avrupa",
@@ -23,7 +23,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     },
     {
       "location": "Ankara",
@@ -35,7 +35,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     },
     {
       "location": "İzmir",
@@ -47,7 +47,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     },
     {
       "location": "Sakarya (Adapazarı)",
@@ -59,7 +59,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     },
     {
       "location": "Tekirdağ",
@@ -71,167 +71,10 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     }
   ],
-  "live_changes": [
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "İstanbul Anadolu",
-      "location_key": "ISTANBUL (ANADOLU)",
-      "fuel": "Benzin 95",
-      "old_price": 80.12,
-      "new_price": 80.2,
-      "delta": 0.08,
-      "direction": "zam",
-      "percent": 0.1,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "İstanbul Anadolu",
-      "location_key": "ISTANBUL (ANADOLU)",
-      "fuel": "Motorin",
-      "old_price": 95.46,
-      "new_price": 100.2,
-      "delta": 4.74,
-      "direction": "zam",
-      "percent": 4.97,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "İstanbul Avrupa",
-      "location_key": "ISTANBUL (AVRUPA)",
-      "fuel": "Benzin 95",
-      "old_price": 80.26,
-      "new_price": 80.4,
-      "delta": 0.14,
-      "direction": "zam",
-      "percent": 0.17,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "İstanbul Avrupa",
-      "location_key": "ISTANBUL (AVRUPA)",
-      "fuel": "Motorin",
-      "old_price": 95.6,
-      "new_price": 100.4,
-      "delta": 4.8,
-      "direction": "zam",
-      "percent": 5.02,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "Ankara",
-      "location_key": "ANKARA",
-      "fuel": "Benzin 95",
-      "old_price": 81.25,
-      "new_price": 81.3,
-      "delta": 0.05,
-      "direction": "zam",
-      "percent": 0.06,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "Ankara",
-      "location_key": "ANKARA",
-      "fuel": "Motorin",
-      "old_price": 96.75,
-      "new_price": 101.5,
-      "delta": 4.75,
-      "direction": "zam",
-      "percent": 4.91,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "İzmir",
-      "location_key": "IZMIR",
-      "fuel": "Benzin 95",
-      "old_price": 81.52,
-      "new_price": 81.6,
-      "delta": 0.08,
-      "direction": "zam",
-      "percent": 0.1,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "İzmir",
-      "location_key": "IZMIR",
-      "fuel": "Motorin",
-      "old_price": 97.02,
-      "new_price": 101.8,
-      "delta": 4.78,
-      "direction": "zam",
-      "percent": 4.93,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "Sakarya (Adapazarı)",
-      "location_key": "SAKARYA",
-      "fuel": "Benzin 95",
-      "old_price": 80.98,
-      "new_price": 81.0,
-      "delta": 0.02,
-      "direction": "zam",
-      "percent": 0.02,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "Sakarya (Adapazarı)",
-      "location_key": "SAKARYA",
-      "fuel": "Motorin",
-      "old_price": 96.27,
-      "new_price": 101.0,
-      "delta": 4.73,
-      "direction": "zam",
-      "percent": 4.91,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "Tekirdağ",
-      "location_key": "TEKIRDAG",
-      "fuel": "Benzin 95",
-      "old_price": 80.95,
-      "new_price": 81.0,
-      "delta": 0.05,
-      "direction": "zam",
-      "percent": 0.06,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari"
-    },
-    {
-      "detected_at": "2026-09-16T21:21:36.088568+00:00",
-      "location": "Tekirdağ",
-      "location_key": "TEKIRDAG",
-      "fuel": "Motorin",
-      "old_price": 96.46,
-      "new_price": 101.2,
-      "delta": 4.74,
-      "direction": "zam",
-      "percent": 4.91,
-      "source": "Petrol Ofisi",
-      "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari"
-    }
-  ],
+  "live_changes": [],
   "changes": [
     {
       "detected_at": "2026-09-16T21:21:36.088568+00:00",
@@ -2475,19 +2318,19 @@
       "source": "Petrol Ofisi güncel pompa fiyatları",
       "ok": true,
       "count": 6,
-      "checked_at": "2026-09-16T21:21:36.088584+00:00"
+      "checked_at": "2026-09-16T21:39:46.076050+00:00"
     },
     {
       "source": "EPDK resmi akaryakıt fiyat bülteni",
       "ok": true,
       "count": 84,
-      "checked_at": "2026-09-16T21:21:42.276863+00:00"
+      "checked_at": "2026-09-16T21:39:53.274754+00:00"
     },
     {
       "source": "EPDK 1 yıllık Benzin & Motorin trendi",
       "ok": true,
       "count": 78,
-      "checked_at": "2026-09-16T21:21:44.519547+00:00"
+      "checked_at": "2026-09-16T21:39:55.734542+00:00"
     }
   ],
   "version": 3
