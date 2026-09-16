@@ -36,13 +36,19 @@ def prices_html():
     new_nav = '<nav class="nav"><a href="/">Mevzuat &amp; Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a><a href="/depozito">♻️ DOA / DBYS</a></nav>'
     html = html.replace(old_nav, new_nav, 1)
 
+    # Make the two annual EPDK series immediately distinguishable on the dark chart:
+    # gasoline = amber/orange, diesel = bright blue.
+    html = html.replace("line(g,'#5eead4')+line(d,'#7dd3fc')", "line(g,'#f59e0b')+line(d,'#38bdf8')")
+    html = html.replace('style="background:#5eead4"></i>Benzin 95', 'style="background:#f59e0b"></i>Benzin 95')
+    html = html.replace('style="background:#7dd3fc"></i>Motorin', 'style="background:#38bdf8"></i>Motorin')
+
     expectation_css = '''
-.expectationBar{display:none;margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden}
-.expectationBar.up{border-color:#743047;background:linear-gradient(90deg,rgba(91,25,44,.62),#0d1a2b)}
-.expectationBar.down{border-color:#2e7147;background:linear-gradient(90deg,rgba(20,83,45,.55),#0d1a2b)}
-.expectationBar.cancel{border-color:#8a681d;background:linear-gradient(90deg,rgba(94,71,17,.55),#0d1a2b)}
-.expectationBar a{display:flex;align-items:center;gap:8px;padding:11px 14px;color:var(--text);text-decoration:none;white-space:nowrap;overflow:auto;font-size:13px}
-.expectationBar strong{font-size:13px;letter-spacing:.01em}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;opacity:.9}.expSource{color:var(--muted);font-size:11px}
+.expectationBar{display:none;margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.16)}
+.expectationBar.up{border-color:#b64762;background:linear-gradient(90deg,rgba(126,30,57,.72),#0d1a2b)}
+.expectationBar.down{border-color:#3a9a5d;background:linear-gradient(90deg,rgba(19,100,51,.62),#0d1a2b)}
+.expectationBar.cancel{border-color:#c0922b;background:linear-gradient(90deg,rgba(112,82,17,.65),#0d1a2b)}
+.expectationBar a{display:flex;align-items:center;gap:8px;padding:12px 14px;color:var(--text);text-decoration:none;white-space:nowrap;overflow:auto;font-size:13px}
+.expectationBar strong{font-size:14px;letter-spacing:.01em}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;opacity:.95}.expSource{color:#c6d2e1;font-size:11px}.expWaiting{display:flex;align-items:center;gap:8px;padding:12px 14px;color:var(--muted);font-size:12px}
 '''
     html = html.replace('</style>', expectation_css + '</style>', 1)
 
@@ -54,10 +60,12 @@ def prices_html():
 async function refreshPriceExpectation(){
   const bar=document.getElementById('priceExpectation');
   if(!bar)return;
+  bar.className='expectationBar';bar.style.display='block';bar.innerHTML='<div class="expWaiting">⏳ Güncel zam / indirim beklentisi kontrol ediliyor…</div>';
   try{
     const r=await fetch('/api/price-expectation?t='+Date.now(),{cache:'no-store'});
     const d=await r.json();
-    if(!r.ok||!d.found){bar.style.display='none';return;}
+    if(!r.ok)throw new Error(d.error||'Beklenti taraması başarısız');
+    if(!d.found){bar.style.display='none';return;}
     const cls=d.status==='up'?'up':d.status==='down'?'down':'cancel';
     bar.className='expectationBar '+cls;
     bar.innerHTML='';
@@ -65,13 +73,13 @@ async function refreshPriceExpectation(){
     a.href=d.url||'#';a.target='_blank';a.rel='noopener';a.title='Haber kaynağını aç';
     const badge=document.createElement('span');badge.className='expLabel';badge.textContent=String(d.status||'').startsWith('cancel')?'GÜNCELLEME':'BEKLENTİ';
     const text=document.createElement('strong');text.textContent=d.line||'';
-    const src=document.createElement('span');src.className='expSource';src.textContent='· '+(d.source||'Haber kaynağı')+' · RESMÎ DEĞİL';
+    const src=document.createElement('span');src.className='expSource';src.textContent='· '+(d.source||'Haber kaynağı')+(d.source_type?' · '+d.source_type:'')+' · RESMÎ DEĞİL';
     a.appendChild(badge);a.appendChild(text);a.appendChild(src);bar.appendChild(a);bar.style.display='block';
   }catch(e){bar.style.display='none';}
 }
 setTimeout(refreshPriceExpectation,0);
 const expectationScanButton=document.getElementById('scanBtn');
-if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,300));
+if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,350));
 setInterval(refreshPriceExpectation,600000);
 </script>
 '''
