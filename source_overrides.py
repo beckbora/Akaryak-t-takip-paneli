@@ -89,11 +89,13 @@ OLD_SOURCE_NAMES = {
 }
 OLD_SOURCE_GROUPS = {'UTTS', 'TOBB'}
 OLD_SOURCE_KEYS = {'utts', 'tobb', 'darphane'}
+CANONICAL_UTTS_SOURCE_NAME = 'Darphane / UTTS Duyuruları'
+CANONICAL_UTTS_GROUP = 'Darphane / UTTS'
 
 DARPHANE_SOURCE = {
     'key': 'darphane_utts',
-    'name': 'Darphane / UTTS Duyuruları',
-    'group': 'Darphane / UTTS',
+    'name': CANONICAL_UTTS_SOURCE_NAME,
+    'group': CANONICAL_UTTS_GROUP,
     'official': True,
     'url': DARPHANE_UTTS_HOME,
     'market': 'Petrol',
@@ -173,8 +175,8 @@ def _official_item(seed, existing, now):
     item = make_item(DARPHANE_SOURCE, title, url, context)
     if date and not item.get('date'):
         item['date'] = date
-    item['source'] = 'Darphane / UTTS'
-    item['source_name'] = 'Darphane / UTTS Duyuruları'
+    item['source'] = CANONICAL_UTTS_GROUP
+    item['source_name'] = CANONICAL_UTTS_SOURCE_NAME
     item['source_key'] = 'darphane_utts'
     item['official'] = True
     item['category'] = 'UTTS'
@@ -205,8 +207,8 @@ def fetch_darphane_utts(existing):
             reachable_count += 1
 
     status = {
-        'source': 'Darphane / UTTS',
-        'source_name': 'Darphane / UTTS Duyuruları',
+        'source': CANONICAL_UTTS_GROUP,
+        'source_name': CANONICAL_UTTS_SOURCE_NAME,
         'ok': reachable_count > 0,
         'count': len(found),
         'checked_at': now,
@@ -244,13 +246,18 @@ def normalize_sector_data(data):
             continue
         if status.get('source') in OLD_SOURCE_GROUPS:
             continue
+        # Replace any lower-level Darphane/UTTS status with the authoritative normalized one below.
+        if status.get('source_name') == CANONICAL_UTTS_SOURCE_NAME:
+            continue
+        if status.get('source') == CANONICAL_UTTS_GROUP:
+            continue
         statuses.append(status)
     statuses.append(darphane_status)
 
     out = dict(data)
     out['items'] = items[:900]
     out['sources'] = statuses
-    out['version'] = max(int(data.get('version') or 0), 9)
+    out['version'] = max(int(data.get('version') or 0), 10)
     return out
 
 
