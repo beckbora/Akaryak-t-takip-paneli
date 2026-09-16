@@ -1,5 +1,4 @@
 import hashlib
-import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from urllib.parse import quote_plus, urljoin, urlsplit
@@ -37,7 +36,7 @@ SOURCES = [
         'authority': 'DOA / Türkiye Çevre Ajansı',
         'queries': (
             'site:doa.gov.tr DOA depozito',
-            'site:doa.gov.tr "iade noktası" OR "iade makinesi"',
+            'site:doa.gov.tr "iade noktası" "iade makinesi"',
         ),
     },
     {
@@ -84,17 +83,13 @@ SOURCES = [
         'key': 'gib_depozito', 'name': 'GİB Depozito Duyuruları', 'group': 'GİB',
         'domains': ('gib.gov.tr',), 'home': 'https://www.gib.gov.tr/',
         'authority': 'Gelir İdaresi Başkanlığı',
-        'queries': (
-            'site:gib.gov.tr DBYS depozito TÜÇA',
-        ),
+        'queries': ('site:gib.gov.tr DBYS depozito TÜÇA',),
     },
     {
         'key': 'resmigazete_depozito', 'name': 'Resmî Gazete Depozito', 'group': 'Resmî Gazete',
         'domains': ('resmigazete.gov.tr',), 'home': 'https://www.resmigazete.gov.tr/',
-        'authority': 'T.C. Cumhurbaşkanlığı Mevzuat Bilgi Sistemi / Resmî Gazete',
-        'queries': (
-            'site:resmigazete.gov.tr depozito ambalaj Türkiye Çevre Ajansı',
-        ),
+        'authority': 'Resmî Gazete',
+        'queries': ('site:resmigazete.gov.tr depozito ambalaj Türkiye Çevre Ajansı',),
     },
 ]
 
@@ -157,7 +152,6 @@ SEEDS = [
     },
 ]
 
-SOURCE_BY_KEY = {s['key']: s for s in SOURCES}
 SESSION = requests.Session()
 SESSION.headers.update(HEADERS)
 
@@ -186,7 +180,7 @@ def _uid(url, title):
 
 def _category(text):
     low = _norm(text)
-    if any(x in low for x in ('iade nokt', 'iade makin', ' i̇ade makin', 'dim ', 'd.i.m')):
+    if any(x in low for x in ('iade nokt', 'iade makin', 'dim ', 'd.i.m')):
         return 'DİM / İade Noktası'
     if any(x in low for x in ('dsys', 'saha operat', 'operatör', 'operator')):
         return 'DSYS / Operatör'
@@ -208,39 +202,12 @@ def _severity(text):
     return 'normal'
 
 
-def _date_from_text(text):
-    return parse_date(text)
-
-
-def _page_details(url, source):
-    if not _host_allowed(url, source):
-        return None, False
-    try:
-        r = SESSION.get(url, timeout=7, allow_redirects=True)
-        r.raise_for_status()
-        if not _host_allowed(r.url, source):
-            return None, False
-        soup = BeautifulSoup(r.text, 'html.parser')
-        title_node = soup.find('h1') or soup.find('h2') or soup.find('title')
-        title = clean(title_node.get_text(' ', strip=True)) if title_node else ''
-        main = soup.find('main') or soup.find('article') or soup.body or soup
-        body = clean(main.get_text(' ', strip=True))
-        return {
-            'url': canonical_url(r.url),
-            'title': title,
-            'summary': body[:900],
-            'date': _date_from_text(body[:2200]) or _date_from_text(title),
-        }, True
-    except Exception:
-        return None, False
-
-
 def _rss_search(query, source):
     url = 'https://www.bing.com/search?format=rss&q=' + quote_plus(query)
     out = []
     ok = False
     try:
-        r = SESSION.get(url, timeout=7)
+        r = SESSION.get(url, timeout=4.5)
         r.raise_for_status()
         ok = True
         root = ET.fromstring(r.text)
@@ -252,7 +219,12 @@ def _rss_search(query, source):
                 continue
             if not _relevant(title + ' ' + desc):
                 continue
-            out.append({'url': canonical_url(link), 'title': title, 'summary': desc, 'date': _date_from_text(desc + ' ' + title)})
+            out.append({
+                'url': canonical_url(link),
+                'title': title,
+                'summary': desc,
+                'date': parse_date(desc + ' ' + title),
+            })
     except Exception:
         pass
     return out, ok
@@ -262,7 +234,7 @@ def _listing_links(url, source):
     out = []
     ok = False
     try:
-        r = SESSION.get(url, timeout=7)
+        r = SESSION.get(url, timeout=4.5)
         r.raise_for_status()
         ok = True
         soup = BeautifulSoup(r.text, 'html.parser')
@@ -275,18 +247,22 @@ def _listing_links(url, source):
             context = clean(context_node.get_text(' ', strip=True) if context_node else title)
             if not _relevant(title + ' ' + context):
                 continue
-            out.append({'url': href, 'title': title, 'summary': context[:800], 'date': _date_from_text(context)})
+            out.append({
+                'url': href,
+                'title': title,
+                'summary': context[:800],
+                'date': parse_date(context),
+            })
     except Exception:
         pass
     return out[:120], ok
 
 
-def _make_item(raw, source, fetched=None):
-    fetched = fetched or {}
-    title = clean(fetched.get('title') or raw.get('title') or 'DOA / DBYS Duyurusu')
-    summary = clean(fetched.get('summary') or raw.get('summary') or '')
-    date = fetched.get('date') or raw.get('date') or _date_from_text(summary + ' ' + title)
-    url = canonical_url(fetched.get('url') or raw.get('url') or source['home'])
+def _make_item(raw, source):
+    title = clean(raw.get('title') or 'DOA / DBYS Duyurusu')
+    summary = clean(raw.get('summary') or '')
+    date = raw.get('date') or parse_date(summary + ' ' + title)
+    url = canonical_url(raw.get('url') or source['home'])
     text = title + ' ' + summary
     return {
         'id': _uid(url, title),
@@ -300,7 +276,7 @@ def _make_item(raw, source, fetched=None):
         'source_url': source['home'],
         'authority': source['authority'],
         'official': True,
-        'official_reason': 'Kayıt kurumun doğrulanmış resmî .gov.tr alan adından alınmıştır.',
+        'official_reason': 'Bağlantı, bu kurum için tanımlı doğrulanmış resmî .gov.tr alan adıyla eşleşmektedir.',
         'category': _category(text),
         'record_type': raw.get('record_type') or 'Haber / Duyuru',
         'severity': _severity(text),
@@ -308,63 +284,53 @@ def _make_item(raw, source, fetched=None):
 
 
 def _scan_source(source):
-    raw_by_url = {}
-    search_ok = False
-    listing_ok = False
-    fetch_ok = 0
+    raw_by_key = {}
+    source_ok = False
 
     for seed in SEEDS:
-        if seed['source_key'] == source['key']:
-            raw_by_url[canonical_url(seed['url'])] = dict(seed)
+        if seed['source_key'] == source['key'] and _host_allowed(seed['url'], source):
+            raw_by_key[(canonical_url(seed['url']), clean(seed['title']).casefold())] = dict(seed)
 
     for listing in source.get('listing_urls', ()):
         rows, ok = _listing_links(listing, source)
-        listing_ok = listing_ok or ok
+        source_ok = source_ok or ok
         for row in rows:
-            raw_by_url[row['url']] = row
+            raw_by_key[(row['url'], clean(row['title']).casefold())] = row
 
     for query in source.get('queries', ()):
         rows, ok = _rss_search(query, source)
-        search_ok = search_ok or ok
+        source_ok = source_ok or ok
         for row in rows:
-            raw_by_url[row['url']] = row
+            raw_by_key[(row['url'], clean(row['title']).casefold())] = row
 
-    # Keep the live request bounded. Search/listing discovery may return dozens of old records.
-    raws = list(raw_by_url.values())[:45]
-    items = []
-    for raw in raws:
-        details, ok = _page_details(raw['url'], source)
-        if ok:
-            fetch_ok += 1
-        item = _make_item(raw, source, details)
-        if _relevant(item['title'] + ' ' + item['summary']) or raw.get('source_key'):
-            items.append(item)
-
+    # No per-result page downloads here: this keeps the live Vercel scan fast.
+    # Every accepted result is nevertheless constrained to the source's official .gov.tr domain.
+    items = [_make_item(raw, source) for raw in list(raw_by_key.values())[:90]]
     status = {
         'source': source['group'],
         'source_name': source['name'],
-        'ok': bool(fetch_ok or listing_ok or search_ok),
+        'ok': source_ok,
         'count': len(items),
         'official': True,
         'checked_at': datetime.now(timezone.utc).isoformat(),
         'home': source['home'],
-        'note': 'Resmî alan adı doğrulaması uygulanır; üçüncü taraf haber siteleri bu kaynağa alınmaz.',
+        'note': 'Yeni bağlantılar arama/listing üzerinden keşfedilir ve yalnızca tanımlı resmî .gov.tr alan adları kabul edilir.',
     }
     if not status['ok']:
-        status['error'] = 'Kaynağa veya arama indeksine erişilemedi; resmî alan adı korunuyor.'
+        status['error'] = 'Canlı kaynağa veya arama indeksine erişilemedi; başlangıçtaki doğrulanmış resmî kayıtlar korunur.'
     return items, status
 
 
 def scan_deposit_now():
     all_items = []
     statuses = []
-    with ThreadPoolExecutor(max_workers=min(7, len(SOURCES))) as pool:
+    with ThreadPoolExecutor(max_workers=len(SOURCES)) as pool:
         jobs = {pool.submit(_scan_source, source): source for source in SOURCES}
         for future in as_completed(jobs):
+            source = jobs[future]
             try:
                 items, status = future.result()
             except Exception as exc:
-                source = jobs[future]
                 items = []
                 status = {
                     'source': source['group'], 'source_name': source['name'], 'ok': False,
@@ -375,12 +341,11 @@ def scan_deposit_now():
             all_items.extend(items)
             statuses.append(status)
 
+    # Same URL can legitimately host several DBYS homepage announcements, therefore dedupe by URL+title.
     dedup = {}
     for item in all_items:
-        key = canonical_url(item.get('url') or '')
-        current = dedup.get(key)
-        if current is None or (item.get('date') or '') > (current.get('date') or ''):
-            dedup[key] = item
+        key = (canonical_url(item.get('url') or ''), clean(item.get('title') or '').casefold())
+        dedup[key] = item
 
     items = list(dedup.values())
     items.sort(key=lambda x: (x.get('date') or '0000-00-00', x.get('title') or ''), reverse=True)
@@ -390,9 +355,9 @@ def scan_deposit_now():
         item['first_seen'] = (item.get('date') + 'T12:00:00+00:00') if item.get('date') else now
 
     return {
-        'version': 1,
+        'version': 2,
         'updated_at': now,
-        'items': items[:250],
+        'items': items[:300],
         'sources': statuses,
         'provinces': PROVINCES,
         'map': {
@@ -401,6 +366,6 @@ def scan_deposit_now():
             'url': 'https://doa.gov.tr/ambalaj-iadesi-nereye-yapilir',
             'title': 'DOA İade Makineleri ve İade Noktaları',
             'filter_level': 'İl / ilçe / mahalle / lokasyon',
-            'note': 'Makine ve iade noktaları DOA resmî canlı haritasından görüntülenir; böylece yeni eklenen veya kaldırılan noktalar için yerel kopya eskimez.',
+            'note': 'Makine ve iade noktaları DOA resmî canlı haritasından görüntülenir; yerel statik kopya tutulmaz.',
         },
     }
