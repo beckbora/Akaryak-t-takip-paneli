@@ -3,7 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
-from live_scan import scan_now
+from source_overrides import scan_sector_now
 from price_scan import scan_prices
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,7 +56,7 @@ def api_root():
 @app.get('/api/scan')
 def live_scan():
     try:
-        return JSONResponse(content=scan_now(), headers={'Cache-Control': 'no-store, max-age=0'})
+        return JSONResponse(content=scan_sector_now(), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
 
