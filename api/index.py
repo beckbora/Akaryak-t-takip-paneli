@@ -5,6 +5,7 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from source_overrides import scan_sector_now
 from price_scan import scan_prices
+from price_expectation import scan_price_expectation
 from deposit_scan import scan_deposit_now
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,7 +34,49 @@ def prices_html():
     html = PRICE_DASHBOARD.read_text(encoding='utf-8')
     old_nav = '<nav class="nav"><a href="/">Mevzuat & Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a></nav>'
     new_nav = '<nav class="nav"><a href="/">Mevzuat &amp; Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a><a href="/depozito">♻️ DOA / DBYS</a></nav>'
-    return html.replace(old_nav, new_nav, 1)
+    html = html.replace(old_nav, new_nav, 1)
+
+    expectation_css = '''
+.expectationBar{display:none;margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden}
+.expectationBar.up{border-color:#743047;background:linear-gradient(90deg,rgba(91,25,44,.62),#0d1a2b)}
+.expectationBar.down{border-color:#2e7147;background:linear-gradient(90deg,rgba(20,83,45,.55),#0d1a2b)}
+.expectationBar.cancel{border-color:#8a681d;background:linear-gradient(90deg,rgba(94,71,17,.55),#0d1a2b)}
+.expectationBar a{display:flex;align-items:center;gap:8px;padding:11px 14px;color:var(--text);text-decoration:none;white-space:nowrap;overflow:auto;font-size:13px}
+.expectationBar strong{font-size:13px;letter-spacing:.01em}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;opacity:.9}.expSource{color:var(--muted);font-size:11px}
+'''
+    html = html.replace('</style>', expectation_css + '</style>', 1)
+
+    expectation_bar = '<div id="priceExpectation" class="expectationBar" aria-live="polite"></div>'
+    html = html.replace('<div class="filters">', expectation_bar + '<div class="filters">', 1)
+
+    expectation_js = r'''
+<script>
+async function refreshPriceExpectation(){
+  const bar=document.getElementById('priceExpectation');
+  if(!bar)return;
+  try{
+    const r=await fetch('/api/price-expectation?t='+Date.now(),{cache:'no-store'});
+    const d=await r.json();
+    if(!r.ok||!d.found){bar.style.display='none';return;}
+    const cls=d.status==='up'?'up':d.status==='down'?'down':'cancel';
+    bar.className='expectationBar '+cls;
+    bar.innerHTML='';
+    const a=document.createElement('a');
+    a.href=d.url||'#';a.target='_blank';a.rel='noopener';a.title='Haber kaynağını aç';
+    const badge=document.createElement('span');badge.className='expLabel';badge.textContent=String(d.status||'').startsWith('cancel')?'GÜNCELLEME':'BEKLENTİ';
+    const text=document.createElement('strong');text.textContent=d.line||'';
+    const src=document.createElement('span');src.className='expSource';src.textContent='· '+(d.source||'Haber kaynağı')+' · RESMÎ DEĞİL';
+    a.appendChild(badge);a.appendChild(text);a.appendChild(src);bar.appendChild(a);bar.style.display='block';
+  }catch(e){bar.style.display='none';}
+}
+setTimeout(refreshPriceExpectation,0);
+const expectationScanButton=document.getElementById('scanBtn');
+if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,300));
+setInterval(refreshPriceExpectation,600000);
+</script>
+'''
+    html = html.replace('</body>', expectation_js + '</body>', 1)
+    return html
 
 
 @app.get('/')
@@ -76,7 +119,7 @@ def api_root():
     return {
         'status': 'ready',
         'service': 'Petrol Piyasasi Takip live scan',
-        'modules': ['sector', 'prices', 'deposit'],
+        'modules': ['sector', 'prices', 'price_expectation', 'deposit'],
     }
 
 
@@ -94,6 +137,14 @@ def live_deposit_scan():
         return JSONResponse(content=scan_deposit_now(), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
+
+
+@app.get('/api/price-expectation')
+def price_expectation():
+    try:
+        return JSONResponse(content=scan_price_expectation(), headers={'Cache-Control': 'no-store, max-age=0'})
+    except Exception as exc:
+        return JSONResponse(status_code=500, content={'error': str(exc)[:300], 'found': False}, headers={'Cache-Control': 'no-store, max-age=0'})
 
 
 @app.get('/api/prices')
