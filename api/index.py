@@ -16,6 +16,10 @@ app = FastAPI(title='Petrol Piyasası Takip')
 
 def sector_html():
     html = DASHBOARD.read_text(encoding='utf-8')
+    html = html.replace(
+        'EPDK Petrol ve LPG piyasası duyuruları, mevzuat değişiklikleri, Kurul kararları ve denetim kararları dahil; Resmî Gazete, GİB / YN ÖKC, Darphane / UTTS, PÜİS, TABGİS, PETDER, LPG Derneği ve TOBB kaynaklarını canlı tarar.',
+        'EPDK Petrol ve LPG piyasası duyuruları, mevzuat değişiklikleri, Kurul kararları ve denetim kararları dahil; Resmî Gazete, GİB / YN ÖKC, Darphane / UTTS, PÜİS, TABGİS, PETDER ve LPG Derneği kaynaklarını canlı tarar.',
+    )
     nav = '''<nav style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px"><a href="/" style="color:#cafff8;text-decoration:none;border:1px solid #20796f;background:#103a37;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">Mevzuat &amp; Sektör Radar</a><a href="/fiyatlar" style="color:#cbd7e6;text-decoration:none;border:1px solid #263b5a;background:#0c1929;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">⛽ Fiyat Radar</a></nav>'''
     marker = '<header class="top">'
     if marker in html:
