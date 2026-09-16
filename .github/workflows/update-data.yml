@@ -8,6 +8,7 @@ on:
       - 'price_scan.py'
       - 'live_scan.py'
       - 'scrape.py'
+      - 'source_overrides.py'
       - 'update_prices.py'
       - 'update_data.py'
       - 'requirements.txt'
