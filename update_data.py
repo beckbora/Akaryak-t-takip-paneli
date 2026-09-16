@@ -1,11 +1,11 @@
 import json
 from pathlib import Path
 
-from live_scan import scan_now
+from source_overrides import scan_sector_now
 
 
 def main():
-    data = scan_now()
+    data = scan_sector_now()
     data['scan_interval_minutes'] = 10
     Path('data.json').write_text(
         json.dumps(data, ensure_ascii=False, indent=2),
