@@ -1,0 +1,32 @@
+{
+  "found": false,
+  "checked_at": "2026-09-17T06:07:13.332731+00:00",
+  "items": [
+    {
+      "fuel_key": "diesel",
+      "fuel": "MOTORİN",
+      "status": "none",
+      "line": "ℹ️ MOTORİN · ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR",
+      "amount": null,
+      "source": null,
+      "url": null,
+      "published_at": null,
+      "official": false,
+      "label": "Güncel durum"
+    },
+    {
+      "fuel_key": "gasoline",
+      "fuel": "BENZİN",
+      "status": "none",
+      "line": "ℹ️ BENZİN · ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR",
+      "amount": null,
+      "source": null,
+      "url": null,
+      "published_at": null,
+      "official": false,
+      "label": "Güncel durum"
+    }
+  ],
+  "no_expectation_text": "ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR",
+  "next_daily_check": "12:00 Europe/Istanbul"
+}
