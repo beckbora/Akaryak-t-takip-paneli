@@ -1,7 +1,7 @@
 import re
 from collections import Counter
 from datetime import datetime, timezone
-from urllib.parse import quote_plus, urlsplit
+from urllib.parse import quote_plus, urljoin, urlsplit
 from xml.etree import ElementTree as ET
 
 import requests
@@ -11,6 +11,7 @@ from live_scan import scan_now as raw_scan_now
 from scrape import HEADERS, clean, make_item, uid, merge_seen, parse_date, severity
 
 DARPHANE_UTTS_HOME = 'https://www.darphane.gov.tr/ulusal-tasit-tanima-sistemi'
+UTTS_PORTAL_HOME = 'https://www.utts.gov.tr/'
 
 SEED_UTTS = [
     {
@@ -60,8 +61,6 @@ SEED_UTTS = [
     },
 ]
 
-# TTO/TİM/TTB/TTS are ambiguous abbreviations. They never create a UTTS label
-# by themselves; a second, fuel/UTTS-specific signal is required.
 UTTS_STRONG_PHRASES = (
     'ulusal taşıt tanıma',
     'ulusal tasit tanima',
@@ -82,8 +81,6 @@ UTTS_CONTEXT_TERMS = (
     'darphane', 'yn ökc', 'yn okc', 'y-imf', 'yetkili istasyon montaj',
 )
 
-# For broad sources such as Resmî Gazete and GİB, only the item's own title is
-# used to decide whether the record belongs to the petrol-sector dashboard.
 SECTOR_TITLE_PHRASES = (
     'akaryakıt', 'akaryakit', 'akaryakıt istasyonu', 'akaryakit istasyonu',
     'petrol piyasası', 'petrol piyasasi', 'petrol ürünleri', 'petrol urunleri',
@@ -96,8 +93,11 @@ SECTOR_TITLE_PHRASES = (
 OLD_SOURCE_NAMES = {'UTTS', 'TOBB Sektör Haberleri', 'Darphane Duyurular'}
 OLD_SOURCE_GROUPS = {'UTTS', 'TOBB'}
 OLD_SOURCE_KEYS = {'utts', 'tobb', 'darphane'}
+
 CANONICAL_UTTS_SOURCE_NAME = 'Darphane / UTTS Duyuruları'
 CANONICAL_UTTS_GROUP = 'Darphane / UTTS'
+UTTS_PORTAL_SOURCE_NAME = 'UTTS Portalı (utts.gov.tr)'
+UTTS_PORTAL_GROUP = 'UTTS Portalı'
 
 DARPHANE_SOURCE = {
     'key': 'darphane_utts',
@@ -105,6 +105,16 @@ DARPHANE_SOURCE = {
     'group': CANONICAL_UTTS_GROUP,
     'official': True,
     'url': DARPHANE_UTTS_HOME,
+    'market': 'Petrol',
+    'record_type': 'UTTS Duyurusu',
+}
+
+UTTS_PORTAL_SOURCE = {
+    'key': 'utts_portal',
+    'name': UTTS_PORTAL_SOURCE_NAME,
+    'group': UTTS_PORTAL_GROUP,
+    'official': True,
+    'url': UTTS_PORTAL_HOME,
     'market': 'Petrol',
     'record_type': 'UTTS Duyurusu',
 }
@@ -152,7 +162,6 @@ def _source_host(url):
 
 
 def _direct_text(item):
-    # Only text known to belong to this exact item may be used for labelling.
     title = clean(item.get('title') or '')
     excerpt = clean(item.get('source_excerpt') or '')
     return clean(f'{title} {excerpt}')
@@ -162,7 +171,9 @@ def _content_category(item):
     text = _direct_text(item)
     low = _norm(text)
 
-    if item.get('source_key') == 'darphane_utts' or item.get('source') == CANONICAL_UTTS_GROUP:
+    if item.get('source_key') in {'darphane_utts', 'utts_portal'}:
+        return 'UTTS'
+    if item.get('source') in {CANONICAL_UTTS_GROUP, UTTS_PORTAL_GROUP}:
         return 'UTTS'
     if _is_utts(text):
         return 'UTTS'
@@ -197,16 +208,15 @@ def _content_category(item):
 
 
 def _is_sector_item(item):
-    # Dedicated sector sources are relevant by source scope.
-    if item.get('source_key') == 'darphane_utts' or item.get('source') == CANONICAL_UTTS_GROUP:
+    if item.get('source_key') in {'darphane_utts', 'utts_portal'}:
+        return True
+    if item.get('source') in {CANONICAL_UTTS_GROUP, UTTS_PORTAL_GROUP}:
         return True
     if item.get('epdk_focus'):
         return True
     if item.get('source') in {'PÜİS', 'TABGİS', 'PETDER', 'LPG Derneği'}:
         return True
 
-    # General EPDK, GİB and Resmî Gazete are broad sources. Their own title must
-    # contain a petrol-sector signal. Neighbouring archive text is never used.
     if item.get('source_key') in {'epdk', 'gib'} or item.get('source') == 'Resmî Gazete':
         return _sector_signal(item.get('title') or '')
 
@@ -217,15 +227,11 @@ def _sanitize_item(raw):
     item = dict(raw)
     title = clean(item.get('title') or '')
 
-    # GİB archive cards previously inherited the text of neighbouring cards.
-    # The date and classification are therefore derived from this card's own title.
     if item.get('source_key') == 'gib':
         title_date = parse_date(title)
         if title_date:
             item['date'] = title_date
 
-    # Never display generated/mirror summaries or broad archive-container text.
-    # source_excerpt is reserved for exact text fetched from the item's own page.
     excerpt = clean(item.get('source_excerpt') or '')
     if item.get('description_origin') != 'official_source':
         excerpt = ''
@@ -254,7 +260,7 @@ def _baseline_seen(item):
     return '2000-01-01T00:00:00+00:00'
 
 
-def _discover_urls():
+def _discover_darphane_urls():
     query = 'site:darphane.gov.tr/duyuru (UTTS OR "Ulusal Taşıt Tanıma")'
     url = 'https://www.bing.com/search?format=rss&q=' + quote_plus(query)
     discovered = []
@@ -276,7 +282,6 @@ def _discover_urls():
 
 
 def _extract_official_paragraphs(soup):
-    # Only paragraph text from the actual article/main area is accepted.
     container = soup.find('article') or soup.find('main')
     if not container:
         return ''
@@ -339,7 +344,7 @@ def _official_item(seed, existing, now):
 def fetch_darphane_utts(existing):
     now = datetime.now(timezone.utc).isoformat()
     candidates = {}
-    for seed in SEED_UTTS + _discover_urls():
+    for seed in SEED_UTTS + _discover_darphane_urls():
         candidates[seed['url']] = seed
 
     found = {}
@@ -358,10 +363,157 @@ def fetch_darphane_utts(existing):
         'checked_at': now,
         'official_urls_reached': reachable_count,
         'official_urls_total': len(candidates),
-        'note': 'UTTS için yalnızca Darphane resmi duyuru adresleri izlenir.',
+        'home': DARPHANE_UTTS_HOME,
+        'note': 'Darphane üzerindeki UTTS duyuru adresleri doğrudan kontrol edilir.',
     }
     if reachable_count == 0:
-        status['error'] = 'Darphane resmi UTTS duyuru sayfalarına erişilemedi'
+        status['error'] = 'Darphane UTTS duyuru sayfalarına erişilemedi'
+    return list(found.values()), status
+
+
+def _portal_card_title(anchor):
+    fallback = clean(anchor.get_text(' ', strip=True))
+    for parent in anchor.parents:
+        if getattr(parent, 'name', None) not in {'article', 'li', 'div'}:
+            continue
+        text = clean(parent.get_text(' ', strip=True))
+        if not (15 <= len(text) <= 900):
+            continue
+        heading = parent.find(['h2', 'h3', 'h4', 'h5', 'h6'])
+        if heading:
+            value = clean(heading.get_text(' ', strip=True))
+            if len(value) >= 10 and value.casefold() not in {'duyurular', 'tümü', 'tumu'}:
+                return value
+        if _is_utts(text):
+            text = re.sub(r'\bDetaylı\s+Bilgi\b', '', text, flags=re.I)
+            text = re.sub(r'^\s*\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\s*', '', text)
+            return clean(text)[:300]
+    return fallback
+
+
+def _discover_utts_portal_from_html(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    found = {}
+    for a in soup.find_all('a', href=True):
+        href = urljoin(UTTS_PORTAL_HOME, a.get('href') or '')
+        if _source_host(href) != 'utts.gov.tr':
+            continue
+        if 'ulusal-tasit-tanima-sistemi-mevzuat-detaylari-' not in href:
+            continue
+        title = _portal_card_title(a)
+        if not title:
+            title = 'UTTS Duyurusu'
+        parent = a.find_parent(['article', 'li', 'div']) or a.parent
+        parent_text = clean(parent.get_text(' ', strip=True)) if parent else title
+        date = parse_date(parent_text) or parse_date(title)
+        found[href] = {'url': href, 'title': title, 'date': date}
+    return list(found.values())
+
+
+def _discover_utts_portal_search():
+    query = 'site:utts.gov.tr/ulusal-tasit-tanima-sistemi-mevzuat-detaylari- UTTS'
+    url = 'https://www.bing.com/search?format=rss&q=' + quote_plus(query)
+    found = {}
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=7)
+        r.raise_for_status()
+        root = ET.fromstring(r.text)
+        for node in root.findall('.//item'):
+            link = clean(node.findtext('link') or '')
+            title = clean(node.findtext('title') or '')
+            if _source_host(link) != 'utts.gov.tr':
+                continue
+            if 'ulusal-tasit-tanima-sistemi-mevzuat-detaylari-' not in link:
+                continue
+            found[link] = {'url': link, 'title': title or 'UTTS Duyurusu', 'date': parse_date(title)}
+    except Exception:
+        pass
+    return list(found.values())
+
+
+def _utts_portal_item(seed, existing, now):
+    url = seed['url']
+    title = clean(seed.get('title') or 'UTTS Duyurusu')
+    date = seed.get('date')
+    excerpt = ''
+
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=8)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, 'html.parser')
+        article = soup.find('article')
+        if article:
+            headings = article.find_all(['h1', 'h2', 'h3', 'h4', 'h5'])
+            for heading in headings:
+                value = clean(heading.get_text(' ', strip=True))
+                if len(value) >= 10 and _is_utts(value):
+                    title = value
+                    break
+            excerpt = _extract_official_paragraphs(soup)
+            if not date:
+                date = parse_date(clean(article.get_text(' ', strip=True)))
+    except Exception:
+        pass
+
+    item = make_item(UTTS_PORTAL_SOURCE, title, url, clean(f'{date or ""} {title}'))
+    if date and not item.get('date'):
+        item['date'] = date
+    item['source'] = UTTS_PORTAL_GROUP
+    item['source_name'] = UTTS_PORTAL_SOURCE_NAME
+    item['source_key'] = 'utts_portal'
+    item['official'] = True
+    item['market'] = 'Petrol'
+    item['record_type'] = 'UTTS Duyurusu'
+    item['source_url'] = UTTS_PORTAL_HOME
+    item['source_excerpt'] = excerpt
+    item['description_origin'] = 'official_source' if excerpt else 'title_only'
+    item['summary'] = excerpt
+    item['category'] = 'UTTS'
+    item['source_host'] = 'utts.gov.tr'
+    item['source_location'] = UTTS_PORTAL_SOURCE_NAME
+
+    item_id = uid(item)
+    previous = existing.get(item_id)
+    merged = merge_seen(item, previous, now)
+    if not previous:
+        merged['first_seen'] = _baseline_seen(item)
+    return merged
+
+
+def fetch_utts_portal(existing):
+    now = datetime.now(timezone.utc).isoformat()
+    reachable = False
+    seeds = {}
+    error = None
+
+    try:
+        r = requests.get(UTTS_PORTAL_HOME, headers=HEADERS, timeout=8)
+        r.raise_for_status()
+        reachable = True
+        for seed in _discover_utts_portal_from_html(r.text):
+            seeds[seed['url']] = seed
+    except Exception as exc:
+        error = str(exc)[:180]
+
+    for seed in _discover_utts_portal_search():
+        seeds.setdefault(seed['url'], seed)
+
+    found = {}
+    for seed in seeds.values():
+        item = _utts_portal_item(seed, existing, now)
+        found[item['id']] = item
+
+    status = {
+        'source': UTTS_PORTAL_GROUP,
+        'source_name': UTTS_PORTAL_SOURCE_NAME,
+        'ok': reachable,
+        'count': len(found),
+        'checked_at': now,
+        'home': UTTS_PORTAL_HOME,
+        'note': 'utts.gov.tr ana sayfası ve duyuru bağlantıları doğrudan kontrol edilir.',
+    }
+    if not reachable:
+        status['error'] = error or 'utts.gov.tr adresine erişilemedi'
     return list(found.values()), status
 
 
@@ -380,6 +532,12 @@ def normalize_sector_data(data):
     for item in darphane_items:
         merged[item['id']] = _sanitize_item(item)
 
+    portal_existing = dict(existing)
+    portal_existing.update(merged)
+    portal_items, portal_status = fetch_utts_portal(portal_existing)
+    for item in portal_items:
+        merged[item['id']] = _sanitize_item(item)
+
     items = list(merged.values())
     items.sort(
         key=lambda x: (
@@ -392,25 +550,28 @@ def normalize_sector_data(data):
 
     counts = Counter((i.get('source_name') or i.get('source')) for i in items)
     statuses = []
+    custom_names = {CANONICAL_UTTS_SOURCE_NAME, UTTS_PORTAL_SOURCE_NAME}
+    custom_groups = {CANONICAL_UTTS_GROUP, UTTS_PORTAL_GROUP}
     for status in data.get('sources') or []:
         if status.get('source_name') in OLD_SOURCE_NAMES:
             continue
         if status.get('source') in OLD_SOURCE_GROUPS:
             continue
-        if status.get('source_name') == CANONICAL_UTTS_SOURCE_NAME:
+        if status.get('source_name') in custom_names:
             continue
-        if status.get('source') == CANONICAL_UTTS_GROUP:
+        if status.get('source') in custom_groups:
             continue
         st = dict(status)
         key = st.get('source_name') or st.get('source')
         st['count'] = counts.get(key, 0)
         statuses.append(st)
     statuses.append(darphane_status)
+    statuses.append(portal_status)
 
     out = dict(data)
     out['items'] = items
     out['sources'] = statuses
-    out['version'] = max(int(data.get('version') or 0), 13)
+    out['version'] = max(int(data.get('version') or 0), 14)
     out['content_policy'] = 'source_text_only'
     return out
 
