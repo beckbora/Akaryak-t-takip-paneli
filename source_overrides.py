@@ -68,19 +68,40 @@ SEED_UTTS = [
     },
 ]
 
-# Explicit UTTS phrases and abbreviations. Short abbreviations MUST be matched as
-# complete tokens; otherwise words such as "denetim", "eğitim" and "yönetim"
-# incorrectly matched the old substring "tim" rule and were labelled UTTS.
-UTTS_PHRASES = (
-    'utts',
+# Strong UTTS wording is enough on its own. Ambiguous abbreviations such as TTO
+# or TİM are NOT enough: they must appear together with fuel/UTTS context.
+UTTS_STRONG_PHRASES = (
     'ulusal taşıt tanıma',
     'ulusal tasit tanima',
     'taşıt tanıma sistemi',
     'tasit tanima sistemi',
+    'taşıt tanıma okuyucu',
+    'tasit tanima okuyucu',
+    'taşıt tanıma birimi',
+    'tasit tanima birimi',
     'yetkili istasyon montaj',
     'tabanca okuyucu',
 )
-UTTS_TOKENS = ('tto', 'tim', 'ttb', 'tts', 'yimf')
+UTTS_AMBIGUOUS_TOKENS = ('tto', 'tim', 'ttb', 'tts', 'yimf')
+UTTS_CONTEXT_TERMS = (
+    'akaryakıt',
+    'akaryakit',
+    'akaryakıt istasyonu',
+    'akaryakit istasyonu',
+    'istasyon montaj',
+    'yakıt pompası',
+    'yakit pompasi',
+    'pompa ökc',
+    'pompa okc',
+    'tabanca okuyucu',
+    'taşıt tanıma',
+    'tasit tanima',
+    'darphane',
+    'yn ökc',
+    'yn okc',
+    'y-imf',
+    'yetkili istasyon montaj',
+)
 
 OLD_SOURCE_NAMES = {
     'UTTS',
@@ -120,7 +141,19 @@ def _phrase(text, value):
 
 
 def _is_utts(text):
-    return any(_phrase(text, term) for term in UTTS_PHRASES) or any(_token(text, term) for term in UTTS_TOKENS)
+    # Explicit UTTS wording is decisive.
+    if _token(text, 'utts'):
+        return True
+    if any(_phrase(text, term) for term in UTTS_STRONG_PHRASES):
+        return True
+
+    # TTO can mean "Teknoloji Transfer Ofisi"; TİM/TTS etc. can also occur in
+    # unrelated texts. Require a second, genuinely fuel/UTTS-specific signal.
+    has_abbreviation = any(_token(text, term) for term in UTTS_AMBIGUOUS_TOKENS)
+    if not has_abbreviation:
+        return False
+    low = _norm(text)
+    return any(_norm(term) in low for term in UTTS_CONTEXT_TERMS)
 
 
 def _content_category(item):
@@ -324,7 +357,7 @@ def normalize_sector_data(data):
     out = dict(data)
     out['items'] = items[:900]
     out['sources'] = statuses
-    out['version'] = max(int(data.get('version') or 0), 11)
+    out['version'] = max(int(data.get('version') or 0), 12)
     return out
 
 
