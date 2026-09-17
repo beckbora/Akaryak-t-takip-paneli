@@ -6,6 +6,7 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from source_overrides import scan_sector_now
 from price_scan import scan_prices
 from price_expectation import scan_price_expectation
+from price_expectation_state import enrich_with_pump_realization
 from deposit_scan import scan_deposit_now
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,7 +38,6 @@ def prices_html():
     new_nav = '<nav class="nav"><a href="/">Mevzuat &amp; Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a><a href="/depozito">♻️ DOA / DBYS</a></nav>'
     html = html.replace(old_nav, new_nav, 1)
 
-    # Make the annual series unmistakable: gasoline orange, diesel electric blue.
     html = html.replace("line(g,'#5eead4')+line(d,'#7dd3fc')", "line(g,'#f59e0b')+line(d,'#38bdf8')")
     html = html.replace('style="background:#5eead4"></i>Benzin 95', 'style="background:#f59e0b"></i>Benzin 95')
     html = html.replace('style="background:#7dd3fc"></i>Motorin', 'style="background:#38bdf8"></i>Motorin')
@@ -168,12 +168,13 @@ def live_deposit_scan():
 @app.get('/api/price-expectation')
 def price_expectation():
     try:
-        return JSONResponse(content=scan_price_expectation(), headers={'Cache-Control': 'no-store, max-age=0'})
+        return JSONResponse(content=enrich_with_pump_realization(scan_price_expectation()), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         if EXPECTATION_DATA.exists():
             try:
                 import json
-                return JSONResponse(content=json.loads(EXPECTATION_DATA.read_text(encoding='utf-8')), headers={'Cache-Control': 'no-store, max-age=0'})
+                saved = json.loads(EXPECTATION_DATA.read_text(encoding='utf-8'))
+                return JSONResponse(content=enrich_with_pump_realization(saved), headers={'Cache-Control': 'no-store, max-age=0'})
             except Exception:
                 pass
         return JSONResponse(status_code=500, content={'error': str(exc)[:300], 'items': []}, headers={'Cache-Control': 'no-store, max-age=0'})
