@@ -13,6 +13,7 @@ DASHBOARD = ROOT / 'live.html'
 PRICE_DASHBOARD = ROOT / 'prices.html'
 DEPOSIT_DASHBOARD = ROOT / 'deposit.html'
 PRICE_DATA = ROOT / 'prices.json'
+EXPECTATION_DATA = ROOT / 'price_expectation.json'
 
 app = FastAPI(title='Petrol Piyasası Takip')
 
@@ -36,50 +37,67 @@ def prices_html():
     new_nav = '<nav class="nav"><a href="/">Mevzuat &amp; Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a><a href="/depozito">♻️ DOA / DBYS</a></nav>'
     html = html.replace(old_nav, new_nav, 1)
 
-    # Make the two annual EPDK series immediately distinguishable on the dark chart:
-    # gasoline = amber/orange, diesel = bright blue.
+    # Make the annual series unmistakable: gasoline orange, diesel electric blue.
     html = html.replace("line(g,'#5eead4')+line(d,'#7dd3fc')", "line(g,'#f59e0b')+line(d,'#38bdf8')")
     html = html.replace('style="background:#5eead4"></i>Benzin 95', 'style="background:#f59e0b"></i>Benzin 95')
     html = html.replace('style="background:#7dd3fc"></i>Motorin', 'style="background:#38bdf8"></i>Motorin')
 
     expectation_css = '''
-.expectationBar{display:none;margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.16)}
-.expectationBar.up{border-color:#b64762;background:linear-gradient(90deg,rgba(126,30,57,.72),#0d1a2b)}
-.expectationBar.down{border-color:#3a9a5d;background:linear-gradient(90deg,rgba(19,100,51,.62),#0d1a2b)}
-.expectationBar.cancel{border-color:#c0922b;background:linear-gradient(90deg,rgba(112,82,17,.65),#0d1a2b)}
-.expectationBar a{display:flex;align-items:center;gap:8px;padding:12px 14px;color:var(--text);text-decoration:none;white-space:nowrap;overflow:auto;font-size:13px}
-.expectationBar strong{font-size:14px;letter-spacing:.01em}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;opacity:.95}.expSource{color:#c6d2e1;font-size:11px}.expWaiting{display:flex;align-items:center;gap:8px;padding:12px 14px;color:var(--muted);font-size:12px}
+.expectationBox{margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden}
+.expectationTitle{padding:8px 13px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+.expectationRow{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid rgba(38,59,90,.55);font-size:13px;min-height:42px}
+.expectationRow:last-child{border-bottom:0}.expectationRow a{color:inherit;text-decoration:none;font-weight:900}.expectationRow.up{background:linear-gradient(90deg,rgba(91,25,44,.5),transparent)}.expectationRow.down{background:linear-gradient(90deg,rgba(20,83,45,.45),transparent)}.expectationRow.realized{background:linear-gradient(90deg,rgba(30,90,68,.5),transparent)}.expectationRow.cancel{background:linear-gradient(90deg,rgba(94,71,17,.45),transparent)}.expectationRow.none{color:#cbd7e6}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;white-space:nowrap}.expSource{margin-left:auto;color:var(--muted);font-size:11px;white-space:nowrap}@media(max-width:700px){.expectationRow{align-items:flex-start;flex-wrap:wrap}.expSource{margin-left:0;width:100%}}
 '''
     html = html.replace('</style>', expectation_css + '</style>', 1)
 
-    expectation_bar = '<div id="priceExpectation" class="expectationBar" aria-live="polite"></div>'
-    html = html.replace('<div class="filters">', expectation_bar + '<div class="filters">', 1)
+    expectation_box = '''<section id="priceExpectation" class="expectationBox" aria-live="polite"><div class="expectationTitle">Güncel zam / indirim durumu</div><div id="expectationRows"><div class="expectationRow none">Motorin ve benzin beklentisi kontrol ediliyor…</div></div></section>'''
+    html = html.replace('<div class="filters">', expectation_box + '<div class="filters">', 1)
 
     expectation_js = r'''
 <script>
+function expectationClass(status){
+  if(status==='up')return 'up';
+  if(status==='down')return 'down';
+  if(String(status).startsWith('realized'))return 'realized';
+  if(String(status).startsWith('cancel'))return 'cancel';
+  return 'none';
+}
+function expectationLabel(status){
+  if(status==='up'||status==='down')return 'BEKLENTİ';
+  if(String(status).startsWith('realized'))return 'GERÇEKLEŞTİ';
+  if(String(status).startsWith('cancel'))return 'GÜNCELLEME';
+  return 'GÜNCEL DURUM';
+}
 async function refreshPriceExpectation(){
-  const bar=document.getElementById('priceExpectation');
-  if(!bar)return;
-  bar.className='expectationBar';bar.style.display='block';bar.innerHTML='<div class="expWaiting">⏳ Güncel zam / indirim beklentisi kontrol ediliyor…</div>';
+  const box=document.getElementById('expectationRows');
+  if(!box)return;
   try{
     const r=await fetch('/api/price-expectation?t='+Date.now(),{cache:'no-store'});
     const d=await r.json();
     if(!r.ok)throw new Error(d.error||'Beklenti taraması başarısız');
-    if(!d.found){bar.style.display='none';return;}
-    const cls=d.status==='up'?'up':d.status==='down'?'down':'cancel';
-    bar.className='expectationBar '+cls;
-    bar.innerHTML='';
-    const a=document.createElement('a');
-    a.href=d.url||'#';a.target='_blank';a.rel='noopener';a.title='Haber kaynağını aç';
-    const badge=document.createElement('span');badge.className='expLabel';badge.textContent=String(d.status||'').startsWith('cancel')?'GÜNCELLEME':'BEKLENTİ';
-    const text=document.createElement('strong');text.textContent=d.line||'';
-    const src=document.createElement('span');src.className='expSource';src.textContent='· '+(d.source||'Haber kaynağı')+(d.source_type?' · '+d.source_type:'')+' · RESMÎ DEĞİL';
-    a.appendChild(badge);a.appendChild(text);a.appendChild(src);bar.appendChild(a);bar.style.display='block';
-  }catch(e){bar.style.display='none';}
+    const items=Array.isArray(d.items)?d.items:[];
+    box.innerHTML='';
+    for(const item of items){
+      const row=document.createElement('div');row.className='expectationRow '+expectationClass(item.status);
+      const badge=document.createElement('span');badge.className='expLabel';badge.textContent=expectationLabel(item.status);
+      row.appendChild(badge);
+      if(item.url){
+        const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener';a.textContent=item.line||'';row.appendChild(a);
+      }else{
+        const text=document.createElement('strong');text.textContent=item.line||'';row.appendChild(text);
+      }
+      const src=document.createElement('span');src.className='expSource';
+      src.textContent=item.source?'· '+item.source+(item.official?'':' · RESMÎ DEĞİL'):'· 12:00 günlük kontrol';
+      row.appendChild(src);box.appendChild(row);
+    }
+    if(!items.length)box.innerHTML='<div class="expectationRow none">Motorin ve benzin için ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR</div>';
+  }catch(e){
+    box.innerHTML='<div class="expectationRow none">Beklenti bilgisi geçici olarak alınamadı.</div>';
+  }
 }
 setTimeout(refreshPriceExpectation,0);
 const expectationScanButton=document.getElementById('scanBtn');
-if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,350));
+if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,500));
 setInterval(refreshPriceExpectation,600000);
 </script>
 '''
@@ -152,14 +170,18 @@ def price_expectation():
     try:
         return JSONResponse(content=scan_price_expectation(), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
-        return JSONResponse(status_code=500, content={'error': str(exc)[:300], 'found': False}, headers={'Cache-Control': 'no-store, max-age=0'})
+        if EXPECTATION_DATA.exists():
+            try:
+                import json
+                return JSONResponse(content=json.loads(EXPECTATION_DATA.read_text(encoding='utf-8')), headers={'Cache-Control': 'no-store, max-age=0'})
+            except Exception:
+                pass
+        return JSONResponse(status_code=500, content={'error': str(exc)[:300], 'items': []}, headers={'Cache-Control': 'no-store, max-age=0'})
 
 
 @app.get('/api/prices')
 def live_prices():
     try:
-        # One-year EPDK history is refreshed by the scheduled job and read from prices.json.
-        # Live button stays fast by checking only current/short-period sources.
         return JSONResponse(
             content=scan_prices(history_days=2, include_year=False),
             headers={'Cache-Control': 'no-store, max-age=0'},
