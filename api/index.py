@@ -15,6 +15,9 @@ PRICE_DASHBOARD = ROOT / 'prices.html'
 DEPOSIT_DASHBOARD = ROOT / 'deposit.html'
 PRICE_DATA = ROOT / 'prices.json'
 EXPECTATION_DATA = ROOT / 'price_expectation.json'
+PWA_MANIFEST = ROOT / 'manifest.webmanifest'
+PWA_SW = ROOT / 'sw.js'
+PWA_IOS = ROOT / 'ios-pwa.js'
 
 app = FastAPI(title='Petrol Piyasası Takip')
 
@@ -38,11 +41,13 @@ def prices_html():
     new_nav = '<nav class="nav"><a href="/">Mevzuat &amp; Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a><a href="/depozito">♻️ DOA / DBYS</a></nav>'
     html = html.replace(old_nav, new_nav, 1)
 
+    pwa_head = '''<link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Fiyat Radar">'''
+    html = html.replace('</head>', pwa_head + '</head>', 1)
+
     html = html.replace("line(g,'#5eead4')+line(d,'#7dd3fc')", "line(g,'#f59e0b')+line(d,'#38bdf8')")
     html = html.replace('style="background:#5eead4"></i>Benzin 95', 'style="background:#f59e0b"></i>Benzin 95')
     html = html.replace('style="background:#7dd3fc"></i>Motorin', 'style="background:#38bdf8"></i>Motorin')
 
-    # Local device notification controls: no phone, e-mail or subscriber database.
     html = html.replace(
         '<button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button></header>',
         '<div class="notifyActions"><button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button><button id="notifyBtn" class="btn notifyBtn" type="button">🔕 Bildirimler Kapalı</button></div></header>',
@@ -159,6 +164,7 @@ setInterval(refreshPriceExpectation,600000);
 </script>
 '''
     html = html.replace('</body>', expectation_js + '</body>', 1)
+    html = html.replace('</body>', '<script src="/ios-pwa.js?v=3"></script></body>', 1)
     return html
 
 
@@ -195,6 +201,21 @@ def deposit_dashboard_file():
 @app.get('/prices.json')
 def prices_data_file():
     return FileResponse(PRICE_DATA, media_type='application/json', headers={'Cache-Control': 'no-store, max-age=0'})
+
+
+@app.get('/manifest.webmanifest')
+def pwa_manifest():
+    return FileResponse(PWA_MANIFEST, media_type='application/manifest+json', headers={'Cache-Control': 'no-cache'})
+
+
+@app.get('/sw.js')
+def pwa_service_worker():
+    return FileResponse(PWA_SW, media_type='application/javascript', headers={'Cache-Control': 'no-cache', 'Service-Worker-Allowed': '/'})
+
+
+@app.get('/ios-pwa.js')
+def pwa_ios_script():
+    return FileResponse(PWA_IOS, media_type='application/javascript', headers={'Cache-Control': 'no-cache'})
 
 
 @app.get('/api')
