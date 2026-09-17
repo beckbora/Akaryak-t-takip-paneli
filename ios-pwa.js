@@ -25,6 +25,72 @@
     }
   }
 
+  function ensureMobileLayout() {
+    if (document.getElementById('fuelRadarMobileLayout')) return;
+    const style = document.createElement('style');
+    style.id = 'fuelRadarMobileLayout';
+    style.textContent = `
+      html,body{width:100%;max-width:100%;overflow-x:hidden}
+      body{position:relative}
+      .wrap{width:100%;max-width:1360px;min-width:0}
+      .wrap>*,.top>*,.grid>*,.cards>*,.yearCards>*,.livebar>*,.expectationRow>*{min-width:0}
+      .nav,.top,.livebar,.expectationBox,.filters,.cards,.yearCards,.grid,.panel,.fuel,.sourcebar,.tableWrap,.chartWrap{max-width:100%;min-width:0}
+      .nav a,.btn,.select{max-width:100%}
+      .expectationRow a,.expectationRow strong,.expSource,.sub,.muted,.footer{overflow-wrap:anywhere;word-break:normal}
+      .expectationRow a,.expectationRow strong{white-space:normal}
+      .expSource{white-space:normal}
+      .chartWrap{overflow:hidden}
+      .chartWrap svg{display:block;width:100%;max-width:100%;height:100%}
+      .tableWrap{width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+      .table{min-width:650px}
+      .source{white-space:normal}
+      @media(max-width:700px){
+        .wrap{padding:14px 12px}
+        .nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;width:100%;margin-bottom:16px}
+        .nav a{display:flex;align-items:center;justify-content:center;text-align:center;white-space:normal;padding:9px 7px;font-size:12px;line-height:1.25}
+        .top{display:block;width:100%}
+        .top h1{font-size:clamp(30px,9vw,40px);line-height:1.05;margin-top:8px}
+        .sub{font-size:15px;line-height:1.48}
+        .notifyActions{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:16px}
+        .notifyActions .btn{width:100%;min-width:0;padding:11px 8px;font-size:12px;line-height:1.25;white-space:normal}
+        .livebar{display:block;padding:12px;margin:14px 0 11px}
+        .liveleft{align-items:flex-start}
+        #updated{margin-top:10px;padding-left:20px}
+        .expectationTitle{padding:8px 11px}
+        .expectationRow{display:grid!important;grid-template-columns:auto minmax(0,1fr);gap:7px 9px;align-items:start;padding:11px}
+        .expectationRow .expLabel{grid-column:1}
+        .expectationRow>a,.expectationRow>strong{grid-column:2;line-height:1.35}
+        .expectationRow .expSource{grid-column:1/-1;margin-left:0!important;width:100%;font-size:10px;line-height:1.35}
+        .filters{display:grid;grid-template-columns:1fr;width:100%;gap:8px;margin:12px 0}
+        .filters .select{width:100%;min-width:0;padding:11px 10px}
+        .cards,.yearCards,.grid{grid-template-columns:1fr!important;width:100%;gap:10px}
+        .fuel,.yearCard,.panel{width:100%;padding:13px}
+        .fuel .price{font-size:31px}
+        .yearDelta{font-size:25px}.yearPct{font-size:16px}
+        .chartWrap{height:235px!important;width:100%}
+        .chartWrap.tall{height:260px!important}
+        .legend{gap:8px;font-size:10px;line-height:1.35}
+        .sourcebar{gap:6px}
+        .source{font-size:10px;padding:6px 8px}
+        .tableWrap{border-radius:10px}
+        .table th,.table td{padding:9px 8px;font-size:12px}
+        .change{padding:10px}
+        .footer{font-size:10px}
+      }
+      @media(max-width:390px){
+        .wrap{padding:12px 10px}
+        .nav{grid-template-columns:1fr 1fr}
+        .notifyActions{grid-template-columns:1fr}
+        .top h1{font-size:30px}
+        .expectationRow{grid-template-columns:1fr}
+        .expectationRow .expLabel,.expectationRow>a,.expectationRow>strong,.expectationRow .expSource{grid-column:1}
+        .chartWrap{height:220px!important}
+        .chartWrap.tall{height:245px!important}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   async function registerSW() {
     if (!('serviceWorker' in navigator)) return null;
     try {
@@ -153,6 +219,7 @@
 
   function takeOver() {
     ensureManifest();
+    ensureMobileLayout();
     registerSW();
 
     const old = document.getElementById('notifyBtn');
