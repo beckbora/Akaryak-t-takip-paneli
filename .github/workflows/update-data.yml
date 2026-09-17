@@ -6,15 +6,19 @@ on:
     branches: [main]
     paths:
       - 'price_scan.py'
+      - 'price_expectation.py'
       - 'live_scan.py'
       - 'scrape.py'
       - 'source_overrides.py'
       - 'update_prices.py'
+      - 'update_expectation.py'
       - 'update_data.py'
       - 'requirements.txt'
       - '.github/workflows/update-data.yml'
   schedule:
     - cron: '2,12,22,32,42,52 * * * *'
+    # 12:00 Türkiye saati (UTC+3). GitHub scheduled jobs can start a few minutes late.
+    - cron: '0 9 * * *'
 
 permissions:
   contents: write
@@ -49,15 +53,18 @@ jobs:
       - name: Scan fuel prices
         run: python update_prices.py
 
+      - name: Scan fuel price expectations
+        run: python update_expectation.py
+
       - name: Commit latest data
         run: |
           git config user.name "akaryakit-takip-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json prices.json
+          git add data.json prices.json price_expectation.json
           if git diff --cached --quiet; then
             echo "No data changes"
           else
-            git commit -m "Update sector and fuel price data"
+            git commit -m "Update sector, fuel price and expectation data"
             git pull --rebase origin main
             git push
           fi
