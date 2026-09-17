@@ -42,11 +42,20 @@ def prices_html():
     html = html.replace('style="background:#5eead4"></i>Benzin 95', 'style="background:#f59e0b"></i>Benzin 95')
     html = html.replace('style="background:#7dd3fc"></i>Motorin', 'style="background:#38bdf8"></i>Motorin')
 
+    # Local device notification controls: no phone, e-mail or subscriber database.
+    html = html.replace(
+        '<button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button></header>',
+        '<div class="notifyActions"><button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button><button id="notifyBtn" class="btn notifyBtn" type="button">🔕 Bildirimler Kapalı</button></div></header>',
+        1,
+    )
+
     expectation_css = '''
 .expectationBox{margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden}
 .expectationTitle{padding:8px 13px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.05em;text-transform:uppercase}
 .expectationRow{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid rgba(38,59,90,.55);font-size:13px;min-height:42px}
-.expectationRow:last-child{border-bottom:0}.expectationRow a{color:inherit;text-decoration:none;font-weight:900}.expectationRow.up{background:linear-gradient(90deg,rgba(91,25,44,.5),transparent)}.expectationRow.down{background:linear-gradient(90deg,rgba(20,83,45,.45),transparent)}.expectationRow.realized{background:linear-gradient(90deg,rgba(30,90,68,.5),transparent)}.expectationRow.cancel{background:linear-gradient(90deg,rgba(94,71,17,.45),transparent)}.expectationRow.none{color:#cbd7e6}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;white-space:nowrap}.expSource{margin-left:auto;color:var(--muted);font-size:11px;white-space:nowrap}@media(max-width:700px){.expectationRow{align-items:flex-start;flex-wrap:wrap}.expSource{margin-left:0;width:100%}}
+.expectationRow:last-child{border-bottom:0}.expectationRow a{color:inherit;text-decoration:none;font-weight:900}.expectationRow.up{background:linear-gradient(90deg,rgba(91,25,44,.5),transparent)}.expectationRow.down{background:linear-gradient(90deg,rgba(20,83,45,.45),transparent)}.expectationRow.realized{background:linear-gradient(90deg,rgba(30,90,68,.5),transparent)}.expectationRow.cancel{background:linear-gradient(90deg,rgba(94,71,17,.45),transparent)}.expectationRow.none{color:#cbd7e6}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;white-space:nowrap}.expSource{margin-left:auto;color:var(--muted);font-size:11px;white-space:nowrap}
+.notifyActions{display:flex;gap:9px;flex-wrap:wrap}.notifyBtn{border-color:#52657c;background:#132033;color:#d9e4f1}.notifyBtn.enabled{border-color:#238579;background:#0e3937;color:#c9fff8}.notifyBtn.blocked{border-color:#8c263b;background:#411522;color:#fecdd3}
+@media(max-width:700px){.expectationRow{align-items:flex-start;flex-wrap:wrap}.expSource{margin-left:0;width:100%}.notifyActions{width:100%}.notifyActions .btn{flex:1}}
 '''
     html = html.replace('</style>', expectation_css + '</style>', 1)
 
@@ -55,6 +64,50 @@ def prices_html():
 
     expectation_js = r'''
 <script>
+const FUEL_NOTIFY_PREF='fuel_notifications_enabled';
+const FUEL_NOTIFY_STATE='fuel_notification_state_v1';
+window.__latestFuelExpectationItems=[];
+function notificationsEnabled(){return localStorage.getItem(FUEL_NOTIFY_PREF)==='1';}
+function readNotifyState(){try{return JSON.parse(localStorage.getItem(FUEL_NOTIFY_STATE)||'{}')}catch(e){return {}}}
+function signatureFor(item){return [item.status||'',item.amount??'',item.line||''].join('|');}
+function baselineNotifyState(items){const state={};for(const item of items||[]){if(item.fuel_key)state[item.fuel_key]=signatureFor(item)}localStorage.setItem(FUEL_NOTIFY_STATE,JSON.stringify(state));}
+function updateNotifyButton(){
+  const b=document.getElementById('notifyBtn');if(!b)return;
+  if(!('Notification' in window)){b.textContent='🔕 Bildirim Desteklenmiyor';b.className='btn notifyBtn blocked';b.disabled=true;return;}
+  if(Notification.permission==='denied'){b.textContent='🚫 Bildirim Tarayıcıda Engelli';b.className='btn notifyBtn blocked';return;}
+  const on=notificationsEnabled()&&Notification.permission==='granted';
+  b.textContent=on?'🔔 Bildirimler Açık':'🔕 Bildirimler Kapalı';
+  b.className='btn notifyBtn '+(on?'enabled':'');
+}
+async function toggleFuelNotifications(){
+  if(!('Notification' in window))return;
+  if(notificationsEnabled()&&Notification.permission==='granted'){
+    localStorage.setItem(FUEL_NOTIFY_PREF,'0');updateNotifyButton();return;
+  }
+  if(Notification.permission==='denied'){updateNotifyButton();return;}
+  let permission=Notification.permission;
+  if(permission==='default')permission=await Notification.requestPermission();
+  if(permission==='granted'){
+    localStorage.setItem(FUEL_NOTIFY_PREF,'1');
+    baselineNotifyState(window.__latestFuelExpectationItems||[]);
+    try{new Notification('Petrol Piyasası Takip',{body:'Akaryakıt fiyat bildirimleri açıldı.',tag:'fuel-notifications-enabled'});}catch(e){}
+  }else{localStorage.setItem(FUEL_NOTIFY_PREF,'0');}
+  updateNotifyButton();
+}
+function maybeNotifyFuelChanges(items){
+  window.__latestFuelExpectationItems=items||[];
+  if(!notificationsEnabled()||!('Notification' in window)||Notification.permission!=='granted')return;
+  const prior=readNotifyState(),next={...prior};
+  for(const item of items||[]){
+    if(!item.fuel_key)continue;
+    const sig=signatureFor(item),old=prior[item.fuel_key];
+    if(old&&old!==sig&&item.status!=='none'){
+      try{new Notification('Petrol Piyasası Takip',{body:item.line||'Akaryakıt fiyat durumu güncellendi.',tag:'fuel-'+item.fuel_key});}catch(e){}
+    }
+    next[item.fuel_key]=sig;
+  }
+  localStorage.setItem(FUEL_NOTIFY_STATE,JSON.stringify(next));
+}
 function expectationClass(status){
   if(status==='up')return 'up';
   if(status==='down')return 'down';
@@ -91,10 +144,14 @@ async function refreshPriceExpectation(){
       row.appendChild(src);box.appendChild(row);
     }
     if(!items.length)box.innerHTML='<div class="expectationRow none">Motorin ve benzin için ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR</div>';
+    maybeNotifyFuelChanges(items);
   }catch(e){
     box.innerHTML='<div class="expectationRow none">Beklenti bilgisi geçici olarak alınamadı.</div>';
   }
 }
+const notificationButton=document.getElementById('notifyBtn');
+if(notificationButton)notificationButton.addEventListener('click',toggleFuelNotifications);
+updateNotifyButton();
 setTimeout(refreshPriceExpectation,0);
 const expectationScanButton=document.getElementById('scanBtn');
 if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,500));
