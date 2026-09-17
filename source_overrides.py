@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
 from xml.etree import ElementTree as ET
@@ -67,20 +68,19 @@ SEED_UTTS = [
     },
 ]
 
-UTTS_TERMS = (
+# Explicit UTTS phrases and abbreviations. Short abbreviations MUST be matched as
+# complete tokens; otherwise words such as "denetim", "eğitim" and "yönetim"
+# incorrectly matched the old substring "tim" rule and were labelled UTTS.
+UTTS_PHRASES = (
     'utts',
     'ulusal taşıt tanıma',
     'ulusal tasit tanima',
-    'taşıt tanıma',
-    'tasit tanima',
-    'tto',
-    'tim',
-    'ttb',
-    'y-imf',
-    'yimf',
+    'taşıt tanıma sistemi',
+    'tasit tanima sistemi',
     'yetkili istasyon montaj',
     'tabanca okuyucu',
 )
+UTTS_TOKENS = ('tto', 'tim', 'ttb', 'tts', 'yimf')
 
 OLD_SOURCE_NAMES = {
     'UTTS',
@@ -104,12 +104,77 @@ DARPHANE_SOURCE = {
 
 
 def _norm(text):
-    return clean(text).casefold()
+    # Turkish capital İ casefolds to i + combining dot; remove that combining mark
+    # so abbreviations such as TİM and GİB can be matched safely as whole tokens.
+    return clean(text).casefold().replace('\u0307', '')
+
+
+def _token(text, value):
+    low = _norm(text)
+    token = _norm(value)
+    return re.search(r'(?<!\w)' + re.escape(token) + r'(?!\w)', low, flags=re.UNICODE) is not None
+
+
+def _phrase(text, value):
+    return _norm(value) in _norm(text)
 
 
 def _is_utts(text):
+    return any(_phrase(text, term) for term in UTTS_PHRASES) or any(_token(text, term) for term in UTTS_TOKENS)
+
+
+def _content_category(item):
+    """Derive the label from the item's own title/summary, never from source name."""
+    title = clean(item.get('title') or '')
+    summary = clean(item.get('summary') or '')
+    text = f'{title} {summary}'
     low = _norm(text)
-    return any(term in low for term in UTTS_TERMS)
+
+    # Darphane/UTTS canonical records have already been verified as UTTS content.
+    if item.get('source_key') == 'darphane_utts' or item.get('source') == CANONICAL_UTTS_GROUP:
+        return 'UTTS'
+
+    if _is_utts(text):
+        return 'UTTS'
+
+    if (
+        _token(text, 'okc')
+        or _token(text, 'ö.k.c')
+        or _token(text, 'pos')
+        or 'ödeme kaydedici' in low
+        or 'odeme kaydedici' in low
+        or 'yeni nesil ökc' in low
+        or 'yeni nesil okc' in low
+    ):
+        return 'ÖKC / POS'
+
+    if _token(text, 'lpg') or any(x in low for x in ('otogaz', 'tüplügaz', 'tuplugaz')):
+        return 'LPG'
+
+    if _token(text, 'ötv') or _token(text, 'otv') or _token(text, 'gib') or 'vergi' in low:
+        return 'Vergi / ÖTV'
+
+    if any(x in low for x in ('lisans', 'denetim', 'ceza', 'idari yaptırım', 'idari yaptirim')):
+        return 'Lisans / Denetim'
+
+    if any(x in low for x in ('kurul kararı', 'kurul karari', 'tebliğ', 'teblig', 'yönetmelik', 'yonetmelik', 'kanun', 'mevzuat')):
+        return 'Mevzuat'
+
+    # EPDK's dedicated legislation/board-decision feeds are legislation even when
+    # their short title does not repeat the word "mevzuat".
+    if item.get('record_type') in {'Mevzuat', 'Kurul Kararı'}:
+        return 'Mevzuat'
+
+    return 'Akaryakıt'
+
+
+def _reclassify_items(items):
+    fixed = []
+    for raw in items or []:
+        item = dict(raw)
+        item['category'] = _content_category(item)
+        fixed.append(item)
+    return fixed
 
 
 def _is_old_item(item):
@@ -223,7 +288,10 @@ def fetch_darphane_utts(existing):
 
 
 def normalize_sector_data(data):
+    # Reclassify every existing and freshly scanned record from its own content.
+    # This also repairs incorrect historical UTTS labels already stored in data.json.
     items = [i for i in (data.get('items') or []) if not _is_old_item(i)]
+    items = _reclassify_items(items)
     existing = {i.get('id'): i for i in items if i.get('id')}
 
     darphane_items, darphane_status = fetch_darphane_utts(existing)
@@ -231,7 +299,7 @@ def normalize_sector_data(data):
     for item in darphane_items:
         merged[item['id']] = item
 
-    items = list(merged.values())
+    items = _reclassify_items(list(merged.values()))
     items.sort(
         key=lambda x: (
             x.get('date') or '0000-00-00',
@@ -246,7 +314,6 @@ def normalize_sector_data(data):
             continue
         if status.get('source') in OLD_SOURCE_GROUPS:
             continue
-        # Replace any lower-level Darphane/UTTS status with the authoritative normalized one below.
         if status.get('source_name') == CANONICAL_UTTS_SOURCE_NAME:
             continue
         if status.get('source') == CANONICAL_UTTS_GROUP:
@@ -257,7 +324,7 @@ def normalize_sector_data(data):
     out = dict(data)
     out['items'] = items[:900]
     out['sources'] = statuses
-    out['version'] = max(int(data.get('version') or 0), 10)
+    out['version'] = max(int(data.get('version') or 0), 11)
     return out
 
 
