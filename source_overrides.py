@@ -12,6 +12,7 @@ from scrape import HEADERS, clean, make_item, uid, merge_seen, parse_date, sever
 
 DARPHANE_UTTS_HOME = 'https://www.darphane.gov.tr/ulusal-tasit-tanima-sistemi'
 UTTS_PORTAL_HOME = 'https://www.utts.gov.tr/'
+UTTS_PORTAL_ALT_HOME = 'https://utts.gov.tr/'
 
 SEED_UTTS = [
     {
@@ -159,6 +160,11 @@ def _source_host(url):
         return urlsplit(url or '').netloc.lower().removeprefix('www.')
     except Exception:
         return ''
+
+
+def _is_utts_domain(url):
+    host = _source_host(url)
+    return host == 'utts.gov.tr' or host.endswith('.utts.gov.tr')
 
 
 def _direct_text(item):
@@ -396,7 +402,7 @@ def _discover_utts_portal_from_html(html):
     found = {}
     for a in soup.find_all('a', href=True):
         href = urljoin(UTTS_PORTAL_HOME, a.get('href') or '')
-        if _source_host(href) != 'utts.gov.tr':
+        if not _is_utts_domain(href):
             continue
         if 'ulusal-tasit-tanima-sistemi-mevzuat-detaylari-' not in href:
             continue
@@ -411,23 +417,32 @@ def _discover_utts_portal_from_html(html):
 
 
 def _discover_utts_portal_search():
-    query = 'site:utts.gov.tr/ulusal-tasit-tanima-sistemi-mevzuat-detaylari- UTTS'
-    url = 'https://www.bing.com/search?format=rss&q=' + quote_plus(query)
+    queries = (
+        'site:utts.gov.tr "Ulusal Taşıt Tanıma Sistemi"',
+        'site:utts.gov.tr UTTS',
+    )
     found = {}
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=7)
-        r.raise_for_status()
-        root = ET.fromstring(r.text)
-        for node in root.findall('.//item'):
-            link = clean(node.findtext('link') or '')
-            title = clean(node.findtext('title') or '')
-            if _source_host(link) != 'utts.gov.tr':
-                continue
-            if 'ulusal-tasit-tanima-sistemi-mevzuat-detaylari-' not in link:
-                continue
-            found[link] = {'url': link, 'title': title or 'UTTS Duyurusu', 'date': parse_date(title)}
-    except Exception:
-        pass
+    for query in queries:
+        url = 'https://www.bing.com/search?format=rss&q=' + quote_plus(query)
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=7)
+            r.raise_for_status()
+            root = ET.fromstring(r.text)
+            for node in root.findall('.//item'):
+                link = clean(node.findtext('link') or '')
+                title = clean(node.findtext('title') or '')
+                description = clean(node.findtext('description') or '')
+                if not _is_utts_domain(link):
+                    continue
+                if not _is_utts(f'{title} {description}'):
+                    continue
+                found[link] = {
+                    'url': link,
+                    'title': title or 'UTTS Duyurusu',
+                    'date': parse_date(title) or parse_date(description),
+                }
+        except Exception:
+            continue
     return list(found.values())
 
 
@@ -438,20 +453,22 @@ def _utts_portal_item(seed, existing, now):
     excerpt = ''
 
     try:
-        r = requests.get(url, headers=HEADERS, timeout=8)
+        r = requests.get(url, headers=HEADERS, timeout=6)
         r.raise_for_status()
-        soup = BeautifulSoup(r.text, 'html.parser')
-        article = soup.find('article')
-        if article:
-            headings = article.find_all(['h1', 'h2', 'h3', 'h4', 'h5'])
-            for heading in headings:
-                value = clean(heading.get_text(' ', strip=True))
-                if len(value) >= 10 and _is_utts(value):
-                    title = value
-                    break
-            excerpt = _extract_official_paragraphs(soup)
-            if not date:
-                date = parse_date(clean(article.get_text(' ', strip=True)))
+        content_type = (r.headers.get('content-type') or '').lower()
+        if 'html' in content_type:
+            soup = BeautifulSoup(r.text, 'html.parser')
+            article = soup.find('article')
+            if article:
+                headings = article.find_all(['h1', 'h2', 'h3', 'h4', 'h5'])
+                for heading in headings:
+                    value = clean(heading.get_text(' ', strip=True))
+                    if len(value) >= 10 and _is_utts(value):
+                        title = value
+                        break
+                excerpt = _extract_official_paragraphs(soup)
+                if not date:
+                    date = parse_date(clean(article.get_text(' ', strip=True)))
     except Exception:
         pass
 
@@ -469,7 +486,7 @@ def _utts_portal_item(seed, existing, now):
     item['description_origin'] = 'official_source' if excerpt else 'title_only'
     item['summary'] = excerpt
     item['category'] = 'UTTS'
-    item['source_host'] = 'utts.gov.tr'
+    item['source_host'] = _source_host(url) or 'utts.gov.tr'
     item['source_location'] = UTTS_PORTAL_SOURCE_NAME
 
     item_id = uid(item)
@@ -482,38 +499,70 @@ def _utts_portal_item(seed, existing, now):
 
 def fetch_utts_portal(existing):
     now = datetime.now(timezone.utc).isoformat()
-    reachable = False
+    direct_reachable = False
     seeds = {}
-    error = None
+    direct_error = None
 
-    try:
-        r = requests.get(UTTS_PORTAL_HOME, headers=HEADERS, timeout=8)
-        r.raise_for_status()
-        reachable = True
-        for seed in _discover_utts_portal_from_html(r.text):
-            seeds[seed['url']] = seed
-    except Exception as exc:
-        error = str(exc)[:180]
+    portal_headers = dict(HEADERS)
+    portal_headers.update({
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.6,en;q=0.4',
+        'Cache-Control': 'no-cache',
+    })
 
-    for seed in _discover_utts_portal_search():
+    for home_url in (UTTS_PORTAL_HOME, UTTS_PORTAL_ALT_HOME):
+        try:
+            r = requests.get(home_url, headers=portal_headers, timeout=4.5, allow_redirects=True)
+            r.raise_for_status()
+            if len(r.content) < 300:
+                raise RuntimeError('short response')
+            direct_reachable = True
+            for seed in _discover_utts_portal_from_html(r.text):
+                seeds[seed['url']] = seed
+            break
+        except Exception as exc:
+            direct_error = str(exc)[:180]
+
+    indexed_seeds = _discover_utts_portal_search()
+    for seed in indexed_seeds:
         seeds.setdefault(seed['url'], seed)
+    indexed_reachable = bool(indexed_seeds)
 
     found = {}
     for seed in seeds.values():
         item = _utts_portal_item(seed, existing, now)
         found[item['id']] = item
 
+    ok = direct_reachable or indexed_reachable
+    if direct_reachable:
+        access_mode = 'direct'
+        note = 'utts.gov.tr ana sayfası ve UTTS bağlantıları doğrudan kontrol edilir.'
+    elif indexed_reachable:
+        access_mode = 'official_index_fallback'
+        note = (
+            'Sunucu tarafında utts.gov.tr ana sayfasına doğrudan erişim sınırlı/zaman aşımına uğruyor; '
+            'resmî utts.gov.tr alan adındaki indekslenmiş UTTS sayfa ve dokümanları yedek yöntemle izleniyor.'
+        )
+    else:
+        access_mode = 'unavailable'
+        note = 'utts.gov.tr doğrudan ve resmî alan adı indeks kontrolüyle taranamadı.'
+
     status = {
         'source': UTTS_PORTAL_GROUP,
         'source_name': UTTS_PORTAL_SOURCE_NAME,
-        'ok': reachable,
+        'ok': ok,
         'count': len(found),
         'checked_at': now,
         'home': UTTS_PORTAL_HOME,
-        'note': 'utts.gov.tr ana sayfası ve duyuru bağlantıları doğrudan kontrol edilir.',
+        'access_mode': access_mode,
+        'direct_reachable': direct_reachable,
+        'indexed_reachable': indexed_reachable,
+        'note': note,
     }
-    if not reachable:
-        status['error'] = error or 'utts.gov.tr adresine erişilemedi'
+    if not ok:
+        status['error'] = direct_error or 'utts.gov.tr adresine erişilemedi'
+    elif not direct_reachable and direct_error:
+        status['direct_error'] = direct_error
     return list(found.values()), status
 
 
@@ -571,7 +620,7 @@ def normalize_sector_data(data):
     out = dict(data)
     out['items'] = items
     out['sources'] = statuses
-    out['version'] = max(int(data.get('version') or 0), 14)
+    out['version'] = max(int(data.get('version') or 0), 15)
     out['content_policy'] = 'source_text_only'
     return out
 
