@@ -1,0 +1,11 @@
+{
+  "name": "Petrol Piyasası Takip - Fiyat Radar",
+  "short_name": "Fiyat Radar",
+  "description": "Akaryakıt fiyat, zam ve indirim beklentisi takip paneli",
+  "start_url": "/fiyatlar",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "lang": "tr-TR"
+}
