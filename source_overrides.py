@@ -1,13 +1,14 @@
 import re
+from collections import Counter
 from datetime import datetime, timezone
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlsplit
 from xml.etree import ElementTree as ET
 
 import requests
 from bs4 import BeautifulSoup
 
-from live_scan import scan_now
-from scrape import HEADERS, clean, make_item, uid, merge_seen
+from live_scan import scan_now as raw_scan_now
+from scrape import HEADERS, clean, make_item, uid, merge_seen, parse_date, severity
 
 DARPHANE_UTTS_HOME = 'https://www.darphane.gov.tr/ulusal-tasit-tanima-sistemi'
 
@@ -16,60 +17,51 @@ SEED_UTTS = [
         'url': 'https://www.darphane.gov.tr/duyuru/utts-kapsaminda-yetkili-istasyon-montaj-firmalari-teknik-servis-bedelleri-hakkinda-duyuru',
         'title': 'UTTS Kapsamında Yetkili İstasyon Montaj Firmaları Teknik Servis Bedelleri Hakkında Duyuru',
         'date': '2026-02-03',
-        'summary': 'UTTS kapsamında Y-İMF teknik servis, saha müdahalesi ve işçilik hizmetlerine ilişkin uygulama esasları güncellendi.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/2026-yili-akaryakit-istasyonlari-utts-donanim-montaj-hizmet-bedelleri-hakkinda-duyuru',
         'title': '2026 Yılı Akaryakıt İstasyonları UTTS Donanım Montaj Hizmet Bedelleri Hakkında Duyuru',
         'date': '2026-02-03',
-        'summary': '2026 yılı TİM/TTO montajı ve YN Pompa ÖKC entegrasyonuna ilişkin hizmet bedelleri ve uygulama esasları yayımlandı.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/kamuoyuna-duyuru-15',
         'title': 'Kamuoyuna Duyuru - UTTS',
         'date': '2026-03-25',
-        'summary': 'Darphane, UTTS donanımlarının menşei, güvenliği ve ücretlerine ilişkin kamuoyunda yer alan iddialar hakkında açıklama yayımladı.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/ulusal-tasit-tanima-sistemi-uygulamasina-yonelik-sure-uzatimina-iliskin-duyuru',
         'title': 'Ulusal Taşıt Tanıma Sistemi Uygulamasına Yönelik Süre Uzatımına İlişkin Duyuru',
         'date': '2025-12-26',
-        'summary': 'LPG pompalarındaki TTO ve ilgili taşıtlardaki TTB yükümlülükleri için 30 Haziran 2026 tarihine kadar süre verildi.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/utts-hakkinda-kamuoyuna-duyuru-4',
         'title': 'UTTS Hakkında Kamuoyuna Duyuru',
         'date': '2025-06-20',
-        'summary': 'TTB montaj süreleri ve mevcut TTS tabanca okuyucu değişim programına ilişkin Darphane açıklaması.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/utts-hakkinda-kamuoyuna-duyuru-2',
         'title': 'UTTS Hakkında Kamuoyuna Duyuru',
         'date': '2025-05-09',
-        'summary': 'Akaryakıt istasyonlarının UTTS kayıt, sipariş ve kurulum yükümlülüklerine ilişkin son tarihler hatırlatıldı.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/utts-ucret-duzenlemeleri-hakkinda',
         'title': 'UTTS Ücret Düzenlemeleri Hakkında',
         'date': '2025-03-24',
-        'summary': 'UTTS kapsamındaki TTB ücretleri, indirim ve iade uygulamalarına ilişkin düzenlemeler duyuruldu.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/kamuoyuna-duyuru-13',
         'title': 'UTTS Hakkında Kamuoyuna Duyuru',
         'date': '2025-02-04',
-        'summary': 'UTTS donanımları, maliyetleri, güvenliği ve proje uygulamasına ilişkin kamuoyu açıklaması yayımlandı.',
     },
     {
         'url': 'https://www.darphane.gov.tr/duyuru/basin-duyurusu-2',
         'title': 'Kamuoyuna Duyuru - UTTS',
         'date': '2024-12-08',
-        'summary': 'UTTS projesi, donanımların menşei ve istasyon/taşıt yükümlülüklerine ilişkin Darphane açıklaması.',
     },
 ]
 
-# Strong UTTS wording is enough on its own. Ambiguous abbreviations such as TTO
-# or TİM are NOT enough: they must appear together with fuel/UTTS context.
+# TTO/TİM/TTB/TTS are ambiguous abbreviations. They never create a UTTS label
+# by themselves; a second, fuel/UTTS-specific signal is required.
 UTTS_STRONG_PHRASES = (
     'ulusal taşıt tanıma',
     'ulusal tasit tanima',
@@ -84,30 +76,24 @@ UTTS_STRONG_PHRASES = (
 )
 UTTS_AMBIGUOUS_TOKENS = ('tto', 'tim', 'ttb', 'tts', 'yimf')
 UTTS_CONTEXT_TERMS = (
-    'akaryakıt',
-    'akaryakit',
-    'akaryakıt istasyonu',
-    'akaryakit istasyonu',
-    'istasyon montaj',
-    'yakıt pompası',
-    'yakit pompasi',
-    'pompa ökc',
-    'pompa okc',
-    'tabanca okuyucu',
-    'taşıt tanıma',
-    'tasit tanima',
-    'darphane',
-    'yn ökc',
-    'yn okc',
-    'y-imf',
-    'yetkili istasyon montaj',
+    'akaryakıt', 'akaryakit', 'akaryakıt istasyonu', 'akaryakit istasyonu',
+    'istasyon montaj', 'yakıt pompası', 'yakit pompasi', 'pompa ökc',
+    'pompa okc', 'tabanca okuyucu', 'taşıt tanıma', 'tasit tanima',
+    'darphane', 'yn ökc', 'yn okc', 'y-imf', 'yetkili istasyon montaj',
 )
 
-OLD_SOURCE_NAMES = {
-    'UTTS',
-    'TOBB Sektör Haberleri',
-    'Darphane Duyurular',
-}
+# For broad sources such as Resmî Gazete and GİB, only the item's own title is
+# used to decide whether the record belongs to the petrol-sector dashboard.
+SECTOR_TITLE_PHRASES = (
+    'akaryakıt', 'akaryakit', 'akaryakıt istasyonu', 'akaryakit istasyonu',
+    'petrol piyasası', 'petrol piyasasi', 'petrol ürünleri', 'petrol urunleri',
+    'benzin', 'motorin', 'otogaz', 'pompa ökc', 'pompa okc', 'akaryakıt pompa',
+    'akaryakit pompa', 'yn ökc', 'yn okc', 'yeni nesil ödeme kaydedici',
+    'ulusal marker', 'zorunlu petrol stoku', 'rafineri', 'dağıtıcılar arası',
+    'dagiticilar arasi', 'bayilik lisansı', 'bayilik lisansi',
+)
+
+OLD_SOURCE_NAMES = {'UTTS', 'TOBB Sektör Haberleri', 'Darphane Duyurular'}
 OLD_SOURCE_GROUPS = {'UTTS', 'TOBB'}
 OLD_SOURCE_KEYS = {'utts', 'tobb', 'darphane'}
 CANONICAL_UTTS_SOURCE_NAME = 'Darphane / UTTS Duyuruları'
@@ -125,8 +111,6 @@ DARPHANE_SOURCE = {
 
 
 def _norm(text):
-    # Turkish capital İ casefolds to i + combining dot; remove that combining mark
-    # so abbreviations such as TİM and GİB can be matched safely as whole tokens.
     return clean(text).casefold().replace('\u0307', '')
 
 
@@ -141,50 +125,60 @@ def _phrase(text, value):
 
 
 def _is_utts(text):
-    # Explicit UTTS wording is decisive.
     if _token(text, 'utts'):
         return True
     if any(_phrase(text, term) for term in UTTS_STRONG_PHRASES):
         return True
-
-    # TTO can mean "Teknoloji Transfer Ofisi"; TİM/TTS etc. can also occur in
-    # unrelated texts. Require a second, genuinely fuel/UTTS-specific signal.
-    has_abbreviation = any(_token(text, term) for term in UTTS_AMBIGUOUS_TOKENS)
-    if not has_abbreviation:
+    if not any(_token(text, term) for term in UTTS_AMBIGUOUS_TOKENS):
         return False
     low = _norm(text)
     return any(_norm(term) in low for term in UTTS_CONTEXT_TERMS)
 
 
-def _content_category(item):
-    """Derive the label from the item's own title/summary, never from source name."""
+def _sector_signal(title):
+    if _is_utts(title):
+        return True
+    low = _norm(title)
+    if _token(title, 'lpg') or _token(title, 'epdk'):
+        return True
+    return any(_norm(term) in low for term in SECTOR_TITLE_PHRASES)
+
+
+def _source_host(url):
+    try:
+        return urlsplit(url or '').netloc.lower().removeprefix('www.')
+    except Exception:
+        return ''
+
+
+def _direct_text(item):
+    # Only text known to belong to this exact item may be used for labelling.
     title = clean(item.get('title') or '')
-    summary = clean(item.get('summary') or '')
-    text = f'{title} {summary}'
+    excerpt = clean(item.get('source_excerpt') or '')
+    return clean(f'{title} {excerpt}')
+
+
+def _content_category(item):
+    text = _direct_text(item)
     low = _norm(text)
 
-    # Darphane/UTTS canonical records have already been verified as UTTS content.
     if item.get('source_key') == 'darphane_utts' or item.get('source') == CANONICAL_UTTS_GROUP:
         return 'UTTS'
-
     if _is_utts(text):
         return 'UTTS'
 
     if (
-        _token(text, 'okc')
-        or _token(text, 'ö.k.c')
-        or _token(text, 'pos')
-        or 'ödeme kaydedici' in low
-        or 'odeme kaydedici' in low
-        or 'yeni nesil ökc' in low
-        or 'yeni nesil okc' in low
+        _token(text, 'okc') or _token(text, 'ö.k.c') or _token(text, 'pos')
+        or 'ödeme kaydedici' in low or 'odeme kaydedici' in low
+        or 'yeni nesil ökc' in low or 'yeni nesil okc' in low
+        or 'mali cihaz' in low
     ):
         return 'ÖKC / POS'
 
     if _token(text, 'lpg') or any(x in low for x in ('otogaz', 'tüplügaz', 'tuplugaz')):
         return 'LPG'
 
-    if _token(text, 'ötv') or _token(text, 'otv') or _token(text, 'gib') or 'vergi' in low:
+    if _token(text, 'ötv') or _token(text, 'otv') or 'vergi' in low:
         return 'Vergi / ÖTV'
 
     if any(x in low for x in ('lisans', 'denetim', 'ceza', 'idari yaptırım', 'idari yaptirim')):
@@ -193,21 +187,57 @@ def _content_category(item):
     if any(x in low for x in ('kurul kararı', 'kurul karari', 'tebliğ', 'teblig', 'yönetmelik', 'yonetmelik', 'kanun', 'mevzuat')):
         return 'Mevzuat'
 
-    # EPDK's dedicated legislation/board-decision feeds are legislation even when
-    # their short title does not repeat the word "mevzuat".
+    if item.get('record_type') == 'Denetim':
+        return 'Lisans / Denetim'
     if item.get('record_type') in {'Mevzuat', 'Kurul Kararı'}:
         return 'Mevzuat'
-
+    if item.get('market') == 'LPG':
+        return 'LPG'
     return 'Akaryakıt'
 
 
-def _reclassify_items(items):
-    fixed = []
-    for raw in items or []:
-        item = dict(raw)
-        item['category'] = _content_category(item)
-        fixed.append(item)
-    return fixed
+def _is_sector_item(item):
+    # Dedicated sector sources are relevant by source scope.
+    if item.get('source_key') == 'darphane_utts' or item.get('source') == CANONICAL_UTTS_GROUP:
+        return True
+    if item.get('epdk_focus'):
+        return True
+    if item.get('source') in {'PÜİS', 'TABGİS', 'PETDER', 'LPG Derneği'}:
+        return True
+
+    # General EPDK, GİB and Resmî Gazete are broad sources. Their own title must
+    # contain a petrol-sector signal. Neighbouring archive text is never used.
+    if item.get('source_key') in {'epdk', 'gib'} or item.get('source') == 'Resmî Gazete':
+        return _sector_signal(item.get('title') or '')
+
+    return _sector_signal(item.get('title') or '')
+
+
+def _sanitize_item(raw):
+    item = dict(raw)
+    title = clean(item.get('title') or '')
+
+    # GİB archive cards previously inherited the text of neighbouring cards.
+    # The date and classification are therefore derived from this card's own title.
+    if item.get('source_key') == 'gib':
+        title_date = parse_date(title)
+        if title_date:
+            item['date'] = title_date
+
+    # Never display generated/mirror summaries or broad archive-container text.
+    # source_excerpt is reserved for exact text fetched from the item's own page.
+    excerpt = clean(item.get('source_excerpt') or '')
+    if item.get('description_origin') != 'official_source':
+        excerpt = ''
+    item['source_excerpt'] = excerpt
+    item['summary'] = excerpt
+    item['description_origin'] = 'official_source' if excerpt else 'title_only'
+
+    item['category'] = _content_category(item)
+    item['severity'] = severity(_direct_text(item))
+    item['source_host'] = _source_host(item.get('url') or item.get('source_url'))
+    item['source_location'] = item.get('source_name') or item.get('source') or 'Kaynak'
+    return item
 
 
 def _is_old_item(item):
@@ -239,17 +269,32 @@ def _discover_urls():
                 continue
             if not _is_utts(title):
                 continue
-            discovered.append({'url': link, 'title': title, 'date': None, 'summary': ''})
+            discovered.append({'url': link, 'title': title, 'date': None})
     except Exception:
         pass
     return discovered
+
+
+def _extract_official_paragraphs(soup):
+    # Only paragraph text from the actual article/main area is accepted.
+    container = soup.find('article') or soup.find('main')
+    if not container:
+        return ''
+    parts = []
+    for p in container.find_all('p'):
+        txt = clean(p.get_text(' ', strip=True))
+        if len(txt) >= 25:
+            parts.append(txt)
+        if sum(len(x) for x in parts) >= 650:
+            break
+    return clean(' '.join(parts))[:700]
 
 
 def _official_item(seed, existing, now):
     url = seed['url']
     title = seed.get('title') or 'Darphane UTTS Duyurusu'
     date = seed.get('date')
-    summary = seed.get('summary') or ''
+    excerpt = ''
     reachable = False
 
     try:
@@ -257,19 +302,15 @@ def _official_item(seed, existing, now):
         r.raise_for_status()
         reachable = True
         soup = BeautifulSoup(r.text, 'html.parser')
-        article = soup.find('main') or soup.find('article') or soup
-        body = clean(article.get_text(' ', strip=True))
-        if _is_utts(body):
-            heading = article.find(['h1', 'h2', 'h3'])
-            page_title = clean(heading.get_text(' ', strip=True)) if heading else ''
-            if page_title and len(page_title) > 7:
-                title = page_title
-            if body:
-                summary = body[:700]
+        heading = soup.find('h1') or soup.find('h2')
+        page_title = clean(heading.get_text(' ', strip=True)) if heading else ''
+        if page_title and len(page_title) > 7:
+            title = page_title
+        excerpt = _extract_official_paragraphs(soup)
     except Exception:
         pass
 
-    context = ' '.join(x for x in [date or '', summary, title] if x)
+    context = clean(f'{date or ""} {title}')
     item = make_item(DARPHANE_SOURCE, title, url, context)
     if date and not item.get('date'):
         item['date'] = date
@@ -277,10 +318,15 @@ def _official_item(seed, existing, now):
     item['source_name'] = CANONICAL_UTTS_SOURCE_NAME
     item['source_key'] = 'darphane_utts'
     item['official'] = True
-    item['category'] = 'UTTS'
     item['market'] = 'Petrol'
     item['record_type'] = 'UTTS Duyurusu'
     item['source_url'] = DARPHANE_UTTS_HOME
+    item['source_excerpt'] = excerpt
+    item['description_origin'] = 'official_source' if excerpt else 'title_only'
+    item['summary'] = excerpt
+    item['category'] = 'UTTS'
+    item['source_host'] = _source_host(url)
+    item['source_location'] = CANONICAL_UTTS_SOURCE_NAME
 
     item_id = uid(item)
     previous = existing.get(item_id)
@@ -312,27 +358,29 @@ def fetch_darphane_utts(existing):
         'checked_at': now,
         'official_urls_reached': reachable_count,
         'official_urls_total': len(candidates),
-        'note': 'UTTS için yalnızca Darphane resmi duyuruları kabul edilir; yeni duyurular alan adı arama indeksiyle keşfedilip resmi URL üzerinden doğrulanır.',
+        'note': 'UTTS için yalnızca Darphane resmi duyuru adresleri izlenir.',
     }
     if reachable_count == 0:
         status['error'] = 'Darphane resmi UTTS duyuru sayfalarına erişilemedi'
-
     return list(found.values()), status
 
 
 def normalize_sector_data(data):
-    # Reclassify every existing and freshly scanned record from its own content.
-    # This also repairs incorrect historical UTTS labels already stored in data.json.
-    items = [i for i in (data.get('items') or []) if not _is_old_item(i)]
-    items = _reclassify_items(items)
-    existing = {i.get('id'): i for i in items if i.get('id')}
+    raw_items = [i for i in (data.get('items') or []) if not _is_old_item(i)]
+    cleaned = []
+    for raw in raw_items:
+        item = _sanitize_item(raw)
+        if _is_sector_item(item):
+            cleaned.append(item)
 
+    existing = {i.get('id'): i for i in cleaned if i.get('id')}
     darphane_items, darphane_status = fetch_darphane_utts(existing)
-    merged = {i.get('id'): i for i in items if i.get('id')}
-    for item in darphane_items:
-        merged[item['id']] = item
 
-    items = _reclassify_items(list(merged.values()))
+    merged = {i.get('id'): i for i in cleaned if i.get('id')}
+    for item in darphane_items:
+        merged[item['id']] = _sanitize_item(item)
+
+    items = list(merged.values())
     items.sort(
         key=lambda x: (
             x.get('date') or '0000-00-00',
@@ -340,7 +388,9 @@ def normalize_sector_data(data):
         ),
         reverse=True,
     )
+    items = items[:900]
 
+    counts = Counter((i.get('source_name') or i.get('source')) for i in items)
     statuses = []
     for status in data.get('sources') or []:
         if status.get('source_name') in OLD_SOURCE_NAMES:
@@ -351,15 +401,19 @@ def normalize_sector_data(data):
             continue
         if status.get('source') == CANONICAL_UTTS_GROUP:
             continue
-        statuses.append(status)
+        st = dict(status)
+        key = st.get('source_name') or st.get('source')
+        st['count'] = counts.get(key, 0)
+        statuses.append(st)
     statuses.append(darphane_status)
 
     out = dict(data)
-    out['items'] = items[:900]
+    out['items'] = items
     out['sources'] = statuses
-    out['version'] = max(int(data.get('version') or 0), 12)
+    out['version'] = max(int(data.get('version') or 0), 13)
+    out['content_policy'] = 'source_text_only'
     return out
 
 
 def scan_sector_now():
-    return normalize_sector_data(scan_now())
+    return normalize_sector_data(raw_scan_now())
