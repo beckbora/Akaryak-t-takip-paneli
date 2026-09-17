@@ -1,18 +1,18 @@
 {
-  "found": false,
-  "checked_at": "2026-09-17T06:07:13.332731+00:00",
+  "found": true,
+  "checked_at": "2026-09-17T06:09:27.220781+00:00",
   "items": [
     {
       "fuel_key": "diesel",
       "fuel": "MOTORİN",
-      "status": "none",
-      "line": "ℹ️ MOTORİN · ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR",
-      "amount": null,
-      "source": null,
-      "url": null,
-      "published_at": null,
+      "status": "realized_up",
+      "line": "✅ MOTORİN · 4,75 TL ZAM GERÇEKLEŞTİ",
+      "amount": 4.75,
+      "source": "Petrol Ofisi pompa fiyat takibi",
+      "url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
+      "published_at": "2026-09-16T21:21:36.088568+00:00",
       "official": false,
-      "label": "Güncel durum"
+      "label": "Gerçekleşen fiyat hareketi"
     },
     {
       "fuel_key": "gasoline",
