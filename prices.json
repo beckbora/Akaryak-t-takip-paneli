@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-16T23:43:31.418706+00:00",
+  "updated_at": "2026-09-17T00:00:24.379206+00:00",
   "current": [
     {
       "location": "İstanbul Anadolu",
@@ -11,7 +11,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     },
     {
       "location": "İstanbul Avrupa",
@@ -23,7 +23,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     },
     {
       "location": "Ankara",
@@ -35,7 +35,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     },
     {
       "location": "İzmir",
@@ -47,7 +47,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     },
     {
       "location": "Sakarya (Adapazarı)",
@@ -59,7 +59,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/sakarya-akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     },
     {
       "location": "Tekirdağ",
@@ -71,7 +71,7 @@
       "unit": "L",
       "source": "Petrol Ofisi",
       "source_url": "https://www.petrolofisi.com.tr/akaryakit-fiyatlari/tekirdag-akaryakit-fiyatlari",
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     }
   ],
   "live_changes": [],
@@ -664,6 +664,168 @@
       "location_key": "TEKIRDAG",
       "fuel": "Motorin",
       "price": 101.2,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "fuel": "Benzin 95",
+      "price": 80.2,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "fuel": "Motorin",
+      "price": 100.2,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İstanbul Anadolu",
+      "location_key": "ISTANBUL (ANADOLU)",
+      "fuel": "LPG/Otogaz",
+      "price": 34.39,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "fuel": "Benzin 95",
+      "price": 80.4,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "fuel": "Motorin",
+      "price": 100.4,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İstanbul Avrupa",
+      "location_key": "ISTANBUL (AVRUPA)",
+      "fuel": "LPG/Otogaz",
+      "price": 34.99,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "fuel": "Benzin 95",
+      "price": 81.3,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "fuel": "Motorin",
+      "price": 101.5,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Ankara",
+      "location_key": "ANKARA",
+      "fuel": "LPG/Otogaz",
+      "price": 35.09,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "fuel": "Benzin 95",
+      "price": 81.6,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "fuel": "Motorin",
+      "price": 101.8,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "İzmir",
+      "location_key": "IZMIR",
+      "fuel": "LPG/Otogaz",
+      "price": 34.99,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "fuel": "Benzin 95",
+      "price": 81.0,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "fuel": "Motorin",
+      "price": 101.0,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Sakarya (Adapazarı)",
+      "location_key": "SAKARYA",
+      "fuel": "LPG/Otogaz",
+      "price": 34.29,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "fuel": "Benzin 95",
+      "price": 81.0,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "fuel": "Motorin",
+      "price": 101.2,
+      "source": "Petrol Ofisi"
+    },
+    {
+      "date": "2026-09-17",
+      "timestamp": "2026-09-17T00:00:24.379206+00:00",
+      "location": "Tekirdağ",
+      "location_key": "TEKIRDAG",
+      "fuel": "LPG/Otogaz",
+      "price": 34.79,
       "source": "Petrol Ofisi"
     }
   ],
@@ -1471,6 +1633,60 @@
     },
     {
       "date": "2026-09-16",
+      "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
+      "price": 46.13429,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-17",
+      "fuel": "Fuel Oil (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 49.2575,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-17",
+      "fuel": "Gazyağı",
+      "price": 94.70571,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-17",
+      "fuel": "Kalorifer Yakıtı (Kükürt Oranı %0.1'i geçen ancak %1'i geçmeyenler)",
+      "price": 68.6675,
+      "unit": "Kilogram",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-17",
+      "fuel": "Kurşunsuz Benzin 95 Oktan",
+      "price": 80.3125,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-17",
+      "fuel": "Motorin",
+      "price": 100.3325,
+      "unit": "Litre",
+      "market": "Petrol",
+      "source": "EPDK",
+      "dataset": "En yüksek işlem hacimli 8 firma ortalama bayi fiyatı"
+    },
+    {
+      "date": "2026-09-17",
       "fuel": "Yüksek Kükürtlü Fuel Oil (Kükürt oranı %1'i geçenler)",
       "price": 46.13429,
       "unit": "Kilogram",
@@ -2318,19 +2534,19 @@
       "source": "Petrol Ofisi güncel pompa fiyatları",
       "ok": true,
       "count": 6,
-      "checked_at": "2026-09-16T23:43:31.418715+00:00"
+      "checked_at": "2026-09-17T00:00:24.379214+00:00"
     },
     {
       "source": "EPDK resmi akaryakıt fiyat bülteni",
       "ok": true,
       "count": 84,
-      "checked_at": "2026-09-16T23:43:37.653210+00:00"
+      "checked_at": "2026-09-17T00:00:30.165474+00:00"
     },
     {
       "source": "EPDK 1 yıllık Benzin & Motorin trendi",
       "ok": true,
       "count": 78,
-      "checked_at": "2026-09-16T23:43:39.855556+00:00"
+      "checked_at": "2026-09-17T00:00:33.000787+00:00"
     }
   ],
   "version": 3
