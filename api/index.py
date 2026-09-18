@@ -191,7 +191,10 @@ async function refreshPriceExpectation(forceLive=false){
         const text=document.createElement('strong');text.textContent=item.line||'';row.appendChild(text);
       }
       const src=document.createElement('span');src.className='expSource';
-      src.textContent=item.source?'· '+item.source+(item.official?'':' · RESMÎ DEĞİL'):'· 12:00 günlük kontrol';
+      const confirmations=Number(item.confirmation_count||0);
+      const confirmText=confirmations>1?' · '+confirmations+' kaynak doğruladı':'';
+      const timing=item.effective_date?' · geçerlilik '+new Date(item.effective_date+'T12:00:00').toLocaleDateString('tr-TR',{day:'2-digit',month:'short'}):'';
+      src.textContent=item.source?'· '+item.source+confirmText+timing+(item.official?'':' · haber beklentisi'):'· 12:00 günlük kontrol';
       row.appendChild(src);box.appendChild(row);
     }
     if(!items.length)box.innerHTML='<div class="expectationRow none">Motorin ve benzin için ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR</div>';
