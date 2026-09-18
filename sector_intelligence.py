@@ -21,7 +21,8 @@ DEADLINE_TERMS = (
     'son tarih', 'son gün', 'son gun', 'tarihine kadar', 'tarihe kadar', 'en geç', 'en gec',
     'süre uzat', 'sure uzat', 'yükümlülük', 'yukumluluk', 'zorunlu', 'başvuru', 'basvuru',
     'yürürlüğe', 'yururluge', 'yürürlük', 'yururluk', 'itibaren', 'itibarıyla', 'itibariyla',
-    'tamamlanması', 'tamamlanmasi', 'geçiş', 'gecis',
+    'tamamlanması', 'tamamlanmasi', 'geçiş', 'gecis', 'uzatılması', 'uzatilmasi',
+    'taktırılması', 'taktirilmasi', 'gerekmektedir',
 )
 
 
