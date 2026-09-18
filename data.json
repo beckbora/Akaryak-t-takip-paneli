@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T08:38:59.845868+00:00",
+  "updated_at": "2026-09-18T08:40:48.921210+00:00",
   "live": true,
   "items": [
     {
@@ -25,7 +25,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -52,7 +52,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -79,7 +79,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -101,7 +101,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -144,7 +144,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -168,7 +168,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -192,7 +192,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -240,7 +240,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -267,7 +267,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -289,7 +289,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -318,7 +318,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -345,7 +345,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Aylık Toplu Lisanslar"
     },
@@ -373,7 +373,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -441,7 +441,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -468,7 +468,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -514,7 +514,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -541,7 +541,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Aylık Toplu Lisanslar"
     },
@@ -563,7 +563,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -587,7 +587,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -617,7 +617,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -641,7 +641,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -668,7 +668,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -695,7 +695,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -717,7 +717,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -741,7 +741,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -765,7 +765,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -794,7 +794,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -821,7 +821,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -845,7 +845,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "epdk.gov.tr",
@@ -869,7 +869,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -898,7 +898,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -926,7 +926,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -948,7 +948,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -972,7 +972,7 @@
       "changed_at": "2026-09-15T09:32:46.840117+00:00",
       "revision": 3,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -996,7 +996,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -1025,7 +1025,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -1052,7 +1052,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1079,7 +1079,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -1107,7 +1107,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -1129,7 +1129,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -1158,7 +1158,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -1185,7 +1185,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1207,7 +1207,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -1237,7 +1237,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -1265,7 +1265,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "Ocak 2026 Sıvılaştırılmış Petrol Gazları (LPG) Piyasası Sektör Raporu ve Eki",
@@ -1290,7 +1290,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1317,7 +1317,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -1344,7 +1344,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Aylık Toplu Lisanslar"
     },
@@ -1366,7 +1366,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -1390,7 +1390,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -1420,7 +1420,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -1444,7 +1444,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "epdk.gov.tr",
@@ -1473,7 +1473,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -1500,7 +1500,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1527,7 +1527,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Aylık Toplu Lisanslar"
     },
@@ -1554,7 +1554,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Aylık Toplu Lisanslar"
     },
@@ -1582,7 +1582,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "2026 Yılı Akaryakıt İstasyonları UTTS Donanım Montaj Hizmet Bedelleri Hakkında Duyuru",
@@ -1608,7 +1608,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "2026 Şubat Ayı Petrol ve LPG Piyasası Fiyatlandırma Raporu",
@@ -1634,7 +1634,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -1661,7 +1661,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -1688,7 +1688,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1716,7 +1716,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -1744,7 +1744,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "25 Aralık 2025 Ulusal Taşıt Tanıma Sistemi Uygulamasına Yönelik Süre Uzatımına İlişkin Duyuru",
@@ -1766,7 +1766,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -1788,7 +1788,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -1817,7 +1817,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -1844,7 +1844,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1868,7 +1868,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -1896,7 +1896,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -1923,7 +1923,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -1950,7 +1950,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -1978,7 +1978,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2005,7 +2005,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2032,7 +2032,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2054,7 +2054,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -2084,7 +2084,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2111,7 +2111,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2138,7 +2138,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2166,7 +2166,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2193,7 +2193,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2220,7 +2220,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2248,7 +2248,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2275,7 +2275,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2302,7 +2302,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2324,7 +2324,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -2348,7 +2348,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -2378,7 +2378,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2405,7 +2405,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2432,7 +2432,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2459,7 +2459,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2486,7 +2486,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2514,7 +2514,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "2025 Haziran Ayı Petrol ve LPG Piyasası Fiyatlandırma Raporu",
@@ -2540,7 +2540,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2567,7 +2567,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2594,7 +2594,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2622,7 +2622,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "Su Dışındaki Sıvılar İçin Ölçme Sistemleri ile Bazı Ölçü ve Tartı Aletlerinin Muayene Yönetmeliğinde Değişiklik Yapılmasına Dair Yönetmelik",
@@ -2642,7 +2642,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -2666,7 +2666,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -2696,7 +2696,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2704,7 +2704,7 @@
       "title": "30 Nisan 2025 Ulusal Taşıt Tanıma Sistemi Uygulamasına Yönelik Süre Uzatımına İlişkin Duyuru",
       "url": "https://ynokc.gib.gov.tr/Home/DuyuruDetay/11133",
       "date": "2025-04-30",
-      "summary": "Loading... Ulusal Taşıt Tanıma Sistemi Uygulamasına Yönelik Süre Uzatımına İlişkin Duyuru İlgili dokümanı indirmek için 30 Nisan 2025 Yardım ve Kaynaklar Mevzuat Sık Sorulan Sorular Onay Alan Firmalar İletişim Bağlantılar Cumhurbaşkanlığı Hazine ve Maliye Bakanlığı Gelir İdaresi Başkanlığı Dijital Vergi Dairesi Her hakkı saklıdır. © 2026 T.C. Gelir İdaresi Başkanlığı - GİB Teknoloji",
+      "summary": "",
       "source": "GİB / YN ÖKC",
       "source_name": "GİB Yeni Nesil ÖKC",
       "source_key": "gib",
@@ -2712,15 +2712,15 @@
       "severity": "critical",
       "category": "UTTS",
       "source_url": "https://ynokc.gib.gov.tr/Home/DuyuruArsiv",
-      "source_excerpt": "Loading... Ulusal Taşıt Tanıma Sistemi Uygulamasına Yönelik Süre Uzatımına İlişkin Duyuru İlgili dokümanı indirmek için 30 Nisan 2025 Yardım ve Kaynaklar Mevzuat Sık Sorulan Sorular Onay Alan Firmalar İletişim Bağlantılar Cumhurbaşkanlığı Hazine ve Maliye Bakanlığı Gelir İdaresi Başkanlığı Dijital Vergi Dairesi Her hakkı saklıdır. © 2026 T.C. Gelir İdaresi Başkanlığı - GİB Teknoloji",
-      "description_origin": "official_source",
+      "source_excerpt": "",
+      "description_origin": "title_only",
       "id": "ff0e8a8a0d87ee2c70",
       "fingerprint": "fe186a447d7e622ace",
       "first_seen": "2026-09-10T08:54:27.559294+00:00",
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -2747,7 +2747,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2774,7 +2774,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2802,7 +2802,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -2833,7 +2833,7 @@
           "new": "29 Mart 2025 1 Sıra No.lu Ulusal Taşıt Tanıma Sistemi Uygulama Genel Tebliği'nde güncellem..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -2857,7 +2857,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -2888,7 +2888,7 @@
           "new": "27 Mart 2025 Yeni Nesil Pompa ÖKClerden Düzenlenecek Fiş ve Rapor Formatları Teknik Kılavu..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -2915,7 +2915,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -2942,7 +2942,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -2970,7 +2970,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "Karayolu Dışı Mobil Makinelere Takılmış ve Kullanımda Olan İçten Yanmalı Motorlardan Kaynaklanan Gaz Halindeki Kirleticilerin İzlenmesine Dair Tebliğ (2017/655/Ab) (Sgm: 2021/25)’De Değişiklik Yapılmasına İlişkin Tebliğ (Sgm: 2025/2)",
@@ -2990,7 +2990,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -3014,7 +3014,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -3044,7 +3044,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3071,7 +3071,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3098,7 +3098,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3125,7 +3125,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3153,7 +3153,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "2025 Şubat Ayı Petrol ve LPG Piyasası Fiyatlandırma Raporu",
@@ -3179,7 +3179,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3206,7 +3206,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3233,7 +3233,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3255,7 +3255,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -3285,7 +3285,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3312,7 +3312,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3339,7 +3339,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3361,7 +3361,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -3385,7 +3385,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -3409,7 +3409,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -3433,7 +3433,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -3463,7 +3463,7 @@
       "changed_at": "2026-09-17T08:37:57.876588+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:39:09.895615+00:00"
+      "last_seen": "2026-09-18T08:40:59.021390+00:00"
     },
     {
       "title": "07 Aralık 2024 3 Sıra No.lu Ulusal Taşıt Tanıma Sistemi Uygulama Genel Tebliği yayımlanmıştır.",
@@ -3485,7 +3485,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -3513,7 +3513,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3540,7 +3540,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3567,7 +3567,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3598,7 +3598,7 @@
           "new": "08 Kasım 2024 Yeni Nesil Pompa ÖKC'lerden Düzenlenecek Fiş ve Rapor Formatları Teknik Kılav..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -3626,7 +3626,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3653,7 +3653,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3680,7 +3680,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3708,7 +3708,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3735,7 +3735,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3762,7 +3762,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3786,7 +3786,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -3814,7 +3814,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3841,7 +3841,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3868,7 +3868,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -3892,7 +3892,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -3920,7 +3920,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -3947,7 +3947,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -3974,7 +3974,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4002,7 +4002,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4029,7 +4029,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4056,7 +4056,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4087,7 +4087,7 @@
           "new": "20 Haziran 2024 Yeni Nesil Ödeme Kaydedici Cihazlara Ait Elektronik Kayıt, Aktivasyon ve Yetk..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -4114,7 +4114,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4141,7 +4141,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4169,7 +4169,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4196,7 +4196,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4223,7 +4223,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4245,7 +4245,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -4275,7 +4275,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4302,7 +4302,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4329,7 +4329,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4351,7 +4351,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -4381,7 +4381,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4408,7 +4408,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4435,7 +4435,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4463,7 +4463,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4490,7 +4490,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4517,7 +4517,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4545,7 +4545,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4572,7 +4572,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4599,7 +4599,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4621,7 +4621,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -4651,7 +4651,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4678,7 +4678,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4705,7 +4705,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4727,7 +4727,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -4760,7 +4760,7 @@
           "new": "19 Aralık 2023 EKÜ’lü Eski Nesil Pompa Ödeme Kaydedici Cihazların Yeni Nesil Akaryakıt Pompa..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -4788,7 +4788,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4815,7 +4815,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4842,7 +4842,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -4864,7 +4864,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -4888,7 +4888,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -4918,7 +4918,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -4945,7 +4945,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -4972,7 +4972,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5000,7 +5000,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5027,7 +5027,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5054,7 +5054,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5082,7 +5082,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5109,7 +5109,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5136,7 +5136,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5164,7 +5164,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5186,7 +5186,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -5215,7 +5215,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5237,7 +5237,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -5267,7 +5267,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5294,7 +5294,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5321,7 +5321,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5348,7 +5348,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5375,7 +5375,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5402,7 +5402,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5430,7 +5430,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5457,7 +5457,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5484,7 +5484,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5512,7 +5512,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5539,7 +5539,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5566,7 +5566,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5588,7 +5588,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -5618,7 +5618,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5645,7 +5645,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5672,7 +5672,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5696,7 +5696,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -5718,7 +5718,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -5748,7 +5748,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5775,7 +5775,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5802,7 +5802,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5833,7 +5833,7 @@
           "new": "10 Şubat 2023 Depremden Etkilenen İllerimizde Yapılan Akaryakıt Satışlarındaki Belge Düzeni..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -5861,7 +5861,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5888,7 +5888,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5915,7 +5915,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -5943,7 +5943,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -5970,7 +5970,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -5997,7 +5997,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6019,7 +6019,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -6049,7 +6049,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6076,7 +6076,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6103,7 +6103,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6125,7 +6125,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -6158,7 +6158,7 @@
           "new": "10 Kasım 2022 Eski Nesil (EKÜ’süz/EKÜ’lü) Akaryakıt Pompa Ödeme Kaydedici Cihazlara İlişki..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -6186,7 +6186,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6213,7 +6213,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6240,7 +6240,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6268,7 +6268,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6295,7 +6295,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6322,7 +6322,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6350,7 +6350,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6377,7 +6377,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6404,7 +6404,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6435,7 +6435,7 @@
           "new": "26 Ağustos 2022 \"Yeni Nesil Akaryakıt Pompa Ödeme Kaydedici Cihazlara Ait Elektronik Kayıt Si..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -6457,7 +6457,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -6487,7 +6487,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6514,7 +6514,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6541,7 +6541,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6565,7 +6565,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -6593,7 +6593,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6620,7 +6620,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6647,7 +6647,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6678,7 +6678,7 @@
           "new": "14 Haziran 2022 Eski Nesil Pompa Ödeme Kaydedici Cihazların Yeni Nesil Akaryakıt Pompa Ödeme ..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -6706,7 +6706,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6733,7 +6733,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6760,7 +6760,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6787,7 +6787,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6814,7 +6814,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6836,7 +6836,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -6866,7 +6866,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -6893,7 +6893,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -6920,7 +6920,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -6942,7 +6942,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -6966,7 +6966,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -6996,7 +6996,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7023,7 +7023,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7050,7 +7050,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7078,7 +7078,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7105,7 +7105,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7132,7 +7132,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7160,7 +7160,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7187,7 +7187,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7214,7 +7214,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7236,7 +7236,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -7266,7 +7266,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7297,7 +7297,7 @@
           "new": "30 Aralık 2021 YN Akaryakıt Pompa ÖKC’ler ve TSM’ler ile İlgili Olarak Hazırlanan Teknik Kıl..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -7324,7 +7324,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7351,7 +7351,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7373,7 +7373,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -7397,7 +7397,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -7421,7 +7421,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -7445,7 +7445,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -7475,7 +7475,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7502,7 +7502,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7529,7 +7529,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7551,7 +7551,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -7581,7 +7581,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7612,7 +7612,7 @@
           "new": "28 Ekim 2021 “Yeni Nesil Akaryakıt Pompa Ödeme Kaydedici Cihazlar (Yeni Nesil Pompa ÖKC)..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -7639,7 +7639,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7666,7 +7666,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7694,7 +7694,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7721,7 +7721,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7748,7 +7748,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7776,7 +7776,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7803,7 +7803,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7830,7 +7830,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7852,7 +7852,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -7882,7 +7882,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -7909,7 +7909,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -7936,7 +7936,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -7958,7 +7958,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -7988,7 +7988,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8010,7 +8010,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -8039,7 +8039,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8066,7 +8066,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8094,7 +8094,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8121,7 +8121,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8148,7 +8148,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8175,7 +8175,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8202,7 +8202,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8233,7 +8233,7 @@
           "new": "21 Mayıs 2021 “Yeni Nesil Akaryakıt Pompa Ödeme Kaydedici Cihazlar (Yeni Nesil Pompa ÖKC)” ..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -8255,7 +8255,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -8285,7 +8285,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8312,7 +8312,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8339,7 +8339,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8361,7 +8361,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -8391,7 +8391,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8418,7 +8418,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8445,7 +8445,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8476,7 +8476,7 @@
           "new": "24 Mart 2021 Eski Nesil Akaryakıt Pompa ÖKC’lerin Yeni Nesil Akaryakıt Pompa ÖKC’ler Halin..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -8504,7 +8504,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8531,7 +8531,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8558,7 +8558,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8580,7 +8580,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -8610,7 +8610,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8637,7 +8637,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8664,7 +8664,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8692,7 +8692,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -8719,7 +8719,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8746,7 +8746,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8768,7 +8768,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -8792,7 +8792,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -8821,7 +8821,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8848,7 +8848,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8870,7 +8870,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -8899,7 +8899,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8926,7 +8926,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -8953,7 +8953,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -8980,7 +8980,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9002,7 +9002,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9026,7 +9026,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9055,7 +9055,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9082,7 +9082,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9109,7 +9109,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9136,7 +9136,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9163,7 +9163,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9190,7 +9190,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9212,7 +9212,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9241,7 +9241,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9268,7 +9268,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9295,7 +9295,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9322,7 +9322,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9349,7 +9349,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9376,7 +9376,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9398,7 +9398,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9427,7 +9427,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9454,7 +9454,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9476,7 +9476,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9505,7 +9505,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9536,7 +9536,7 @@
           "new": "21 Şubat 2020 Eski Nesil Akaryakıt Pompa ÖKC’lerin Yeni Nesil Akaryakıt Pompa ÖKC’ler Halin..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -9558,7 +9558,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9582,7 +9582,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -9606,7 +9606,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -9630,7 +9630,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9663,7 +9663,7 @@
           "new": "04 Ekim 2019 “Yeni Nesil Akaryakıt Pompa Ödeme Kaydedici Cihazlar (Yeni Nesil Pompa ÖKC)” ..."
         }
       ],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "ynokc.gib.gov.tr",
       "source_location": "GİB Yeni Nesil ÖKC"
     },
@@ -9685,7 +9685,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9714,7 +9714,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9741,7 +9741,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9763,7 +9763,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9787,7 +9787,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9859,7 +9859,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -9883,7 +9883,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9912,7 +9912,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -9939,7 +9939,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -9961,7 +9961,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -9985,7 +9985,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10009,7 +10009,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10033,7 +10033,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10057,7 +10057,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10081,7 +10081,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10105,7 +10105,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10134,7 +10134,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -10161,7 +10161,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -10183,7 +10183,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10207,7 +10207,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10231,7 +10231,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10255,7 +10255,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10279,7 +10279,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10303,7 +10303,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10327,7 +10327,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10351,7 +10351,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10380,7 +10380,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -10407,7 +10407,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -10429,7 +10429,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10453,7 +10453,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10477,7 +10477,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10501,7 +10501,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10525,7 +10525,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10549,7 +10549,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10573,7 +10573,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10597,7 +10597,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10626,7 +10626,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -10653,7 +10653,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -10675,7 +10675,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10699,7 +10699,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10723,7 +10723,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10747,7 +10747,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10771,7 +10771,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10795,7 +10795,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -10819,7 +10819,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10848,7 +10848,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -10875,7 +10875,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -10897,7 +10897,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10921,7 +10921,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10945,7 +10945,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10969,7 +10969,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -10993,7 +10993,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11017,7 +11017,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11041,7 +11041,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11070,7 +11070,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -11097,7 +11097,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -11119,7 +11119,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11143,7 +11143,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11167,7 +11167,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11196,7 +11196,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -11218,7 +11218,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11242,7 +11242,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11266,7 +11266,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11290,7 +11290,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11314,7 +11314,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -11343,7 +11343,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -11365,7 +11365,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11389,7 +11389,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11413,7 +11413,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11437,7 +11437,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11461,7 +11461,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11485,7 +11485,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11509,7 +11509,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11533,7 +11533,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11557,7 +11557,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11581,7 +11581,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11605,7 +11605,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11629,7 +11629,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11653,7 +11653,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11677,7 +11677,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11701,7 +11701,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11725,7 +11725,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11749,7 +11749,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11773,7 +11773,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11797,7 +11797,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -11826,7 +11826,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -11853,7 +11853,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -11880,7 +11880,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Mevzuatı"
     },
@@ -11907,7 +11907,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -11934,7 +11934,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -11961,7 +11961,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -11988,7 +11988,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -12015,7 +12015,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -12042,7 +12042,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -12069,7 +12069,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -12096,7 +12096,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -12123,7 +12123,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -12150,7 +12150,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -12177,7 +12177,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Resmî İstatistikleri"
     },
@@ -12231,7 +12231,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12258,7 +12258,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12285,7 +12285,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12312,7 +12312,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12339,7 +12339,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12366,7 +12366,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12393,7 +12393,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12420,7 +12420,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12447,7 +12447,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12474,7 +12474,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12501,7 +12501,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12528,7 +12528,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12555,7 +12555,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12582,7 +12582,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12609,7 +12609,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12636,7 +12636,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12663,7 +12663,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12690,7 +12690,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12717,7 +12717,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12744,7 +12744,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12771,7 +12771,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12798,7 +12798,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12825,7 +12825,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12852,7 +12852,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12879,7 +12879,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12906,7 +12906,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12933,7 +12933,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12960,7 +12960,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -12987,7 +12987,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13014,7 +13014,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13041,7 +13041,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13068,7 +13068,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 23,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13095,7 +13095,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 22,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13122,7 +13122,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 22,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13149,7 +13149,7 @@
       "changed_at": "2026-09-18T05:26:50.637026+00:00",
       "revision": 22,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13186,26 +13186,26 @@
       "date": null,
       "summary": "Lisans Bedelleri",
       "source": "EPDK",
-      "source_name": "EPDK LPG Piyasası Kurul Kararları",
-      "source_key": "epdk_lpg_karar",
+      "source_name": "EPDK LPG Piyasası Mevzuatı",
+      "source_key": "epdk_lpg_mevzuat",
       "official": true,
       "severity": "important",
       "category": "Lisans / Denetim",
       "market": "LPG",
-      "record_type": "Kurul Kararı",
+      "record_type": "Mevzuat",
       "epdk_focus": true,
-      "source_url": "https://www.epdk.gov.tr/Detay/Icerik/3-0-0-1173/lpg-piyasasi-kurul-kararlari",
+      "source_url": "https://www.epdk.gov.tr/Detay/Icerik/23-2-1002/mevzuat",
       "source_excerpt": "Lisans Bedelleri",
       "description_origin": "official_source",
       "id": "58a630c2f28934609c",
-      "fingerprint": "7a7d71ac89a810fb79",
+      "fingerprint": "155ddb26e774d622bb",
       "first_seen": "2000-01-01T00:00:00+00:00",
       "changed_at": "2026-09-18T04:18:42.894214+00:00",
       "revision": 94,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
-      "source_location": "EPDK LPG Piyasası Kurul Kararları"
+      "source_location": "EPDK LPG Piyasası Mevzuatı"
     },
     {
       "title": "Lisans Bedelleri",
@@ -13230,7 +13230,7 @@
       "changed_at": "2026-09-16T02:52:58.890509+00:00",
       "revision": 8,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -13252,7 +13252,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13276,7 +13276,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13300,7 +13300,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -13324,7 +13324,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "puis.org.tr",
@@ -13348,7 +13348,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -13372,7 +13372,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -13396,7 +13396,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tabgis.org.tr",
@@ -13420,7 +13420,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -13444,7 +13444,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -13468,7 +13468,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -13492,7 +13492,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -13516,7 +13516,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -13540,7 +13540,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "petder.org.tr",
@@ -13564,7 +13564,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13588,7 +13588,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13612,7 +13612,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "epdk.org.tr",
@@ -13636,7 +13636,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13660,7 +13660,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13684,7 +13684,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13708,7 +13708,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13732,7 +13732,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13756,7 +13756,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13780,7 +13780,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13804,7 +13804,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13828,7 +13828,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13852,7 +13852,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13876,7 +13876,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13900,7 +13900,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13924,7 +13924,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13948,7 +13948,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13972,7 +13972,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -13996,7 +13996,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "tlpgder.org.tr",
@@ -14066,7 +14066,7 @@
       "changed_at": "2026-09-14T07:30:59.252556+00:00",
       "revision": 1,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_excerpt": "",
       "description_origin": "title_only",
       "source_host": "noxdesign.net",
@@ -14149,7 +14149,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Mevzuatı"
     },
@@ -14203,7 +14203,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Mevzuatı"
     },
@@ -14257,7 +14257,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -14311,7 +14311,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -14338,7 +14338,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -14365,7 +14365,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Mevzuatı"
     },
@@ -14392,7 +14392,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol Piyasası Resmî İstatistikleri"
     },
@@ -14419,7 +14419,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Kurul Kararları"
     },
@@ -14446,7 +14446,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK LPG Piyasası Kurul Kararları"
     },
@@ -14473,7 +14473,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14500,7 +14500,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14527,7 +14527,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14554,7 +14554,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14581,7 +14581,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14608,7 +14608,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14635,7 +14635,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14662,7 +14662,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14689,7 +14689,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     },
@@ -14716,7 +14716,7 @@
       "changed_at": null,
       "revision": 0,
       "change_details": [],
-      "last_seen": "2026-09-18T08:38:59.845868+00:00",
+      "last_seen": "2026-09-18T08:40:48.921210+00:00",
       "source_host": "epdk.gov.tr",
       "source_location": "EPDK Petrol ve LPG Fiyatlandırma Raporları"
     }
@@ -14727,119 +14727,119 @@
       "source_name": "EPDK Petrol/LPG Denetim Kararları",
       "ok": true,
       "count": 1,
-      "checked_at": "2026-09-18T08:38:59.851333+00:00"
-    },
-    {
-      "source": "EPDK",
-      "source_name": "EPDK LPG Piyasası Mevzuatı",
-      "ok": true,
-      "count": 5,
-      "checked_at": "2026-09-18T08:38:59.846959+00:00"
-    },
-    {
-      "source": "EPDK",
-      "source_name": "EPDK Duyurular",
-      "ok": true,
-      "count": 4,
-      "checked_at": "2026-09-18T08:38:59.846176+00:00"
+      "checked_at": "2026-09-18T08:40:48.926422+00:00"
     },
     {
       "source": "EPDK",
       "source_name": "EPDK Petrol Piyasası Kurul Kararları",
       "ok": true,
       "count": 1,
-      "checked_at": "2026-09-18T08:38:59.849448+00:00"
+      "checked_at": "2026-09-18T08:40:48.924147+00:00"
+    },
+    {
+      "source": "EPDK",
+      "source_name": "EPDK Duyurular",
+      "ok": true,
+      "count": 4,
+      "checked_at": "2026-09-18T08:40:48.921476+00:00"
     },
     {
       "source": "EPDK",
       "source_name": "EPDK LPG Piyasası Kurul Kararları",
       "ok": true,
-      "count": 3,
-      "checked_at": "2026-09-18T08:38:59.850706+00:00"
+      "count": 2,
+      "checked_at": "2026-09-18T08:40:48.925538+00:00"
+    },
+    {
+      "source": "EPDK",
+      "source_name": "EPDK LPG Piyasası Mevzuatı",
+      "ok": true,
+      "count": 6,
+      "checked_at": "2026-09-18T08:40:48.923000+00:00"
     },
     {
       "source": "EPDK",
       "source_name": "EPDK Petrol Piyasası Mevzuatı",
       "ok": true,
       "count": 46,
-      "checked_at": "2026-09-18T08:38:59.846571+00:00"
+      "checked_at": "2026-09-18T08:40:48.921901+00:00"
     },
     {
       "source": "EPDK",
       "source_name": "EPDK Petrol Piyasası Aylık Toplu Lisanslar",
       "ok": true,
       "count": 7,
-      "checked_at": "2026-09-18T08:38:59.854834+00:00"
+      "checked_at": "2026-09-18T08:40:48.929631+00:00"
     },
     {
       "source": "EPDK",
       "source_name": "EPDK Petrol ve LPG Fiyatlandırma Raporları",
       "ok": true,
       "count": 78,
-      "checked_at": "2026-09-18T08:38:59.853903+00:00"
-    },
-    {
-      "source": "GİB / YN ÖKC",
-      "source_name": "GİB Yeni Nesil ÖKC",
-      "ok": true,
-      "count": 27,
-      "checked_at": "2026-09-18T08:39:02.007018+00:00"
-    },
-    {
-      "source": "TABGİS",
-      "source_name": "TABGİS Duyurular",
-      "ok": true,
-      "count": 56,
-      "checked_at": "2026-09-18T08:39:02.178186+00:00"
-    },
-    {
-      "source": "EPDK",
-      "source_name": "EPDK LPG Piyasası Aylık Toplu Lisanslar",
-      "ok": true,
-      "count": 4,
-      "checked_at": "2026-09-18T08:39:01.876532+00:00"
-    },
-    {
-      "source": "EPDK",
-      "source_name": "EPDK LPG Piyasası Resmî İstatistikleri",
-      "ok": true,
-      "count": 100,
-      "checked_at": "2026-09-18T08:38:59.852977+00:00"
+      "checked_at": "2026-09-18T08:40:48.928891+00:00"
     },
     {
       "source": "EPDK",
       "source_name": "EPDK Petrol Piyasası Resmî İstatistikleri",
       "ok": true,
       "count": 100,
-      "checked_at": "2026-09-18T08:38:59.852315+00:00"
+      "checked_at": "2026-09-18T08:40:48.927249+00:00"
+    },
+    {
+      "source": "EPDK",
+      "source_name": "EPDK LPG Piyasası Resmî İstatistikleri",
+      "ok": true,
+      "count": 100,
+      "checked_at": "2026-09-18T08:40:48.928003+00:00"
+    },
+    {
+      "source": "TABGİS",
+      "source_name": "TABGİS Duyurular",
+      "ok": true,
+      "count": 56,
+      "checked_at": "2026-09-18T08:40:50.741470+00:00"
+    },
+    {
+      "source": "GİB / YN ÖKC",
+      "source_name": "GİB Yeni Nesil ÖKC",
+      "ok": true,
+      "count": 27,
+      "checked_at": "2026-09-18T08:40:50.678814+00:00"
+    },
+    {
+      "source": "EPDK",
+      "source_name": "EPDK LPG Piyasası Aylık Toplu Lisanslar",
+      "ok": true,
+      "count": 4,
+      "checked_at": "2026-09-18T08:40:50.612222+00:00"
     },
     {
       "source": "PÜİS",
       "source_name": "PÜİS Haberler",
       "ok": true,
       "count": 16,
-      "checked_at": "2026-09-18T08:39:02.148855+00:00"
+      "checked_at": "2026-09-18T08:40:50.718529+00:00"
     },
     {
       "source": "LPG Derneği",
       "source_name": "Türkiye LPG Derneği",
       "ok": true,
       "count": 26,
-      "checked_at": "2026-09-18T08:39:02.264138+00:00"
+      "checked_at": "2026-09-18T08:40:50.893839+00:00"
     },
     {
       "source": "PETDER",
       "source_name": "PETDER Mevzuat",
       "ok": true,
       "count": 80,
-      "checked_at": "2026-09-18T08:39:02.179853+00:00"
+      "checked_at": "2026-09-18T08:40:50.849466+00:00"
     },
     {
       "source": "Resmî Gazete",
       "source_name": "Resmî Gazete",
       "ok": true,
       "count": 0,
-      "checked_at": "2026-09-18T08:39:08.067506+00:00",
+      "checked_at": "2026-09-18T08:40:56.616444+00:00",
       "access_mode": "verified_mirror",
       "days_reached": 14,
       "note": "Resmî Gazete doğrudan erişimi Vercel tarafında kısıtlı; günlük indeks yedek kaynaktan okunuyor, bağlantılar resmigazete.gov.tr adresine gider."
@@ -14849,8 +14849,8 @@
       "source_name": "Darphane / UTTS Duyuruları",
       "ok": true,
       "count": 9,
-      "checked_at": "2026-09-18T08:39:09.895615+00:00",
-      "official_urls_reached": 9,
+      "checked_at": "2026-09-18T08:40:59.021390+00:00",
+      "official_urls_reached": 8,
       "official_urls_total": 9,
       "home": "https://www.darphane.gov.tr/ulusal-tasit-tanima-sistemi",
       "note": "Darphane üzerindeki UTTS duyuru adresleri doğrudan kontrol edilir."
@@ -14860,7 +14860,7 @@
       "source_name": "UTTS Portalı (utts.gov.tr)",
       "ok": true,
       "count": 0,
-      "checked_at": "2026-09-18T08:39:17.464042+00:00",
+      "checked_at": "2026-09-18T08:41:15.941460+00:00",
       "home": "https://www.utts.gov.tr/",
       "access_mode": "official_static_fallback",
       "direct_reachable": false,
@@ -14868,7 +14868,7 @@
       "indexed_reachable": false,
       "note": "Ana sayfa sunucu tarafında zaman aşımına uğradı; resmî utts.gov.tr / cdn-document.utts.gov.tr doküman sunucusu erişilebilir. Kaynak aktif kabul edildi.",
       "health_probe_url": "https://cdn-document.utts.gov.tr/utts-akaryakit-dagitim-sirketleri-kayit-kilavuzu.pdf",
-      "direct_error": "HTTPSConnectionPool(host='utts.gov.tr', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<HTTPSConnection(host='utts.gov.tr', port=443) at 0x7f1688b8eff0>"
+      "direct_error": "HTTPSConnectionPool(host='utts.gov.tr', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<HTTPSConnection(host='utts.gov.tr', port=443) at 0x7f652470a5d0>"
     }
   ],
   "version": 18,
