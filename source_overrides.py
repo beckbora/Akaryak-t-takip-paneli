@@ -421,7 +421,7 @@ def normalize_sector_data(data):
     items = _enrich_gib_detail_text(items)
     for i in items:
         if i.get('description_origin') == 'official_source':
-            i['category'] = _content_category(i)
+            i['category'] = _category(i)
             i['severity'] = severity(_direct_text(i))
     items.sort(key=lambda x: (x.get('date') or ((x.get('report_period') or '0000-00') + '-01'), x.get('changed_at') or x.get('first_seen') or ''), reverse=True)
     items = items[:900]
