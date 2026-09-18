@@ -96,11 +96,20 @@ jobs:
         run: |
           python - <<'PY'
           import json, os
+          def clean(name):
+              value = os.getenv(name, "").strip()
+              if "=" in value and value.startswith(("SUPABASE_", "NEXT_PUBLIC_SUPABASE_", "VAPID_")):
+                  value = value.split("=", 1)[1].strip()
+              return value
+          supabase_url = clean("SUPABASE_URL")
+          publishable_key = clean("SUPABASE_PUBLISHABLE_KEY")
+          secret_key = clean("SUPABASE_SECRET_KEY")
+          vapid_private = clean("VAPID_PRIVATE_KEY_B64")
           data = {
-              "configured": bool(os.getenv("SUPABASE_URL") and os.getenv("SUPABASE_PUBLISHABLE_KEY")),
-              "sender_configured": bool(os.getenv("SUPABASE_SECRET_KEY") and os.getenv("VAPID_PRIVATE_KEY_B64")),
-              "supabase_url": os.getenv("SUPABASE_URL", ""),
-              "supabase_publishable_key": os.getenv("SUPABASE_PUBLISHABLE_KEY", ""),
+              "configured": bool(supabase_url and publishable_key),
+              "sender_configured": bool(secret_key and vapid_private),
+              "supabase_url": supabase_url,
+              "supabase_publishable_key": publishable_key,
               "vapid_public_key": "BCd3xQNt5Ba-iH4uonQU8VCI2E6RZxd3LRWqehRLBLZaRgEjm6qfyNCVyYEkfwd1MiIVhVznd6mLYuCdcG4USM0",
           }
           with open("push-config.json", "w", encoding="utf-8") as f:
