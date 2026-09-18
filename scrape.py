@@ -15,14 +15,16 @@ SOURCES = [
     {"key":"epdk_petrol_karar","name":"EPDK Petrol Piyasası Kurul Kararları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-0-1172/petrol-piyasasi-kurul-kararlari","group":"EPDK","official":True,"market":"Petrol","record_type":"Kurul Kararı","epdk_focus":True},
     {"key":"epdk_lpg_karar","name":"EPDK LPG Piyasası Kurul Kararları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-0-1173/lpg-piyasasi-kurul-kararlari","group":"EPDK","official":True,"market":"LPG","record_type":"Kurul Kararı","epdk_focus":True},
     {"key":"epdk_denetim","name":"EPDK Petrol/LPG Denetim Kararları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-136/kurul-kararlari","group":"EPDK","official":True,"market":"Petrol/LPG","record_type":"Denetim","epdk_focus":True},
+    {"key":"epdk_petrol_istatistik","name":"EPDK Petrol Piyasası Resmî İstatistikleri","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-168/resmi-istatistikleri","group":"EPDK","official":True,"market":"Petrol","record_type":"Sektör Raporu","epdk_focus":True,"parser":"epdk_report"},
+    {"key":"epdk_lpg_istatistik","name":"EPDK LPG Piyasası Resmî İstatistikleri","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-169/resmi-istatistikleri","group":"EPDK","official":True,"market":"LPG","record_type":"Sektör Raporu","epdk_focus":True,"parser":"epdk_report"},
+    {"key":"epdk_fiyatlandirma","name":"EPDK Petrol ve LPG Fiyatlandırma Raporları","url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-143/raporlar","group":"EPDK","official":True,"market":"Petrol/LPG","record_type":"Fiyatlandırma Raporu","epdk_focus":True,"parser":"epdk_pricing"},
+    {"key":"epdk_petrol_lisans","name":"EPDK Petrol Piyasası Aylık Toplu Lisanslar","url":"https://www.epdk.gov.tr/Detay/Icerik/21-1-1008/aylik-toplu-lisanslar","group":"EPDK","official":True,"market":"Petrol","record_type":"Aylık Toplu Lisans","epdk_focus":True,"parser":"epdk_license"},
+    {"key":"epdk_lpg_lisans","name":"EPDK LPG Piyasası Aylık Toplu Lisanslar","url":"https://www.epdk.gov.tr/Detay/Icerik/21-1-1002/aylik-toplu-lisanslar","group":"EPDK","official":True,"market":"LPG","record_type":"Aylık Toplu Lisans","epdk_focus":True,"parser":"epdk_license"},
     {"key":"gib","name":"GİB Yeni Nesil ÖKC","url":"https://ynokc.gib.gov.tr/Home/DuyuruArsiv","group":"GİB / YN ÖKC","official":True},
-    {"key":"darphane","name":"Darphane Duyurular","url":"https://www.darphane.gov.tr/","group":"Darphane / UTTS","official":True},
-    {"key":"utts","name":"UTTS","url":"https://www.utts.gov.tr/","group":"UTTS","official":True},
     {"key":"puis","name":"PÜİS Haberler","url":"https://www.puis.org.tr/haberler/","group":"PÜİS","official":False},
     {"key":"tabgis","name":"TABGİS Duyurular","url":"https://tabgis.org.tr/duyurular/","group":"TABGİS","official":False},
     {"key":"petder","name":"PETDER Mevzuat","url":"https://www.petder.org.tr/tr-TR/mevzuat/628766","group":"PETDER","official":False},
     {"key":"lpgder","name":"Türkiye LPG Derneği","url":"https://www.tlpgder.org.tr/default.aspx","group":"LPG Derneği","official":False},
-    {"key":"tobb","name":"TOBB Sektör Haberleri","url":"https://www.tobb.org.tr/Sayfalar/Arsiv.php?csn=TOBB&kategori=&lst=2&s5=50","group":"TOBB","official":False},
 ]
 
 KEYWORDS = [
@@ -269,22 +271,51 @@ def fingerprint(item):
     return hashlib.sha1(body.encode("utf-8")).hexdigest()[:18]
 
 
+def _change_details(item, previous):
+    fields = (
+        ("title", "Başlık"),
+        ("date", "Yayın tarihi"),
+        ("source_excerpt", "Kaynak metni"),
+    )
+    details = []
+    for field, label in fields:
+        old = clean(previous.get(field) or "")
+        new = clean(item.get(field) or "")
+        if old == new:
+            continue
+        # Parser geçişinde daha önce tutulmayan gerçek kaynak metninin ilk kez
+        # eklenmesini mevzuat değişikliği gibi göstermeyelim.
+        if field == "source_excerpt" and not old and new:
+            continue
+        details.append({
+            "field": field,
+            "label": label,
+            "old": old[:500],
+            "new": new[:500],
+        })
+    return details
+
+
 def merge_seen(item, previous, now):
     item["id"] = uid(item)
     item["fingerprint"] = fingerprint(item)
     if previous:
         item["first_seen"] = previous.get("first_seen", now)
         old_fp = previous.get("fingerprint") or fingerprint(previous)
-        if old_fp != item["fingerprint"]:
+        details = _change_details(item, previous)
+        if old_fp != item["fingerprint"] and details:
             item["changed_at"] = now
             item["revision"] = int(previous.get("revision", 0)) + 1
+            item["change_details"] = details[:4]
         else:
             item["changed_at"] = previous.get("changed_at")
             item["revision"] = int(previous.get("revision", 0))
+            item["change_details"] = previous.get("change_details") or []
     else:
         item["first_seen"] = now
         item["changed_at"] = None
         item["revision"] = 0
+        item["change_details"] = []
     item["last_seen"] = now
     return item
 
