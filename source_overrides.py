@@ -1,4 +1,5 @@
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import Counter
 from datetime import datetime, timezone
 from urllib.parse import quote_plus, urljoin, urlsplit
@@ -310,6 +311,79 @@ DEDICATED_EPDK_TITLES = {
     'epdk_petrol_lisans': 'aylık toplu lisanslar',
     'epdk_lpg_lisans': 'aylık toplu lisanslar',
 }
+DETAIL_TEXT_TERMS = ('süre uzat', 'sure uzat', 'yükümlülük', 'yukumluluk', 'son tarih', 'tebliğ', 'teblig')
+
+
+def _detail_page_text(url, title=''):
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=5)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, 'html.parser')
+        for bad in soup.find_all(['script', 'style', 'nav', 'header', 'footer', 'aside']):
+            bad.decompose()
+        candidates = []
+        for node in soup.select('article, main, .duyuru-detay, .duyuruDetay, .content, .icerik, #content, #icerik'):
+            text = clean(node.get_text(' ', strip=True))
+            if 120 <= len(text) <= 12000:
+                candidates.append(text)
+        if not candidates and soup.body:
+            text = clean(soup.body.get_text(' ', strip=True))
+            if 120 <= len(text) <= 12000:
+                candidates.append(text)
+        if not candidates:
+            return ''
+        title_key = clean(re.sub(r'^\d{1,2}\s+\w+\s+20\d{2}\s+', '', title or '')).casefold()[:45]
+        candidates.sort(key=lambda t: (title_key in t.casefold() if title_key else False, min(len(t), 5000)), reverse=True)
+        return candidates[0][:2200]
+    except Exception:
+        return ''
+
+
+def _enrich_gib_detail_text(items):
+    targets = [
+        i for i in items
+        if i.get('source_key') == 'gib'
+        and not clean(i.get('source_excerpt') or '')
+        and i.get('url')
+        and any(term in clean(i.get('title') or '').casefold() for term in DETAIL_TEXT_TERMS)
+    ]
+    targets.sort(key=lambda i: i.get('date') or '0000-00-00', reverse=True)
+    targets = targets[:8]
+    if not targets:
+        return items
+    by_id = {id(i): i for i in targets}
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        jobs = {pool.submit(_detail_page_text, i.get('url'), i.get('title')): id(i) for i in targets}
+        for job in as_completed(jobs):
+            item = by_id.get(jobs[job])
+            if not item:
+                continue
+            try:
+                text = clean(job.result())
+            except Exception:
+                text = ''
+            if text:
+                item['source_excerpt'] = text
+                item['summary'] = text
+                item['description_origin'] = 'official_source'
+    return items
+
+
+def _clean_parser_migration_change(item):
+    details = item.get('change_details') or []
+    key = item.get('source_key')
+    required = DEDICATED_EPDK_TITLES.get(key)
+    if not required or len(details) != 1:
+        return item
+    ch = details[0]
+    old = clean(ch.get('old') or '').casefold()
+    new = clean(ch.get('new') or '').casefold()
+    if ch.get('field') == 'title' and required in new and required not in old:
+        if int(item.get('revision') or 0) <= 1:
+            item['revision'] = 0
+            item['changed_at'] = None
+        item['change_details'] = []
+    return item
 
 
 def _dedicated_epdk_record(raw):
@@ -317,7 +391,15 @@ def _dedicated_epdk_record(raw):
     required = DEDICATED_EPDK_TITLES.get(key)
     if not required:
         return True
-    return required in clean(raw.get('title') or '').casefold()
+    title = clean(raw.get('title') or '')
+    low = title.casefold()
+    if required not in low:
+        return False
+    if key == 'epdk_fiyatlandirma':
+        return bool(raw.get('report_period')) or bool(re.search(r'\b20\d{2}\b', title))
+    if key in {'epdk_petrol_istatistik', 'epdk_lpg_istatistik'}:
+        return bool(re.search(r'\b20\d{2}\b', title))
+    return True
 
 def normalize_sector_data(data):
     cleaned = []
@@ -335,8 +417,13 @@ def normalize_sector_data(data):
     p_items, p_status = fetch_utts_portal(merged)
     for i in p_items: merged[i['id']] = _sanitize(i)
 
-    items = list(merged.values())
-    items.sort(key=lambda x: (x.get('date') or '0000-00-00', x.get('changed_at') or x.get('first_seen') or ''), reverse=True)
+    items = [_clean_parser_migration_change(i) for i in merged.values()]
+    items = _enrich_gib_detail_text(items)
+    for i in items:
+        if i.get('description_origin') == 'official_source':
+            i['category'] = _content_category(i)
+            i['severity'] = severity(_direct_text(i))
+    items.sort(key=lambda x: (x.get('date') or ((x.get('report_period') or '0000-00') + '-01'), x.get('changed_at') or x.get('first_seen') or ''), reverse=True)
     items = items[:900]
     counts = Counter((i.get('source_name') or i.get('source')) for i in items)
 
