@@ -10,6 +10,8 @@ on:
       - 'live_scan.py'
       - 'scrape.py'
       - 'source_overrides.py'
+      - 'source_parsers.py'
+      - 'sector_intelligence.py'
       - 'update_prices.py'
       - 'update_expectation.py'
       - 'update_data.py'
@@ -60,13 +62,25 @@ jobs:
         run: |
           git config user.name "akaryakit-takip-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Tarama uzun sürerken main'e yeni bir kod commit'i gelirse data.json gibi
+          # üretilen dosyalarda rebase çatışması oluşmasın. Üretilen çıktıları sakla,
+          # en güncel main'i al ve çıktıları onun üzerine uygula.
+          cp data.json /tmp/data.json
+          cp prices.json /tmp/prices.json
+          cp price_expectation.json /tmp/price_expectation.json
+          git fetch origin main
+          git reset --hard origin/main
+          cp /tmp/data.json data.json
+          cp /tmp/prices.json prices.json
+          cp /tmp/price_expectation.json price_expectation.json
+
           git add data.json prices.json price_expectation.json
           if git diff --cached --quiet; then
             echo "No data changes"
           else
             git commit -m "Update sector, fuel price and expectation data"
-            git pull --rebase origin main
-            git push
+            git push origin HEAD:main
           fi
 
       - name: Configure Pages
