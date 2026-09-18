@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from live_scan import scan_now as raw_scan_now
+from sector_intelligence import build_deadlines, recent_changes
 from scrape import HEADERS, clean, make_item, uid, merge_seen, parse_date, severity
 
 DARPHANE_UTTS_HOME = 'https://www.darphane.gov.tr/ulusal-tasit-tanima-sistemi'
