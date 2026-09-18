@@ -92,7 +92,7 @@ def build_deadlines(items, today=None, horizon_days=730):
 def recent_changes(items, limit=40):
     changed = [
         i for i in (items or [])
-        if i.get('changed_at') and (i.get('change_details') or int(i.get('revision') or 0) > 0)
+        if i.get('changed_at') and bool(i.get('change_details'))
     ]
     changed.sort(key=lambda i: i.get('changed_at') or '', reverse=True)
     return [
