@@ -6,11 +6,6 @@ import requests
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
-from source_overrides import scan_sector_now
-from price_scan import scan_prices
-from price_expectation import scan_price_expectation
-from price_expectation_state import enrich_with_pump_realization
-from deposit_scan import scan_deposit_now
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = ROOT / 'data.json'
@@ -289,6 +284,7 @@ def api_root():
 @app.get('/api/scan')
 def live_scan():
     try:
+        from source_overrides import scan_sector_now
         saved, _ = _snapshot_json('data.json', DATA_FILE)
         return JSONResponse(content=scan_sector_now(saved=saved), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
@@ -298,6 +294,7 @@ def live_scan():
 @app.get('/api/deposit')
 def live_deposit_scan():
     try:
+        from deposit_scan import scan_deposit_now
         return JSONResponse(content=scan_deposit_now(), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
@@ -315,6 +312,8 @@ def price_expectation(live: int = 0):
         )
 
     try:
+        from price_expectation import scan_price_expectation
+        from price_expectation_state import enrich_with_pump_realization
         scanned = scan_price_expectation(saved=saved_expectation, price_data=saved_prices)
         data = enrich_with_pump_realization(scanned, price_data=saved_prices)
         return JSONResponse(content=data, headers={'Cache-Control': 'no-store, max-age=0'})
@@ -334,6 +333,7 @@ def price_expectation(live: int = 0):
 @app.get('/api/prices')
 def live_prices():
     try:
+        from price_scan import scan_prices
         return JSONResponse(
             content=scan_prices(
                 history_days=2,
