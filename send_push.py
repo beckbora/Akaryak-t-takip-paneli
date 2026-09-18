@@ -9,6 +9,15 @@ import requests
 from pywebpush import WebPushException, webpush
 
 
+def env_value(name):
+    value = os.getenv(name, '').strip()
+    # GitHub Secrets sometimes receive a complete .env line by mistake.
+    # Accept both raw values and NAME=value / NEXT_PUBLIC_NAME=value forms.
+    if '=' in value and value.startswith(('SUPABASE_', 'NEXT_PUBLIC_SUPABASE_', 'VAPID_')):
+        value = value.split('=', 1)[1].strip()
+    return value
+
+
 def read_json(path):
     try:
         data = json.loads(Path(path).read_text(encoding='utf-8'))
@@ -94,10 +103,10 @@ def main():
     parser.add_argument('--current', required=True)
     args = parser.parse_args()
 
-    base_url = os.getenv('SUPABASE_URL', '').strip()
-    secret = os.getenv('SUPABASE_SECRET_KEY', '').strip()
-    private_b64 = os.getenv('VAPID_PRIVATE_KEY_B64', '').strip()
-    subject = os.getenv('VAPID_SUBJECT', 'https://petrol-piyasasi-takip.vercel.app').strip()
+    base_url = env_value('SUPABASE_URL')
+    secret = env_value('SUPABASE_SECRET_KEY')
+    private_b64 = env_value('VAPID_PRIVATE_KEY_B64')
+    subject = env_value('VAPID_SUBJECT') or 'https://petrol-piyasasi-takip.vercel.app'
 
     if not (base_url and secret and private_b64):
         print('Web Push not configured; skipping sender.')
