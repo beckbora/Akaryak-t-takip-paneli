@@ -32,8 +32,16 @@ def _small_context(node, max_len=1800):
         text = clean(parent.get_text(' ', strip=True)) if hasattr(parent, 'get_text') else ''
         if len(text) > max_len:
             break
+        low = text.casefold()
+        report_hits = low.count('sektör raporu') + low.count('fiyatlandırma raporu')
+        # Bir üst kapsayıcı birden fazla kayıt barındırıyorsa komşu duyuruların
+        # metnini bu kayda taşımadan burada dur.
+        if report_hits > 2:
+            break
         if len(text) >= len(best):
             best = text
+        if 'yayınlanma tarihi' in low or 'revizyon tarihi' in low or 'revizyon kapsamı' in low:
+            break
         parent = getattr(parent, 'parent', None)
     return best
 
