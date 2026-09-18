@@ -23,7 +23,7 @@ create or replace function public.register_push_subscription(
 returns jsonb
 language plpgsql
 security definer
-set search_path = public
+set search_path = public, extensions
 as $$
 declare
   v_hash text;
@@ -57,7 +57,7 @@ create or replace function public.unregister_push_subscription(p_endpoint text)
 returns jsonb
 language plpgsql
 security definer
-set search_path = public
+set search_path = public, extensions
 as $$
 declare
   v_hash text;
