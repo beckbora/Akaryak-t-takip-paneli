@@ -14,6 +14,7 @@ PRICE_DASHBOARD = ROOT / 'prices.html'
 DEPOSIT_DASHBOARD = ROOT / 'deposit.html'
 PRICE_DATA = ROOT / 'prices.json'
 EXPECTATION_DATA = ROOT / 'price_expectation.json'
+PUSH_CONFIG_FILE = ROOT / 'push-config.json'
 PWA_MANIFEST = ROOT / 'manifest.webmanifest'
 PWA_SW = ROOT / 'sw.js'
 PWA_IOS = ROOT / 'ios-pwa.js'
@@ -140,20 +141,7 @@ async function toggleFuelNotifications(){
   }else{localStorage.setItem(FUEL_NOTIFY_PREF,'0');}
   updateNotifyButton();
 }
-function maybeNotifyFuelChanges(items){
-  window.__latestFuelExpectationItems=items||[];
-  if(!notificationsEnabled()||!('Notification' in window)||Notification.permission!=='granted')return;
-  const prior=readNotifyState(),next={...prior};
-  for(const item of items||[]){
-    if(!item.fuel_key)continue;
-    const sig=signatureFor(item),old=prior[item.fuel_key];
-    if(old&&old!==sig&&item.status!=='none'){
-      try{new Notification('Petrol Piyasası Takip',{body:item.line||'Akaryakıt fiyat durumu güncellendi.',tag:'fuel-'+item.fuel_key});}catch(e){}
-    }
-    next[item.fuel_key]=sig;
-  }
-  localStorage.setItem(FUEL_NOTIFY_STATE,JSON.stringify(next));
-}
+function maybeNotifyFuelChanges(items){window.__latestFuelExpectationItems=items||[];}
 function expectationClass(status){
   if(status==='up')return 'up';
   if(status==='down')return 'down';
@@ -208,7 +196,7 @@ setInterval(refreshPriceExpectation,600000);
 </script>
 '''
     html = html.replace('</body>', expectation_js + '</body>', 1)
-    html = html.replace('</body>', '<script src="/ios-pwa.js?v=3"></script></body>', 1)
+    html = html.replace('</body>', '<script src="/ios-pwa.js?v=4"></script></body>', 1)
     return html
 
 
@@ -255,6 +243,11 @@ def prices_data_file():
 @app.get('/price_expectation.json')
 def expectation_data_file():
     return _snapshot_response('price_expectation.json', EXPECTATION_DATA)
+
+
+@app.get('/api/push-config')
+def push_config():
+    return _snapshot_response('push-config.json', PUSH_CONFIG_FILE)
 
 
 @app.get('/manifest.webmanifest')

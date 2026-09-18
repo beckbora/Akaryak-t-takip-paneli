@@ -19,6 +19,11 @@ on:
       - 'live.html'
       - 'prices.html'
       - 'api/index.py'
+      - 'ios-pwa.js'
+      - 'sw.js'
+      - 'send_push.py'
+      - 'supabase_push_setup.sql'
+      - 'push-requirements.txt'
       - 'requirements.txt'
       - '.github/workflows/update-data.yml'
   schedule:
@@ -70,6 +75,9 @@ jobs:
             fi
           done
 
+      - name: Preserve previous expectation snapshot
+        run: cp price_expectation.json /tmp/price_expectation_before.json
+
       - name: Scan sector sources
         run: python update_data.py
 
@@ -78,6 +86,41 @@ jobs:
 
       - name: Scan fuel price expectations
         run: python update_expectation.py
+
+      - name: Generate public push config
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          VAPID_PRIVATE_KEY_B64: ${{ secrets.VAPID_PRIVATE_KEY_B64 }}
+        run: |
+          python - <<'PY'
+          import json, os
+          data = {
+              "configured": bool(os.getenv("SUPABASE_URL") and os.getenv("SUPABASE_PUBLISHABLE_KEY")),
+              "sender_configured": bool(os.getenv("SUPABASE_SECRET_KEY") and os.getenv("VAPID_PRIVATE_KEY_B64")),
+              "supabase_url": os.getenv("SUPABASE_URL", ""),
+              "supabase_publishable_key": os.getenv("SUPABASE_PUBLISHABLE_KEY", ""),
+              "vapid_public_key": "BCd3xQNt5Ba-iH4uonQU8VCI2E6RZxd3LRWqehRLBLZaRgEjm6qfyNCVyYEkfwd1MiIVhVznd6mLYuCdcG4USM0",
+          }
+          with open("push-config.json", "w", encoding="utf-8") as f:
+              json.dump(data, f, ensure_ascii=False, indent=2)
+          PY
+
+      - name: Send background Web Push
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          VAPID_PRIVATE_KEY_B64: ${{ secrets.VAPID_PRIVATE_KEY_B64 }}
+          VAPID_SUBJECT: https://petrol-piyasasi-takip.vercel.app
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ] || [ -z "$VAPID_PRIVATE_KEY_B64" ]; then
+            echo "Web Push secrets are not configured yet; skipping."
+            exit 0
+          fi
+          pip install -q -r push-requirements.txt
+          python send_push.py --previous /tmp/price_expectation_before.json --current price_expectation.json
 
       # IMPORTANT: generated JSON is deliberately NOT committed to main.
       # GitHub Pages is the rolling snapshot store. This prevents each 10-minute
