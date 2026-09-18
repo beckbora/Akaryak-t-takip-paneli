@@ -122,11 +122,16 @@ def main():
             continue
         events.append(item)
 
+    # Validate the Supabase sender connection on every scheduled run, even
+    # when there is no new fuel event. This makes configuration problems visible
+    # before the first real alert is needed.
+    subs = subscriptions(base_url, secret)
+    print(f'Web Push backend ready: active_subscriptions={len(subs)}')
+
     if not events:
         print('No new push-worthy fuel event.')
         return
 
-    subs = subscriptions(base_url, secret)
     if not subs:
         print('No active push subscriptions.')
         return
