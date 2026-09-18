@@ -70,6 +70,19 @@ QUERIES = (
     'benzin zam gerçekleşti pompaya yansıdı bugün',
 )
 
+GOOGLE_NEWS_QUERIES = (
+    'motorine indirim',
+    'motorin indirim',
+    'motorine zam',
+    'motorin zam',
+    'benzine indirim',
+    'benzin indirim',
+    'benzine zam',
+    'benzin zam',
+    'akaryakıta indirim',
+    'akaryakıt zam',
+)
+
 UP_PATTERNS = (
     'zam beklen', 'zam yapılması beklen', 'zam yapilmasi beklen',
     'artış beklen', 'artis beklen', 'zam ihtimali', 'zam yolda',
@@ -456,11 +469,9 @@ def scan_price_expectation(saved=None, price_data=None):
     price_data = price_data if isinstance(price_data, dict) else _read_json(PRICE_DATA)
 
     candidates = []
-    with ThreadPoolExecutor(max_workers=max(8, len(QUERIES) * 2)) as pool:
-        jobs = []
-        for q in QUERIES:
-            jobs.append(pool.submit(_rss, q))
-            jobs.append(pool.submit(_google_news_rss, q))
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        jobs = [pool.submit(_rss, q) for q in QUERIES]
+        jobs.extend(pool.submit(_google_news_rss, q) for q in GOOGLE_NEWS_QUERIES)
         for job in as_completed(jobs):
             candidates.extend(job.result())
 
