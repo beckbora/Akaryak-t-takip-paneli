@@ -6,6 +6,8 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
+from source_parsers import parse_source
+
 from scrape import (
     SOURCES, HEADERS, candidates, uid, merge_seen, category, severity,
     make_item, relevant, clean
@@ -31,7 +33,7 @@ def fetch_one(src):
     try:
         r = requests.get(src['url'], headers=HEADERS, timeout=8)
         r.raise_for_status()
-        items = candidates(src, r.text)
+        items = parse_source(src, r.text)
         return items, {
             'source': src['group'], 'source_name': src['name'], 'ok': True,
             'count': len(items), 'checked_at': now,
@@ -231,5 +233,5 @@ def scan_now():
     )
     return {
         'updated_at': now, 'live': True, 'items': items[:900],
-        'sources': statuses, 'version': 7,
+        'sources': statuses, 'version': 17,
     }
