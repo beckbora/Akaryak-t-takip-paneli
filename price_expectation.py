@@ -501,7 +501,21 @@ def scan_price_expectation(saved=None, price_data=None):
             if SOURCE_PRIORITY.get(row['domain'], 0) < 5:
                 continue
         effective_date = _effective_date(text, published)
-        dedup_title = re.sub(r'\s+-\s+[^-]{2,40}        'realized_up': 5, 'realized_down': 5,
+        dedup_title = re.sub(r'\s+-\s+[^-]{2,40}$', '', row['title']).casefold()
+        key = (row['domain'], dedup_title, fuel_key, status)
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append({
+            **row,
+            'fuel_key': fuel_key,
+            'status': status,
+            'amount': amount,
+            'effective_date': effective_date,
+        })
+
+    status_rank = {
+        'realized_up': 5, 'realized_down': 5,
         'cancel_up': 4, 'cancel_down': 4,
         'up': 3, 'down': 3,
     }
