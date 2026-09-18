@@ -2,14 +2,18 @@ import json
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
+from statistics import median
+from zoneinfo import ZoneInfo
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import quote_plus, urlsplit
 from xml.etree import ElementTree as ET
 
 import requests
+from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parent
+TR_TZ = ZoneInfo('Europe/Istanbul')
 EXPECTATION_DATA = ROOT / 'price_expectation.json'
 PRICE_DATA = ROOT / 'prices.json'
 
@@ -171,6 +175,163 @@ def _rss(query):
     return rows
 
 
+def _google_news_rss(query):
+    url = (
+        'https://news.google.com/rss/search?q=' + quote_plus(query + ' when:2d')
+        + '&hl=tr&gl=TR&ceid=TR:tr'
+    )
+    rows = []
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=7)
+        r.raise_for_status()
+        root = ET.fromstring(r.text)
+        for node in root.findall('.//item'):
+            link = (node.findtext('link') or '').strip()
+            title = re.sub(r'\s+', ' ', node.findtext('title') or '').strip()
+            desc = re.sub(r'<[^>]+>', ' ', node.findtext('description') or '')
+            desc = re.sub(r'\s+', ' ', desc).strip()
+            source_node = node.find('source')
+            source_url = (source_node.attrib.get('url') or '').strip() if source_node is not None else ''
+            domain = _accepted_host(source_url)
+            if not domain or not title:
+                continue
+            published = _published(node.findtext('pubDate') or node.findtext('date'))
+            if not published:
+                published = _date_from_text(title + ' ' + desc)
+            rows.append({
+                'url': link,
+                'title': title,
+                'description': desc,
+                'published': published,
+                'domain': domain,
+                'source': SOURCE_NAMES.get(domain) or (source_node.text.strip() if source_node is not None and source_node.text else domain),
+                'discovery': 'google-news-rss',
+            })
+    except Exception:
+        pass
+    return rows
+
+
+def _article_text(row):
+    # Direct article enrichment is used only for original publisher URLs.
+    url = row.get('url') or ''
+    domain = row.get('domain') or ''
+    if not url or _accepted_host(url) != domain:
+        return ''
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=5, allow_redirects=True)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, 'html.parser')
+        for bad in soup.find_all(['script', 'style', 'nav', 'header', 'footer', 'aside']):
+            bad.decompose()
+        blocks = []
+        for node in soup.select('article, main, .article-content, .news-content, .content, .icerik, #content'):
+            text = re.sub(r'\s+', ' ', node.get_text(' ', strip=True)).strip()
+            if 120 <= len(text) <= 15000:
+                blocks.append(text)
+        if not blocks and soup.body:
+            text = re.sub(r'\s+', ' ', soup.body.get_text(' ', strip=True)).strip()
+            if 120 <= len(text) <= 12000:
+                blocks.append(text)
+        return max(blocks, key=len)[:7000] if blocks else ''
+    except Exception:
+        return ''
+
+
+def _effective_date(text, published):
+    if not published:
+        return None
+    local = published.astimezone(TR_TZ)
+    low = _norm(text)
+
+    # Explicit Turkish date, year optional.
+    m = re.search(
+        r'\b(\d{1,2})\s+(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)(?:\s+(20\d{2}))?\b',
+        text or '',
+        re.I,
+    )
+    if m:
+        try:
+            year = int(m.group(3)) if m.group(3) else local.year
+            month = TR_MONTHS[m.group(2).casefold()]
+            candidate = datetime(year, month, int(m.group(1)), tzinfo=TR_TZ).date()
+            # Avoid mistaking an article's own publication date for the effective date
+            # unless wording around the text indicates applicability.
+            pos = m.start()
+            around = _norm((text or '')[max(0, pos-80):m.end()+100])
+            if any(x in around for x in ('geçerli', 'itibaren', 'başlayacak', 'baslayacak', 'yansıyacak', 'yansiyacak')):
+                return candidate.isoformat()
+        except Exception:
+            pass
+
+    if 'yarından itibaren' in low or 'yarindan itibaren' in low or 'yarın geçerli' in low or 'yarin geçerli' in low:
+        return (local.date() + timedelta(days=1)).isoformat()
+    if 'bu gece yarısı' in low or 'bu gece yarisi' in low or 'gece yarısından itibaren' in low or 'gece yarisindan itibaren' in low:
+        return (local.date() + timedelta(days=1)).isoformat()
+    if 'bugünden itibaren' in low or 'bugunden itibaren' in low:
+        return local.date().isoformat()
+    return None
+
+
+def _tr_short_date(value):
+    if not value:
+        return None
+    try:
+        d = datetime.fromisoformat(value).date()
+    except Exception:
+        return None
+    names = ['OCAK','ŞUBAT','MART','NİSAN','MAYIS','HAZİRAN','TEMMUZ','AĞUSTOS','EYLÜL','EKİM','KASIM','ARALIK']
+    return f'{d.day} {names[d.month-1]}'
+
+
+def _consensus_event(fuel_rows):
+    if not fuel_rows:
+        return None, []
+    latest = fuel_rows[0]
+    status = latest.get('status')
+    latest_dt = latest.get('published')
+    group = []
+    for row in fuel_rows:
+        if row.get('status') != status:
+            continue
+        published = row.get('published')
+        if latest_dt and published and abs((latest_dt - published).total_seconds()) > 18 * 3600:
+            continue
+        if latest.get('amount') is not None and row.get('amount') is not None:
+            if abs(float(latest['amount']) - float(row['amount'])) > 0.20:
+                continue
+        group.append(row)
+
+    domains = []
+    sources = []
+    for row in group:
+        domain = row.get('domain') or ''
+        if not domain or domain in domains:
+            continue
+        domains.append(domain)
+        sources.append({
+            'name': row.get('source') or SOURCE_NAMES.get(domain) or domain,
+            'domain': domain,
+            'url': row.get('url'),
+            'published_at': row.get('published').isoformat() if row.get('published') else None,
+        })
+
+    amounts = [float(r['amount']) for r in group if r.get('amount') is not None]
+    effective_dates = [r.get('effective_date') for r in group if r.get('effective_date')]
+    amount = round(float(median(amounts)), 2) if amounts else latest.get('amount')
+    effective_date = None
+    if effective_dates:
+        effective_date = max(set(effective_dates), key=lambda x: effective_dates.count(x))
+
+    merged = dict(latest)
+    merged['amount'] = amount
+    merged['effective_date'] = effective_date or latest.get('effective_date')
+    merged['confirmation_count'] = len(domains)
+    merged['sources_detail'] = sources
+    merged['confidence'] = 'high' if len(domains) >= 3 else ('medium' if len(domains) >= 2 else 'single')
+    return merged, group
+
+
 def _fuel(text):
     low = _norm(text)
     if 'motorin' in low or 'mazot' in low or 'dizel' in low:
@@ -243,12 +404,14 @@ def _fmt_amount(value):
     return None if value is None else f'{value:.2f}'.replace('.', ',')
 
 
-def _line(fuel_label, status, amount):
+def _line(fuel_label, status, amount, effective_date=None):
     amt = _fmt_amount(amount)
+    when = _tr_short_date(effective_date)
+    suffix = f' · {when}' if when and status in {'up', 'down'} else ''
     if status == 'up':
-        return f'🔺 {fuel_label} · {amt + " TL " if amt else ""}ZAM BEKLENİYOR'
+        return f'🔺 {fuel_label} · {amt + " TL " if amt else ""}ZAM BEKLENİYOR{suffix}'
     if status == 'down':
-        return f'🔻 {fuel_label} · {amt + " TL " if amt else ""}İNDİRİM BEKLENİYOR'
+        return f'🔻 {fuel_label} · {amt + " TL " if amt else ""}İNDİRİM BEKLENİYOR{suffix}'
     if status == 'realized_up':
         return f'✅ {fuel_label} · {amt + " TL " if amt else ""}ZAM GERÇEKLEŞTİ'
     if status == 'realized_down':
@@ -293,8 +456,11 @@ def scan_price_expectation(saved=None, price_data=None):
     price_data = price_data if isinstance(price_data, dict) else _read_json(PRICE_DATA)
 
     candidates = []
-    with ThreadPoolExecutor(max_workers=len(QUERIES)) as pool:
-        jobs = [pool.submit(_rss, q) for q in QUERIES]
+    with ThreadPoolExecutor(max_workers=max(8, len(QUERIES) * 2)) as pool:
+        jobs = []
+        for q in QUERIES:
+            jobs.append(pool.submit(_rss, q))
+            jobs.append(pool.submit(_google_news_rss, q))
         for job in as_completed(jobs):
             candidates.extend(job.result())
 
@@ -313,19 +479,141 @@ def scan_price_expectation(saved=None, price_data=None):
         if published < cutoff:
             continue
         status = _status(text)
+        amount = None
+        article_text = ''
+        if status:
+            sentence = _event_sentence(text, status)
+            amount = _amount(sentence) or _amount(row['title']) or _amount(row['description'])
+        # If the search result is terse, inspect the original publisher page.
+        if (not status or amount is None) and _accepted_host(row.get('url') or ''):
+            article_text = _article_text(row)
+            if article_text:
+                enriched_text = text + '. ' + article_text
+                status = status or _status(enriched_text)
+                if status:
+                    sentence = _event_sentence(enriched_text, status)
+                    amount = amount or _amount(sentence) or _amount(article_text)
+                    text = enriched_text
         if not status:
             continue
-        sentence = _event_sentence(text, status)
-        amount = _amount(sentence) or _amount(row['title']) or _amount(row['description'])
         if status in {'up', 'down'} and amount is None:
-            # Keep amount-less expectations only from high-confidence specialist/association sources.
-            if SOURCE_PRIORITY.get(row['domain'], 0) < 8:
+            # Amount-less reports can still corroborate an event when the publisher is trusted.
+            if SOURCE_PRIORITY.get(row['domain'], 0) < 5:
                 continue
-        key = (row['url'], fuel_key, status)
+        effective_date = _effective_date(text, published)
+        dedup_title = re.sub(r'\s+-\s+[^-]{2,40}
+    status_rank = {
+        'realized_up': 5, 'realized_down': 5,
+        'cancel_up': 4, 'cancel_down': 4,
+        'up': 3, 'down': 3,
+    }
+    rows.sort(key=lambda x: (
+        x.get('published') or datetime(1970, 1, 1, tzinfo=timezone.utc),
+        status_rank.get(x['status'], 0),
+        SOURCE_PRIORITY.get(x['domain'], 0),
+    ), reverse=True)
+
+    items = []
+    for fuel_key, fuel_label in [('diesel', 'MOTORİN'), ('gasoline', 'BENZİN')]:
+        fuel_rows = [x for x in rows if x['fuel_key'] == fuel_key]
+        item, supporting_rows = _consensus_event(fuel_rows)
+
+        # If a stored expectation has subsequently appeared in pump-change history,
+        # upgrade it even when the news search index has not yet refreshed.
+        previous = next((x for x in (saved.get('items') or []) if x.get('fuel_key') == fuel_key), None)
+        if item and item['status'] in {'up', 'down'}:
+            realized = _pump_realized(fuel_key, item['status'], item.get('published'), price_data)
+            if realized:
+                item = dict(item)
+                item['status'] = 'realized_up' if float(realized.get('delta') or 0) > 0 else 'realized_down'
+                item['amount'] = abs(float(realized.get('delta') or 0))
+                item['source'] = realized.get('source') or 'Pompa fiyat takibi'
+                item['url'] = realized.get('source_url') or item.get('url')
+                item['effective_date'] = None
+        elif not item and previous and previous.get('status') in {'up', 'down'}:
+            try:
+                prev_dt = datetime.fromisoformat(previous.get('published_at'))
+            except Exception:
+                prev_dt = None
+            realized = _pump_realized(fuel_key, previous['status'], prev_dt, price_data)
+            if realized:
+                item = {
+                    'status': 'realized_up' if float(realized.get('delta') or 0) > 0 else 'realized_down',
+                    'amount': abs(float(realized.get('delta') or 0)),
+                    'published': datetime.fromisoformat(realized['detected_at']),
+                    'domain': '',
+                    'url': realized.get('source_url') or '',
+                    'source': realized.get('source') or 'Pompa fiyat takibi',
+                }
+
+        if not item:
+            items.append({
+                'fuel_key': fuel_key,
+                'fuel': fuel_label,
+                'status': 'none',
+                'line': _line(fuel_label, 'none', None),
+                'amount': None,
+                'source': None,
+                'url': None,
+                'published_at': None,
+                'official': False,
+                'label': 'Güncel durum',
+                'effective_date': None,
+                'confirmation_count': 0,
+                'sources_detail': [],
+                'confidence': 'none',
+            })
+            continue
+
+        source = item.get('source') or SOURCE_NAMES.get(item.get('domain')) or 'Haber kaynağı'
+        items.append({
+            'fuel_key': fuel_key,
+            'fuel': fuel_label,
+            'status': item['status'],
+            'line': _line(fuel_label, item['status'], item.get('amount'), item.get('effective_date')),
+            'amount': item.get('amount'),
+            'source': source,
+            'url': item.get('url'),
+            'published_at': item.get('published').isoformat() if item.get('published') else None,
+            'official': False,
+            'label': 'Gerçekleşen fiyat hareketi' if item['status'].startswith('realized') else ('Güncelleme' if item['status'].startswith('cancel') else 'Sektör beklentisi'),
+            'effective_date': item.get('effective_date'),
+            'confirmation_count': int(item.get('confirmation_count') or 1),
+            'sources_detail': item.get('sources_detail') or [],
+            'confidence': item.get('confidence') or 'single',
+        })
+
+    return {
+        'found': any(x['status'] != 'none' for x in items),
+        'checked_at': now.isoformat(),
+        'items': items,
+        'no_expectation_text': 'ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR',
+        'next_daily_check': '12:00 Europe/Istanbul',
+        'discovery': ['bing_rss', 'google_news_rss'],
+        'consensus_window_hours': 18,
+    }
+
+
+def write_price_expectation():
+    data = scan_price_expectation()
+    EXPECTATION_DATA.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+    return data
+
+
+if __name__ == '__main__':
+    write_price_expectation()
+, '', row['title']).casefold()
+        key = (row['domain'], dedup_title, fuel_key, status)
         if key in seen:
             continue
         seen.add(key)
-        rows.append({**row, 'fuel_key': fuel_key, 'status': status, 'amount': amount})
+        rows.append({
+            **row,
+            'fuel_key': fuel_key,
+            'status': status,
+            'amount': amount,
+            'effective_date': effective_date,
+        })
 
     status_rank = {
         'realized_up': 5, 'realized_down': 5,
