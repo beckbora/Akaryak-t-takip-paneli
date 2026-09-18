@@ -70,7 +70,7 @@ def _published_date(context):
 
 def _report_period(title):
     m = re.search(
-        r'\b(20\d{2})\s+(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)\b',
+        r'\b(20\d{2})(?:\s+Yılı)?\s+(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)\b',
         title or '',
         flags=re.I,
     )
