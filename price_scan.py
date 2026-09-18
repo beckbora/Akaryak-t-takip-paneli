@@ -457,8 +457,8 @@ def merge_history(saved_history, current, detected_at):
     return history[-5000:]
 
 
-def scan_prices(history_days=2, include_year=True):
-    saved = read_saved()
+def scan_prices(history_days=2, include_year=True, saved=None):
+    saved = saved if isinstance(saved, dict) else read_saved()
     detected_at = now_iso()
     current, po_status = fetch_po_prices()
     if not current:

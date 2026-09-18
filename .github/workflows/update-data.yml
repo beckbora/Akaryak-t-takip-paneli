@@ -7,6 +7,7 @@ on:
     paths:
       - 'price_scan.py'
       - 'price_expectation.py'
+      - 'price_expectation_state.py'
       - 'live_scan.py'
       - 'scrape.py'
       - 'source_overrides.py'
@@ -15,21 +16,24 @@ on:
       - 'update_prices.py'
       - 'update_expectation.py'
       - 'update_data.py'
+      - 'live.html'
+      - 'prices.html'
+      - 'api/index.py'
       - 'requirements.txt'
       - '.github/workflows/update-data.yml'
   schedule:
     - cron: '2,12,22,32,42,52 * * * *'
-    # 12:00 Türkiye saati (UTC+3). GitHub scheduled jobs can start a few minutes late.
+    # 12:00 Türkiye saati (UTC+3). GitHub scheduled jobs birkaç dakika gecikebilir.
     - cron: '0 9 * * *'
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
   group: update-sector-data
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   update:
@@ -49,6 +53,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Restore latest snapshots
+        shell: bash
+        run: |
+          set -u
+          BASE="https://beckbora.github.io/Akaryak-t-takip-paneli"
+          for FILE in data.json prices.json price_expectation.json; do
+            TMP="/tmp/${FILE}"
+            URL="${BASE}/${FILE}?t=$(date +%s)"
+            if curl -fL --retry 2 --retry-delay 2 --connect-timeout 5 --max-time 20 "$URL" -o "$TMP"               && python -m json.tool "$TMP" >/dev/null 2>&1; then
+              mv "$TMP" "$FILE"
+              echo "Restored $FILE from the last GitHub Pages snapshot"
+            else
+              rm -f "$TMP"
+              echo "Could not restore $FILE; repository fallback will be used"
+            fi
+          done
+
       - name: Scan sector sources
         run: python update_data.py
 
@@ -58,31 +79,9 @@ jobs:
       - name: Scan fuel price expectations
         run: python update_expectation.py
 
-      - name: Commit latest data
-        run: |
-          git config user.name "akaryakit-takip-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Tarama uzun sürerken main'e yeni bir kod commit'i gelirse data.json gibi
-          # üretilen dosyalarda rebase çatışması oluşmasın. Üretilen çıktıları sakla,
-          # en güncel main'i al ve çıktıları onun üzerine uygula.
-          cp data.json /tmp/data.json
-          cp prices.json /tmp/prices.json
-          cp price_expectation.json /tmp/price_expectation.json
-          git fetch origin main
-          git reset --hard origin/main
-          cp /tmp/data.json data.json
-          cp /tmp/prices.json prices.json
-          cp /tmp/price_expectation.json price_expectation.json
-
-          git add data.json prices.json price_expectation.json
-          if git diff --cached --quiet; then
-            echo "No data changes"
-          else
-            git commit -m "Update sector, fuel price and expectation data"
-            git push origin HEAD:main
-          fi
-
+      # IMPORTANT: generated JSON is deliberately NOT committed to main.
+      # GitHub Pages is the rolling snapshot store. This prevents each 10-minute
+      # refresh from triggering a new Vercel deployment.
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:

@@ -168,8 +168,8 @@ def _baseline_seen(item):
     return '2000-01-01T00:00:00+00:00'
 
 
-def scan_now():
-    saved = read_saved()
+def scan_now(saved=None):
+    saved = saved if isinstance(saved, dict) else read_saved()
     saved_items = saved.get('items', [])
     existing = {i.get('id'): i for i in saved_items if i.get('id')}
     known_source_names = {i.get('source_name') for i in saved_items if i.get('source_name')}

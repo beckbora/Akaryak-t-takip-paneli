@@ -1,5 +1,8 @@
+import json
+import time
 from pathlib import Path
 
+import requests
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
@@ -10,6 +13,7 @@ from price_expectation_state import enrich_with_pump_realization
 from deposit_scan import scan_deposit_now
 
 ROOT = Path(__file__).resolve().parents[1]
+DATA_FILE = ROOT / 'data.json'
 DASHBOARD = ROOT / 'live.html'
 PRICE_DASHBOARD = ROOT / 'prices.html'
 DEPOSIT_DASHBOARD = ROOT / 'deposit.html'
@@ -18,8 +22,50 @@ EXPECTATION_DATA = ROOT / 'price_expectation.json'
 PWA_MANIFEST = ROOT / 'manifest.webmanifest'
 PWA_SW = ROOT / 'sw.js'
 PWA_IOS = ROOT / 'ios-pwa.js'
+SNAPSHOT_BASE = 'https://beckbora.github.io/Akaryak-t-takip-paneli'
+SNAPSHOT_TTL_SECONDS = 45
+_SNAPSHOT_CACHE = {}
 
 app = FastAPI(title='Petrol Piyasası Takip')
+
+
+def _snapshot_json(filename, local_path):
+    now = time.monotonic()
+    cached = _SNAPSHOT_CACHE.get(filename)
+    if cached and now - cached['at'] < SNAPSHOT_TTL_SECONDS:
+        return cached['data'], cached['source']
+    try:
+        bucket = int(time.time() // 60)
+        r = requests.get(
+            f'{SNAPSHOT_BASE}/{filename}?v={bucket}',
+            headers={'User-Agent': 'PetrolPiyasasiTakip/1.0'},
+            timeout=6,
+        )
+        r.raise_for_status()
+        data = r.json()
+        if not isinstance(data, dict):
+            raise ValueError('snapshot is not an object')
+        source = 'github-pages'
+    except Exception:
+        try:
+            data = json.loads(local_path.read_text(encoding='utf-8'))
+            source = 'vercel-bundled-fallback'
+        except Exception:
+            data = {}
+            source = 'unavailable'
+    _SNAPSHOT_CACHE[filename] = {'at': now, 'data': data, 'source': source}
+    return data, source
+
+
+def _snapshot_response(filename, local_path):
+    data, source = _snapshot_json(filename, local_path)
+    return JSONResponse(
+        content=data,
+        headers={
+            'Cache-Control': 'no-store, max-age=0',
+            'X-Snapshot-Source': source,
+        },
+    )
 
 
 def sector_html():
@@ -126,11 +172,11 @@ function expectationLabel(status){
   if(String(status).startsWith('cancel'))return 'GÜNCELLEME';
   return 'GÜNCEL DURUM';
 }
-async function refreshPriceExpectation(){
+async function refreshPriceExpectation(forceLive=false){
   const box=document.getElementById('expectationRows');
   if(!box)return;
   try{
-    const r=await fetch('/api/price-expectation?t='+Date.now(),{cache:'no-store'});
+    const r=await fetch('/api/price-expectation?t='+Date.now()+(forceLive?'&live=1':''),{cache:'no-store'});
     const d=await r.json();
     if(!r.ok)throw new Error(d.error||'Beklenti taraması başarısız');
     const items=Array.isArray(d.items)?d.items:[];
@@ -159,7 +205,7 @@ if(notificationButton)notificationButton.addEventListener('click',toggleFuelNoti
 updateNotifyButton();
 setTimeout(refreshPriceExpectation,0);
 const expectationScanButton=document.getElementById('scanBtn');
-if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(refreshPriceExpectation,500));
+if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setTimeout(()=>refreshPriceExpectation(true),500));
 setInterval(refreshPriceExpectation,600000);
 </script>
 '''
@@ -198,9 +244,19 @@ def deposit_dashboard_file():
     return FileResponse(DEPOSIT_DASHBOARD, media_type='text/html; charset=utf-8', headers={'Cache-Control': 'no-store, max-age=0'})
 
 
+@app.get('/data.json')
+def sector_data_file():
+    return _snapshot_response('data.json', DATA_FILE)
+
+
 @app.get('/prices.json')
 def prices_data_file():
-    return FileResponse(PRICE_DATA, media_type='application/json', headers={'Cache-Control': 'no-store, max-age=0'})
+    return _snapshot_response('prices.json', PRICE_DATA)
+
+
+@app.get('/price_expectation.json')
+def expectation_data_file():
+    return _snapshot_response('price_expectation.json', EXPECTATION_DATA)
 
 
 @app.get('/manifest.webmanifest')
@@ -230,7 +286,8 @@ def api_root():
 @app.get('/api/scan')
 def live_scan():
     try:
-        return JSONResponse(content=scan_sector_now(), headers={'Cache-Control': 'no-store, max-age=0'})
+        saved, _ = _snapshot_json('data.json', DATA_FILE)
+        return JSONResponse(content=scan_sector_now(saved=saved), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
 
@@ -244,25 +301,42 @@ def live_deposit_scan():
 
 
 @app.get('/api/price-expectation')
-def price_expectation():
+def price_expectation(live: int = 0):
+    saved_expectation, snapshot_source = _snapshot_json('price_expectation.json', EXPECTATION_DATA)
+    saved_prices, _ = _snapshot_json('prices.json', PRICE_DATA)
+
+    if not live and saved_expectation:
+        return JSONResponse(
+            content=saved_expectation,
+            headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source},
+        )
+
     try:
-        return JSONResponse(content=enrich_with_pump_realization(scan_price_expectation()), headers={'Cache-Control': 'no-store, max-age=0'})
+        scanned = scan_price_expectation(saved=saved_expectation, price_data=saved_prices)
+        data = enrich_with_pump_realization(scanned, price_data=saved_prices)
+        return JSONResponse(content=data, headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
-        if EXPECTATION_DATA.exists():
-            try:
-                import json
-                saved = json.loads(EXPECTATION_DATA.read_text(encoding='utf-8'))
-                return JSONResponse(content=enrich_with_pump_realization(saved), headers={'Cache-Control': 'no-store, max-age=0'})
-            except Exception:
-                pass
-        return JSONResponse(status_code=500, content={'error': str(exc)[:300], 'items': []}, headers={'Cache-Control': 'no-store, max-age=0'})
+        if saved_expectation:
+            return JSONResponse(
+                content=saved_expectation,
+                headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source},
+            )
+        return JSONResponse(
+            status_code=500,
+            content={'error': str(exc)[:300], 'items': []},
+            headers={'Cache-Control': 'no-store, max-age=0'},
+        )
 
 
 @app.get('/api/prices')
 def live_prices():
     try:
         return JSONResponse(
-            content=scan_prices(history_days=2, include_year=False),
+            content=scan_prices(
+                history_days=2,
+                include_year=False,
+                saved=_snapshot_json('prices.json', PRICE_DATA)[0],
+            ),
             headers={'Cache-Control': 'no-store, max-age=0'},
         )
     except Exception as exc:

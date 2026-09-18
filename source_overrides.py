@@ -459,5 +459,5 @@ def normalize_sector_data(data):
     return out
 
 
-def scan_sector_now():
-    return normalize_sector_data(raw_scan_now())
+def scan_sector_now(saved=None):
+    return normalize_sector_data(raw_scan_now(saved=saved))
