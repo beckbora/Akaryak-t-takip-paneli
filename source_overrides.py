@@ -302,10 +302,27 @@ def fetch_utts_portal(existing):
     return list(found.values()), status
 
 
+
+DEDICATED_EPDK_TITLES = {
+    'epdk_petrol_istatistik': 'sektör raporu',
+    'epdk_lpg_istatistik': 'sektör raporu',
+    'epdk_fiyatlandirma': 'fiyatlandırma raporu',
+    'epdk_petrol_lisans': 'aylık toplu lisanslar',
+    'epdk_lpg_lisans': 'aylık toplu lisanslar',
+}
+
+
+def _dedicated_epdk_record(raw):
+    key = raw.get('source_key')
+    required = DEDICATED_EPDK_TITLES.get(key)
+    if not required:
+        return True
+    return required in clean(raw.get('title') or '').casefold()
+
 def normalize_sector_data(data):
     cleaned = []
     for raw in data.get('items') or []:
-        if _old(raw):
+        if _old(raw) or not _dedicated_epdk_record(raw):
             continue
         item = _sanitize(raw)
         if _sector_item(item):
@@ -331,7 +348,14 @@ def normalize_sector_data(data):
         st = dict(s); st['count'] = counts.get(st.get('source_name') or st.get('source'), 0); statuses.append(st)
     statuses.extend((d_status, p_status))
 
-    out = dict(data); out['items'] = items; out['sources'] = statuses; out['version'] = max(int(data.get('version') or 0), 16); out['content_policy'] = 'source_text_only'
+    out = dict(data)
+    out['items'] = items
+    out['sources'] = statuses
+    out['deadlines'] = build_deadlines(items)
+    out['recent_changes'] = recent_changes(items)
+    out['version'] = max(int(data.get('version') or 0), 18)
+    out['content_policy'] = 'source_text_only'
+    out['features'] = ['source_specific_parsers', 'epdk_reports', 'change_tracking', 'deadline_radar']
     return out
 
 
