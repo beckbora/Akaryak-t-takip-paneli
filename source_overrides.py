@@ -372,17 +372,30 @@ def _enrich_gib_detail_text(items):
 def _clean_parser_migration_change(item):
     details = item.get('change_details') or []
     key = item.get('source_key')
-    required = DEDICATED_EPDK_TITLES.get(key)
-    if not required or len(details) != 1:
+    if len(details) != 1:
         return item
     ch = details[0]
-    old = clean(ch.get('old') or '').casefold()
-    new = clean(ch.get('new') or '').casefold()
-    if ch.get('field') == 'title' and required in new and required not in old:
-        if int(item.get('revision') or 0) <= 1:
+    old_raw = clean(ch.get('old') or '')
+    new_raw = clean(ch.get('new') or '')
+    old = old_raw.casefold()
+    new = new_raw.casefold()
+
+    required = DEDICATED_EPDK_TITLES.get(key)
+    if required and ch.get('field') == 'title' and required in new and required not in old:
+        item['revision'] = 0
+        item['changed_at'] = None
+        item['change_details'] = []
+        return item
+
+    # GİB arşivinde bazı bağlantı metinleri ekranda "..." ile kısaltılıyor.
+    # Bu, kaynak değişikliği değildir; daha önce yakalanmış tam başlığı koru.
+    if key == 'gib' and ch.get('field') == 'title' and new_raw.endswith('...'):
+        prefix = new_raw[:-3].strip()
+        if prefix and old_raw.startswith(prefix):
+            item['title'] = old_raw
             item['revision'] = 0
             item['changed_at'] = None
-        item['change_details'] = []
+            item['change_details'] = []
     return item
 
 
