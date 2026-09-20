@@ -51,18 +51,18 @@ def message_for(item):
         except Exception:
             amount_text = ''
     if status == 'down':
-        return f'🔻 {fuel}: {amount_text}indirim bekleniyor'
+        return fuel, f'🔻 {amount_text}İNDİRİM BEKLENİYOR'
     if status == 'up':
-        return f'🔺 {fuel}: {amount_text}zam bekleniyor'
+        return fuel, f'🔺 {amount_text}ZAM BEKLENİYOR'
     if status == 'realized_down':
-        return f'✅ {fuel}: {amount_text}indirim gerçekleşti'
+        return fuel, f'✅ {amount_text}İNDİRİM GERÇEKLEŞTİ'
     if status == 'realized_up':
-        return f'✅ {fuel}: {amount_text}zam gerçekleşti'
+        return fuel, f'✅ {amount_text}ZAM GERÇEKLEŞTİ'
     if status == 'cancel_down':
-        return f'⏸️ {fuel}: beklenen indirim iptal edildi'
+        return fuel, '⏸️ BEKLENEN İNDİRİM İPTAL EDİLDİ'
     if status == 'cancel_up':
-        return f'⏸️ {fuel}: beklenen zam iptal edildi'
-    return item.get('line') or f'{fuel} fiyat durumu güncellendi'
+        return fuel, '⏸️ BEKLENEN ZAM İPTAL EDİLDİ'
+    return fuel, 'FİYAT DURUMU GÜNCELLENDİ'
 
 
 def supabase_headers(secret):
@@ -145,9 +145,10 @@ def main():
         removed = 0
         failed = 0
         for item in events:
+            title, body = message_for(item)
             payload = json.dumps({
-                'title': 'Petrol Piyasası Takip',
-                'body': message_for(item),
+                'title': title,
+                'body': body,
                 'tag': 'fuel-' + str(item.get('fuel_key') or 'price') + '-' + str(item.get('status') or 'update'),
                 'url': '/fiyatlar',
                 'fuel_key': item.get('fuel_key'),
@@ -172,7 +173,7 @@ def main():
                     sent += 1
                 except WebPushException as exc:
                     code = getattr(getattr(exc, 'response', None), 'status_code', None)
-                    if code in (404, 410):
+                    if code in (401, 403, 404, 410):
                         delete_subscription(base_url, secret, sub.get('endpoint_hash'))
                         removed += 1
                     else:

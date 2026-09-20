@@ -88,7 +88,8 @@
   async function registerSW() {
     if (!('serviceWorker' in navigator)) return null;
     try {
-      await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+      const reg = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+      try { await reg.update(); } catch (e) {}
       return await navigator.serviceWorker.ready;
     } catch (e) {
       return null;
@@ -115,6 +116,30 @@
     const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
     const rawData = atob(base64);
     return Uint8Array.from([...rawData].map(ch => ch.charCodeAt(0)));
+  }
+
+  function uint8ToBase64Url(value) {
+    if (!value) return '';
+    const bytes = value instanceof Uint8Array ? value : new Uint8Array(value);
+    let binary = '';
+    for (const b of bytes) binary += String.fromCharCode(b);
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+  }
+
+  function subscriptionMatchesKey(sub, publicKey) {
+    try {
+      const key = sub && sub.options && sub.options.applicationServerKey;
+      return Boolean(key) && uint8ToBase64Url(key) === publicKey;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function subscribeFresh(reg, cfg) {
+    return await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(cfg.vapid_public_key),
+    });
   }
 
   async function rpc(name, payload) {
@@ -240,7 +265,12 @@
 
     const reg = await registerSW();
     if (!reg || !reg.pushManager) return;
-    const existing = await reg.pushManager.getSubscription();
+    let existing = await reg.pushManager.getSubscription();
+    if (existing && !subscriptionMatchesKey(existing, cfg.vapid_public_key)) {
+      await unregisterRemote(existing);
+      try { await existing.unsubscribe(); } catch (e) {}
+      existing = null;
+    }
     if (existing) {
       await unregisterRemote(existing);
       await existing.unsubscribe();
@@ -263,17 +293,19 @@
 
     let sub = null;
     try {
-      sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(cfg.vapid_public_key),
-      });
+      sub = await subscribeFresh(reg, cfg);
       await registerRemote(sub);
       localStorage.setItem(PREF, '1');
       await showLocal('Arka plan bildirimleri açıldı. Site kapalıyken de fiyat beklentileri bildirilecek.', 'fuel-push-enabled');
     } catch (e) {
       if (sub) try { await sub.unsubscribe(); } catch (_) {}
       localStorage.setItem(PREF, '0');
-      alert('Arka plan bildirimi açılamadı: ' + (e && e.message ? e.message : 'Bilinmeyen hata'));
+      const msg = e && e.message ? e.message : 'Bilinmeyen hata';
+      if (/push service error/i.test(msg)) {
+        alert('Android push servisine kayıt başarısız. Chrome ve Google Play Hizmetleri güncel/açık olmalı. Uygulamayı kapatıp tekrar açtıktan sonra yeniden deneyin. Hata: ' + msg);
+      } else {
+        alert('Arka plan bildirimi açılamadı: ' + msg);
+      }
     }
     await updateButton();
   }
@@ -283,7 +315,18 @@
       if (Notification.permission !== 'granted') return;
       const cfg = await getConfig();
       if (!cfg.configured || !cfg.sender_configured) return;
-      const sub = await subscription();
+      const reg = await registerSW();
+      if (!reg || !reg.pushManager) return;
+      let sub = await reg.pushManager.getSubscription();
+      const wanted = localStorage.getItem(PREF) === '1';
+      if (sub && !subscriptionMatchesKey(sub, cfg.vapid_public_key)) {
+        await unregisterRemote(sub);
+        try { await sub.unsubscribe(); } catch (e) {}
+        sub = null;
+      }
+      if (!sub && wanted) {
+        try { sub = await subscribeFresh(reg, cfg); } catch (e) { sub = null; }
+      }
       if (sub) {
         await registerRemote(sub);
         localStorage.setItem(PREF, '1');
