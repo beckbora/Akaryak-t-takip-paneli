@@ -65,10 +65,13 @@ jobs:
         run: |
           python - <<'PY'
           import os, requests
-          base=os.environ['SUPABASE_URL'].strip().rstrip('/')
+          base=os.environ['SUPABASE_URL'].strip()
           secret=os.environ['SUPABASE_SECRET_KEY'].strip()
+          if '=' in base and base.startswith('SUPABASE_'):
+              base=base.split('=',1)[1].strip()
           if '=' in secret and secret.startswith('SUPABASE_'):
               secret=secret.split('=',1)[1].strip()
+          base=base.rstrip('/')
           headers={'apikey':secret,'Authorization':'Bearer '+secret}
           url=base+'/rest/v1/push_subscriptions'
           cutoff='2026-09-22T11:40:00+00:00'
