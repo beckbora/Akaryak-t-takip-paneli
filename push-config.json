@@ -3,6 +3,6 @@
   "sender_configured": false,
   "supabase_url": "",
   "supabase_publishable_key": "",
-  "vapid_public_key": "BCd3xQNt5Ba-iH4uonQU8VCI2E6RZxd3LRWqehRLBLZaRgEjm6qfyNCVyYEkfwd1MiIVhVznd6mLYuCdcG4USM0",
-  "vapid_key_version": 1
+  "vapid_public_key": "BH8eJYsPtJXs6mPZyfE-bT3QiK4RQ88C5Ckvj-Zthb1xjL7oeEoIkUqm7ZgdmMLjkBtDjxY9xevjaDZ1oWOYWV0",
+  "vapid_key_version": 2
 }

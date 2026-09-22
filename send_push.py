@@ -181,7 +181,7 @@ def main():
     base_url = env_value('SUPABASE_URL')
     secret = env_value('SUPABASE_SECRET_KEY')
     private_b64 = env_value('VAPID_PRIVATE_KEY_B64')
-    public_key = env_value('VAPID_PUBLIC_KEY') or 'BCd3xQNt5Ba-iH4uonQU8VCI2E6RZxd3LRWqehRLBLZaRgEjm6qfyNCVyYEkfwd1MiIVhVznd6mLYuCdcG4USM0'
+    public_key = env_value('VAPID_PUBLIC_KEY') or 'BH8eJYsPtJXs6mPZyfE-bT3QiK4RQ88C5Ckvj-Zthb1xjL7oeEoIkUqm7ZgdmMLjkBtDjxY9xevjaDZ1oWOYWV0'
     subject = env_value('VAPID_SUBJECT') or 'https://petrol-piyasasi-takip.vercel.app'
 
     # Structural diagnostics only: never print key material.
