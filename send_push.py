@@ -111,6 +111,27 @@ def main():
     private_b64 = env_value('VAPID_PRIVATE_KEY_B64')
     subject = env_value('VAPID_SUBJECT') or 'https://petrol-piyasasi-takip.vercel.app'
 
+    # Structural diagnostics only: never print key material.
+    try:
+        decoded_probe = base64.b64decode(private_b64.encode('ascii'))
+        probe_text = decoded_probe.decode('ascii', errors='ignore')
+        pem_marker = '-----BEGIN' in probe_text
+        compact_probe = ''.join(probe_text.split())
+        print(
+            'VAPID key diagnostics: '
+            f'env_len={len(private_b64)} decoded_len={len(decoded_probe)} '
+            f'pem_marker={pem_marker} decoded_text_len={len(probe_text)} '
+            f'decoded_compact_mod4={len(compact_probe) % 4}'
+        )
+        if pem_marker:
+            body = ''.join(
+                line.strip() for line in probe_text.splitlines()
+                if line.strip() and not line.startswith('-----')
+            )
+            print(f'VAPID PEM diagnostics: body_len={len(body)} body_mod4={len(body) % 4}')
+    except Exception as probe_exc:
+        print(f'VAPID key diagnostics failed before send: {type(probe_exc).__name__}: {str(probe_exc)[:160]}')
+
     if not (base_url and secret and private_b64):
         print('Web Push not configured; skipping sender.')
         return
