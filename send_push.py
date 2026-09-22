@@ -5,6 +5,7 @@ import os
 import tempfile
 from pathlib import Path
 
+from cryptography.hazmat.primitives import serialization
 import requests
 from pywebpush import WebPushException, webpush
 
@@ -99,6 +100,65 @@ def delete_subscription(base_url, secret, endpoint_hash):
     )
 
 
+def _b64url_decode(value):
+    raw = (value or '').encode('ascii')
+    raw += b'=' * ((4 - len(raw) % 4) % 4)
+    return base64.urlsafe_b64decode(raw)
+
+
+def recover_vapid_pem(encoded_secret, expected_public_key):
+    decoded = base64.b64decode(encoded_secret.encode('ascii'))
+    try:
+        serialization.load_pem_private_key(decoded, password=None)
+        return decoded
+    except Exception:
+        pass
+
+    text = decoded.decode('ascii', errors='ignore')
+    if '-----BEGIN' not in text or not expected_public_key:
+        return decoded
+
+    body = ''.join(
+        line.strip() for line in text.splitlines()
+        if line.strip() and not line.startswith('-----')
+    )
+    core = body.rstrip('=')
+    expected = _b64url_decode(expected_public_key)
+
+    # A valid Base64 payload can never have non-padding length mod 4 == 1.
+    # The stored secret currently has exactly this shape, so try repairing one
+    # missing Base64 character and accept only the candidate whose EC public
+    # key matches the already-published VAPID public key.
+    if len(core) % 4 != 1:
+        return decoded
+
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    for pos in range(len(core) + 1):
+        for ch in alphabet:
+            candidate_core = core[:pos] + ch + core[pos:]
+            candidate_body = candidate_core + ('=' * ((4 - len(candidate_core) % 4) % 4))
+            try:
+                der = base64.b64decode(candidate_body.encode('ascii'), validate=True)
+                key = serialization.load_der_private_key(der, password=None)
+                public_raw = key.public_key().public_bytes(
+                    encoding=serialization.Encoding.X962,
+                    format=serialization.PublicFormat.UncompressedPoint,
+                )
+                if public_raw != expected:
+                    continue
+                print(f'VAPID private key repaired in memory: inserted_one_base64_char_at={pos}')
+                return key.private_bytes(
+                    encoding=serialization.Encoding.PEM,
+                    format=serialization.PrivateFormat.PKCS8,
+                    encryption_algorithm=serialization.NoEncryption(),
+                )
+            except Exception:
+                continue
+
+    print('VAPID private key auto-repair failed: no candidate matched the published public key.')
+    return decoded
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--previous', required=True)
@@ -109,6 +169,7 @@ def main():
     base_url = env_value('SUPABASE_URL')
     secret = env_value('SUPABASE_SECRET_KEY')
     private_b64 = env_value('VAPID_PRIVATE_KEY_B64')
+    public_key = env_value('VAPID_PUBLIC_KEY') or 'BCd3xQNt5Ba-iH4uonQU8VCI2E6RZxd3LRWqehRLBLZaRgEjm6qfyNCVyYEkfwd1MiIVhVznd6mLYuCdcG4USM0'
     subject = env_value('VAPID_SUBJECT') or 'https://petrol-piyasasi-takip.vercel.app'
 
     # Structural diagnostics only: never print key material.
@@ -169,7 +230,7 @@ def main():
         print('No active push subscriptions.')
         return
 
-    private_pem = base64.b64decode(private_b64.encode('ascii'))
+    private_pem = recover_vapid_pem(private_b64, public_key)
     with tempfile.NamedTemporaryFile('wb', suffix='.pem', delete=True) as keyfile:
         keyfile.write(private_pem)
         keyfile.flush()
