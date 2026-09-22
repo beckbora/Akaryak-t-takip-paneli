@@ -1,5 +1,16 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/live.html" }
+    {
+      "source": "/",
+      "destination": "/live.html"
+    },
+    {
+      "source": "/fiyatlar",
+      "destination": "/prices.html"
+    },
+    {
+      "source": "/depozito",
+      "destination": "/deposit.html"
+    }
   ]
 }
