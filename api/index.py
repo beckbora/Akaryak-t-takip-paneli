@@ -196,7 +196,7 @@ setInterval(refreshPriceExpectation,600000);
 </script>
 '''
     html = html.replace('</body>', expectation_js + '</body>', 1)
-    html = html.replace('</body>', '<script src="/ios-pwa.js?v=5"></script></body>', 1)
+    html = html.replace('</body>', '<script src="/ios-pwa.js?v=6"></script></body>', 1)
     return html
 
 
