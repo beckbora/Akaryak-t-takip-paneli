@@ -72,7 +72,7 @@ def sector_html():
     )
     nav = '''<nav style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px"><a href="/" style="color:#cafff8;text-decoration:none;border:1px solid #20796f;background:#103a37;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">Mevzuat &amp; Sektör Radar</a><a href="/fiyatlar" style="color:#cbd7e6;text-decoration:none;border:1px solid #263b5a;background:#0c1929;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">⛽ Fiyat Radar</a><a href="/depozito" style="color:#cbd7e6;text-decoration:none;border:1px solid #263b5a;background:#0c1929;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850">♻️ DOA / DBYS</a></nav>'''
     marker = '<header class="top">'
-    if marker in html:
+    if 'class="mainNav"' not in html and marker in html:
         html = html.replace(marker, nav + marker, 1)
     return html
 
@@ -90,11 +90,12 @@ def prices_html():
     html = html.replace('style="background:#5eead4"></i>Benzin 95', 'style="background:#f59e0b"></i>Benzin 95')
     html = html.replace('style="background:#7dd3fc"></i>Motorin', 'style="background:#38bdf8"></i>Motorin')
 
-    html = html.replace(
-        '<button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button></header>',
-        '<div class="notifyActions"><button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button><button id="notifyBtn" class="btn notifyBtn" type="button">🔕 Bildirimler Kapalı</button></div></header>',
-        1,
-    )
+    if 'id="notifyBtn"' not in html:
+        html = html.replace(
+            '<button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button></header>',
+            '<div class="notifyActions"><button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button><button id="notifyBtn" class="btn notifyBtn" type="button">🔕 Bildirimler Kapalı</button></div></header>',
+            1,
+        )
 
     expectation_css = '''
 .expectationBox{margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden}
@@ -104,10 +105,12 @@ def prices_html():
 .notifyActions{display:flex;gap:9px;flex-wrap:wrap}.notifyBtn{border-color:#52657c;background:#132033;color:#d9e4f1}.notifyBtn.enabled{border-color:#238579;background:#0e3937;color:#c9fff8}.notifyBtn.blocked{border-color:#8c263b;background:#411522;color:#fecdd3}
 @media(max-width:700px){.expectationRow{align-items:flex-start;flex-wrap:wrap}.expSource{margin-left:0;width:100%}.notifyActions{width:100%}.notifyActions .btn{flex:1}}
 '''
-    html = html.replace('</style>', expectation_css + '</style>', 1)
+    if '.expectationBox{' not in html:
+        html = html.replace('</style>', expectation_css + '</style>', 1)
 
     expectation_box = '''<section id="priceExpectation" class="expectationBox" aria-live="polite"><div class="expectationTitle">Güncel zam / indirim durumu</div><div id="expectationRows"><div class="expectationRow none">Motorin ve benzin beklentisi kontrol ediliyor…</div></div></section>'''
-    html = html.replace('<div class="filters">', expectation_box + '<div class="filters">', 1)
+    if 'id="priceExpectation"' not in html:
+        html = html.replace('<div class="filters">', expectation_box + '<div class="filters">', 1)
 
     expectation_js = r'''
 <script>
@@ -195,8 +198,10 @@ if(expectationScanButton)expectationScanButton.addEventListener('click',()=>setT
 setInterval(refreshPriceExpectation,600000);
 </script>
 '''
-    html = html.replace('</body>', expectation_js + '</body>', 1)
-    html = html.replace('</body>', '<script src="/ios-pwa.js?v=6"></script></body>', 1)
+    if "const FUEL_NOTIFY_PREF='fuel_notifications_enabled'" not in html:
+        html = html.replace('</body>', expectation_js + '</body>', 1)
+    if '/ios-pwa.js' not in html:
+        html = html.replace('</body>', '<script src="/ios-pwa.js?v=6"></script></body>', 1)
     return html
 
 
