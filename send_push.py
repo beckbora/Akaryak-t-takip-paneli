@@ -62,6 +62,8 @@ def message_for(item):
         return fuel, '⏸️ BEKLENEN İNDİRİM İPTAL EDİLDİ'
     if status == 'cancel_up':
         return fuel, '⏸️ BEKLENEN ZAM İPTAL EDİLDİ'
+    if status == 'test':
+        return fuel, 'Petrol Piyasası Takip arka plan push testi. Bu gerçek bir zam/indirim bildirimi değildir.'
     return fuel, 'FİYAT DURUMU GÜNCELLENDİ'
 
 
@@ -101,6 +103,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--previous', required=True)
     parser.add_argument('--current', required=True)
+    parser.add_argument('--test', action='store_true', help='Send a one-off push test without changing price data')
     args = parser.parse_args()
 
     base_url = env_value('SUPABASE_URL')
@@ -121,6 +124,15 @@ def main():
         if signature(item) == signature(previous.get(fuel_key)):
             continue
         events.append(item)
+
+    if args.test:
+        events = [{
+            'fuel_key': 'test',
+            'fuel': '🧪 TEST BİLDİRİMİ',
+            'status': 'test',
+            'amount': None,
+        }]
+        print('One-off TEST push requested; price data is not modified.')
 
     # Validate the Supabase sender connection on every scheduled run, even
     # when there is no new fuel event. This makes configuration problems visible
@@ -173,12 +185,16 @@ def main():
                     sent += 1
                 except WebPushException as exc:
                     code = getattr(getattr(exc, 'response', None), 'status_code', None)
-                    if code in (401, 403, 404, 410):
+                    detail = str(exc).replace('\n', ' ')[:240]
+                    print(f'Web Push failure: type=WebPushException status={code} detail={detail}')
+                    if code in (404, 410):
                         delete_subscription(base_url, secret, sub.get('endpoint_hash'))
                         removed += 1
                     else:
                         failed += 1
-                except Exception:
+                except Exception as exc:
+                    detail = str(exc).replace('\n', ' ')[:240]
+                    print(f'Web Push failure: type={type(exc).__name__} detail={detail}')
                     failed += 1
 
     print(f'Web Push: events={len(events)} subscriptions={len(subs)} sent={sent} removed={removed} failed={failed}')

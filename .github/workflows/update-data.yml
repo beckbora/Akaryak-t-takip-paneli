@@ -123,13 +123,19 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           VAPID_PRIVATE_KEY_B64: ${{ secrets.VAPID_PRIVATE_KEY_B64 }}
           VAPID_SUBJECT: https://petrol-piyasasi-takip.vercel.app
+          TEST_PUSH: ${{ contains(github.event.head_commit.message, '[test-push]') }}
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ] || [ -z "$VAPID_PRIVATE_KEY_B64" ]; then
             echo "Web Push secrets are not configured yet; skipping."
             exit 0
           fi
           pip install -q -r push-requirements.txt
-          python send_push.py --previous /tmp/price_expectation_before.json --current price_expectation.json
+          if [ "$TEST_PUSH" = "true" ]; then
+            echo "Running one-off background TEST push"
+            python send_push.py --previous /tmp/price_expectation_before.json --current price_expectation.json --test
+          else
+            python send_push.py --previous /tmp/price_expectation_before.json --current price_expectation.json
+          fi
 
       # IMPORTANT: generated JSON is deliberately NOT committed to main.
       # GitHub Pages is the rolling snapshot store. This prevents each 10-minute
