@@ -133,6 +133,7 @@ def recover_vapid_pem(encoded_secret, expected_public_key):
         return decoded
 
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    valid_candidates = []
     for pos in range(len(core) + 1):
         for ch in alphabet:
             candidate_core = core[:pos] + ch + core[pos:]
@@ -144,9 +145,11 @@ def recover_vapid_pem(encoded_secret, expected_public_key):
                     encoding=serialization.Encoding.X962,
                     format=serialization.PublicFormat.UncompressedPoint,
                 )
+                public_b64 = base64.urlsafe_b64encode(public_raw).rstrip(b'=').decode('ascii')
+                valid_candidates.append((pos, ch, key, public_b64))
                 if public_raw != expected:
                     continue
-                print(f'VAPID private key repaired in memory: inserted_one_base64_char_at={pos}')
+                print(f'VAPID private key repaired in memory: inserted_one_base64_char_at={pos}; matches_published_public_key=true')
                 return key.private_bytes(
                     encoding=serialization.Encoding.PEM,
                     format=serialization.PrivateFormat.PKCS8,
@@ -155,7 +158,16 @@ def recover_vapid_pem(encoded_secret, expected_public_key):
             except Exception:
                 continue
 
-    print('VAPID private key auto-repair failed: no candidate matched the published public key.')
+    if len(valid_candidates) == 1:
+        pos, _, key, public_b64 = valid_candidates[0]
+        print(f'VAPID private key has one unique recoverable candidate: inserted_at={pos}')
+        print(f'RECOVERED_VAPID_PUBLIC_KEY={public_b64}')
+        return key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption(),
+        )
+    print(f'VAPID private key auto-repair failed: valid_candidate_count={len(valid_candidates)}; none matched published public key.')
     return decoded
 
 
