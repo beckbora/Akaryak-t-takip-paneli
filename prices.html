@@ -8,14 +8,15 @@
 <style>
 :root{color-scheme:dark;--bg:#07111f;--panel:#0d1a2b;--card:#102138;--line:#263b5a;--text:#eef5ff;--muted:#9fb1c9;--accent:#5eead4;--good:#4ade80;--bad:#fb7185;--warn:#fbbf24;--blue:#7dd3fc}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 82% 0,#0b2940 0,transparent 30%),linear-gradient(180deg,#07111f,#09111c);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.wrap{max-width:1360px;margin:auto;padding:24px}.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.nav a{color:#cbd7e6;text-decoration:none;border:1px solid var(--line);background:#0c1929;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:850}.nav a.active{background:#103a37;border-color:#20796f;color:#cafff8}.top{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-start}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(31px,4vw,48px);margin:6px 0 7px}.sub{max-width:900px;color:var(--muted);line-height:1.55}.btn{border:1px solid #238579;background:#0e3937;color:#c9fff8;padding:12px 16px;border-radius:12px;font-weight:900;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}.livebar{margin:18px 0 12px;border:1px solid var(--line);background:#0c1929;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.liveleft{display:flex;gap:10px;align-items:center}.dot{width:10px;height:10px;border-radius:50%;background:var(--warn)}.dot.good{background:var(--good)}.dot.bad{background:var(--bad)}.muted{color:var(--muted);font-size:12px}.filters{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}.select{background:#081522;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-size:14px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.fuel{border:1px solid var(--line);background:linear-gradient(180deg,#11243c,#0d1c2e);border-radius:17px;padding:17px}.fuel .name{font-size:13px;color:var(--muted);font-weight:800}.fuel .price{font-size:35px;font-weight:950;margin:8px 0 2px}.fuel .unit{font-size:12px;color:var(--muted)}.move{display:inline-flex;margin-top:10px;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900;border:1px solid var(--line)}.move.up{color:#fecdd3;background:#411522;border-color:#8c263b}.move.down{color:#bbf7d0;background:#12351d;border-color:#2b7140}.move.flat{color:#cbd7e6;background:#0c1929}.banner{margin:13px 0;border:1px solid var(--line);background:#0d1a2b;border-radius:15px;padding:15px}.banner.up{border-color:#743047;background:linear-gradient(90deg,rgba(91,25,44,.5),#0d1a2b)}.banner.down{border-color:#2e7147;background:linear-gradient(90deg,rgba(20,83,45,.45),#0d1a2b)}.banner strong{font-size:17px}.yearCards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.yearCard{border:1px solid #355476;background:linear-gradient(180deg,#10253d,#0c1b2d);border-radius:17px;padding:17px}.yearLabel{font-size:12px;color:var(--blue);font-weight:900;text-transform:uppercase;letter-spacing:.06em}.yearMain{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-top:8px}.yearDelta{font-size:29px;font-weight:950}.yearPct{font-size:18px;font-weight:900}.yearMeta{margin-top:7px;color:var(--muted);font-size:12px}.yearDelta.up,.yearPct.up{color:#fb7185}.yearDelta.down,.yearPct.down{color:#4ade80}.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);gap:14px;margin-top:14px}.panel{border:1px solid var(--line);background:#0d1a2b;border-radius:16px;padding:15px}.panel h2{font-size:16px;margin:0 0 12px}.chartWrap{height:290px;position:relative}.chartWrap.tall{height:330px}.chartWrap svg{width:100%;height:100%;overflow:visible}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:11px}.legendDot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.tableWrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid rgba(38,59,90,.65);white-space:nowrap}.table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}.delta.up{color:#fb7185;font-weight:900}.delta.down{color:#4ade80;font-weight:900}.changes{display:grid;gap:9px}.change{border:1px solid var(--line);background:#091624;border-radius:13px;padding:12px}.changeHead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.badge{border-radius:999px;padding:4px 7px;font-size:10px;font-weight:950}.badge.up{color:#fecdd3;background:#411522}.badge.down{color:#bbf7d0;background:#12351d}.sourcebar{display:flex;gap:8px;flex-wrap:wrap}.source{border:1px solid var(--line);border-radius:999px;padding:7px 9px;font-size:11px;color:var(--muted);background:#091624}.source i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--good);margin-right:6px}.source.bad i{background:var(--bad)}.footer{margin-top:18px;color:var(--muted);font-size:11px;line-height:1.55}@media(max-width:900px){.grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.yearCards{grid-template-columns:1fr}}@media(max-width:600px){.wrap{padding:15px}.fuel .price{font-size:30px}}
+.expectationBox{margin:13px 0;border:1px solid var(--line);border-radius:14px;background:#0d1a2b;overflow:hidden}.expectationTitle{padding:8px 13px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.05em;text-transform:uppercase}.expectationRow{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid rgba(38,59,90,.55);font-size:13px;min-height:42px}.expectationRow:last-child{border-bottom:0}.expectationRow a{color:inherit;text-decoration:none;font-weight:900}.expectationRow.up{background:linear-gradient(90deg,rgba(91,25,44,.5),transparent)}.expectationRow.down{background:linear-gradient(90deg,rgba(20,83,45,.45),transparent)}.expectationRow.realized{background:linear-gradient(90deg,rgba(30,90,68,.5),transparent)}.expectationRow.cancel{background:linear-gradient(90deg,rgba(94,71,17,.45),transparent)}.expectationRow.none{color:#cbd7e6}.expLabel{font-size:10px;font-weight:950;border:1px solid currentColor;border-radius:999px;padding:4px 7px;white-space:nowrap}.expSource{margin-left:auto;color:var(--muted);font-size:11px;white-space:nowrap}.notifyActions{display:flex;gap:9px;flex-wrap:wrap}.notifyBtn{border-color:#52657c;background:#132033;color:#d9e4f1}.notifyBtn.enabled{border-color:#238579;background:#0e3937;color:#c9fff8}.notifyBtn.blocked{border-color:#8c263b;background:#411522;color:#fecdd3}@media(max-width:700px){.expectationRow{align-items:flex-start;flex-wrap:wrap}.expSource{margin-left:0;width:100%}.notifyActions{width:100%}.notifyActions .btn{flex:1}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <nav class="nav"><a href="/">Mevzuat & Sektör Radar</a><a class="active" href="/fiyatlar">⛽ Fiyat Radar</a></nav>
-<header class="top"><div><div class="eyebrow">Petrol Piyasası Takip</div><h1>Akaryakıt Fiyat Radar</h1><div class="sub">İstanbul Anadolu, İstanbul Avrupa, Ankara, İzmir, Sakarya ve Tekirdağ için benzin, motorin ve LPG fiyatlarını izler. Fiyat değiştiğinde zam/indirim tutarını hesaplar; EPDK resmi bültenlerinden Benzin 95 ve Motorin için 1 yıllık fiyat eğilimini ayrıca gösterir.</div></div><button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button></header>
+<header class="top"><div><div class="eyebrow">Petrol Piyasası Takip</div><h1>Akaryakıt Fiyat Radar</h1><div class="sub">İstanbul Anadolu, İstanbul Avrupa, Ankara, İzmir, Sakarya ve Tekirdağ için benzin, motorin ve LPG fiyatlarını izler. Fiyat değiştiğinde zam/indirim tutarını hesaplar; EPDK resmi bültenlerinden Benzin 95 ve Motorin için 1 yıllık fiyat eğilimini ayrıca gösterir.</div></div><div class="notifyActions"><button id="scanBtn" class="btn">⚡ Fiyatları Şimdi Tara</button><button id="notifyBtn" class="btn notifyBtn" type="button">🔕 Bildirimler Kapalı</button></div></header>
 <div class="livebar"><div class="liveleft"><span id="statusDot" class="dot"></span><div><strong id="statusText">Fiyat verileri hazırlanıyor…</strong><div id="statusMeta" class="muted">10 dakikada bir güncellenen kayıtlı tarama verisi yüklenir; “Şimdi Tara” anlık kontrol yapar.</div></div></div><div id="updated" class="muted"></div></div>
-<div class="filters"><select id="city" class="select"></select><select id="trendFuel" class="select"><option value="gasoline">Benzin trendi</option><option value="diesel">Motorin trendi</option><option value="lpg">LPG trendi</option></select><select id="trendSource" class="select"><option value="retail">Pompa fiyat geçmişi</option><option value="epdk">EPDK kısa dönem bülten</option></select></div>
+<section id="priceExpectation" class="expectationBox" aria-live="polite"><div class="expectationTitle">Güncel zam / indirim durumu</div><div id="expectationRows"><div class="expectationRow none">Motorin ve benzin beklentisi kontrol ediliyor…</div></div></section><div class="filters"><select id="city" class="select"></select><select id="trendFuel" class="select"><option value="gasoline">Benzin trendi</option><option value="diesel">Motorin trendi</option><option value="lpg">LPG trendi</option></select><select id="trendSource" class="select"><option value="retail">Pompa fiyat geçmişi</option><option value="epdk">EPDK kısa dönem bülten</option></select></div>
 <section class="cards"><div class="fuel"><div class="name">Benzin 95</div><div class="price" id="gasoline">—</div><div class="unit">TL/L</div><div id="gasolineMove" class="move flat">Değişiklik yok</div></div><div class="fuel"><div class="name">Motorin</div><div class="price" id="diesel">—</div><div class="unit">TL/L</div><div id="dieselMove" class="move flat">Değişiklik yok</div></div><div class="fuel"><div class="name">LPG / Otogaz</div><div class="price" id="lpg">—</div><div class="unit">TL/L</div><div id="lpgMove" class="move flat">Değişiklik yok</div></div></section>
 <div id="movementBanner" class="banner"><strong>Henüz kayıtlı fiyat hareketi yok.</strong><div class="muted" style="margin-top:5px">Sistem fiyat değişikliklerini kaydetmeye başladığında burada son zam veya indirim görünecek.</div></div>
 <section class="yearCards"><div class="yearCard"><div class="yearLabel">EPDK · Benzin 95 · 1 yıllık değişim</div><div class="yearMain"><span id="yearGasDelta" class="yearDelta">—</span><span id="yearGasPct" class="yearPct">—</span></div><div id="yearGasMeta" class="yearMeta">1 yıllık resmi veri hazırlanıyor.</div></div><div class="yearCard"><div class="yearLabel">EPDK · Motorin · 1 yıllık değişim</div><div class="yearMain"><span id="yearDieselDelta" class="yearDelta">—</span><span id="yearDieselPct" class="yearPct">—</span></div><div id="yearDieselMeta" class="yearMeta">1 yıllık resmi veri hazırlanıyor.</div></div></section>
@@ -44,6 +45,80 @@ function render(){cityOptions();renderCards();renderAnnualCards();drawAnnualChar
 async function loadSaved(){try{const r=await fetch('/prices.json?t='+Date.now(),{cache:'no-store'});if(r.ok){DATA=await r.json();render();$('#statusDot').className='dot good';$('#statusText').textContent='Zamanlanmış fiyat taraması yüklendi';$('#statusMeta').textContent='Yaklaşık 10 dakikada bir otomatik yenilenir · Şimdi Tara anlık kontrol yapar.';return true}}catch(e){}return false}
 async function scan(){const b=$('#scanBtn');b.disabled=true;b.textContent='⏳ Taranıyor…';$('#statusDot').className='dot';$('#statusText').textContent='Fiyat kaynakları taranıyor…';try{const r=await fetch('/api/prices?t='+Date.now(),{cache:'no-store'});const d=await r.json();if(!r.ok||d.error)throw new Error(d.error||'Fiyat taraması başarısız');DATA=d;render();$('#statusDot').className='dot good';$('#statusText').textContent='Canlı fiyat taraması tamamlandı';$('#statusMeta').textContent=(d.current||[]).length+' şehir referansı · '+(d.sources||[]).filter(x=>x.ok).length+'/'+(d.sources||[]).length+' kaynak erişildi'}catch(e){$('#statusDot').className='dot bad';$('#statusText').textContent='Canlı fiyat taraması başarısız';$('#statusMeta').textContent=e.message+' · Kayıtlı fiyatlar gösteriliyor.';await loadSaved()}finally{b.disabled=false;b.textContent='⚡ Fiyatları Şimdi Tara'}}
 $('#city').onchange=()=>{renderCards();drawChart()};$('#trendFuel').onchange=drawChart;$('#trendSource').onchange=drawChart;$('#scanBtn').onclick=scan;(async()=>{const ok=await loadSaved();const stamp=ok&&DATA?new Date(DATA.updated_at||0):null;const stale=!stamp||isNaN(stamp)||Date.now()-stamp.getTime()>20*60*1000;const canLive=!location.hostname.endsWith('github.io');if(stale&&canLive)await scan();setInterval(loadSaved,600000)})();
+</script>
+<script>
+const FUEL_NOTIFY_PREF='fuel_notifications_enabled';
+const FUEL_NOTIFY_STATE='fuel_notification_state_v1';
+window.__latestFuelExpectationItems=[];
+function notificationsEnabled(){return localStorage.getItem(FUEL_NOTIFY_PREF)==='1'}
+function readNotifyState(){try{return JSON.parse(localStorage.getItem(FUEL_NOTIFY_STATE)||'{}')}catch(e){return {}}}
+function signatureFor(item){return [item.status||'',item.amount??'',item.line||''].join('|')}
+function baselineNotifyState(items){const state={};for(const item of items||[]){if(item.fuel_key)state[item.fuel_key]=signatureFor(item)}localStorage.setItem(FUEL_NOTIFY_STATE,JSON.stringify(state))}
+function updateNotifyButton(){
+  const b=document.getElementById('notifyBtn');if(!b)return;
+  if(!('Notification' in window)){b.textContent='🔕 Bildirim Desteklenmiyor';b.className='btn notifyBtn blocked';b.disabled=true;return}
+  if(Notification.permission==='denied'){b.textContent='🚫 Bildirim Tarayıcıda Engelli';b.className='btn notifyBtn blocked';return}
+  const on=notificationsEnabled()&&Notification.permission==='granted';
+  b.textContent=on?'🔔 Bildirimler Açık':'🔕 Bildirimler Kapalı';
+  b.className='btn notifyBtn '+(on?'enabled':'')
+}
+async function toggleFuelNotifications(){
+  if(!('Notification' in window))return;
+  if(notificationsEnabled()&&Notification.permission==='granted'){localStorage.setItem(FUEL_NOTIFY_PREF,'0');updateNotifyButton();return}
+  if(Notification.permission==='denied'){updateNotifyButton();return}
+  let permission=Notification.permission;
+  if(permission==='default')permission=await Notification.requestPermission();
+  if(permission==='granted'){
+    localStorage.setItem(FUEL_NOTIFY_PREF,'1');
+    baselineNotifyState(window.__latestFuelExpectationItems||[]);
+    try{new Notification('Petrol Piyasası Takip',{body:'Akaryakıt fiyat bildirimleri açıldı.',tag:'fuel-notifications-enabled'})}catch(e){}
+  }else localStorage.setItem(FUEL_NOTIFY_PREF,'0');
+  updateNotifyButton()
+}
+function expectationClass(status){
+  if(status==='up')return 'up';
+  if(status==='down')return 'down';
+  if(String(status).startsWith('realized'))return 'realized';
+  if(String(status).startsWith('cancel'))return 'cancel';
+  return 'none'
+}
+function expectationLabel(status){
+  if(status==='up'||status==='down')return 'BEKLENTİ';
+  if(String(status).startsWith('realized'))return 'GERÇEKLEŞTİ';
+  if(String(status).startsWith('cancel'))return 'GÜNCELLEME';
+  return 'GÜNCEL DURUM'
+}
+async function refreshPriceExpectation(forceLive=false){
+  const box=document.getElementById('expectationRows');if(!box)return;
+  try{
+    const r=await fetch('/api/price-expectation?t='+Date.now()+(forceLive?'&live=1':''),{cache:'no-store'});
+    const d=await r.json();
+    if(!r.ok)throw new Error(d.error||'Beklenti taraması başarısız');
+    const items=Array.isArray(d.items)?d.items:[];
+    window.__latestFuelExpectationItems=items;
+    box.innerHTML='';
+    for(const item of items){
+      const row=document.createElement('div');row.className='expectationRow '+expectationClass(item.status);
+      const badge=document.createElement('span');badge.className='expLabel';badge.textContent=expectationLabel(item.status);row.appendChild(badge);
+      if(item.url){const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener';a.textContent=item.line||'';row.appendChild(a)}
+      else{const strong=document.createElement('strong');strong.textContent=item.line||'';row.appendChild(strong)}
+      const src=document.createElement('span');src.className='expSource';
+      const confirmations=Number(item.confirmation_count||0);
+      const confirmText=confirmations>1?' · '+confirmations+' kaynak doğruladı':'';
+      const timing=item.effective_date?' · geçerlilik '+new Date(item.effective_date+'T12:00:00').toLocaleDateString('tr-TR',{day:'2-digit',month:'short'}):'';
+      src.textContent=item.source?'· '+item.source+confirmText+timing+(item.official?'':' · haber beklentisi'):'· 12:00 günlük kontrol';
+      row.appendChild(src);box.appendChild(row)
+    }
+    if(!items.length)box.innerHTML='<div class="expectationRow none">Motorin ve benzin için ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR</div>'
+  }catch(e){
+    box.innerHTML='<div class="expectationRow none">Beklenti bilgisi geçici olarak alınamadı.</div>'
+  }
+}
+document.getElementById('notifyBtn')?.addEventListener('click',toggleFuelNotifications);
+updateNotifyButton();
+setTimeout(()=>refreshPriceExpectation(false),0);
+document.getElementById('scanBtn')?.addEventListener('click',()=>setTimeout(()=>refreshPriceExpectation(true),500));
+setInterval(()=>refreshPriceExpectation(false),600000);
 </script>
 </body>
 </html>
