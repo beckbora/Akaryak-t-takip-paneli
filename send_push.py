@@ -175,6 +175,7 @@ def main():
                     },
                 }
                 try:
+                    print(f"Push key diagnostics: p256dh_len={len(str(sub.get('p256dh') or ''))} auth_len={len(str(sub.get('auth') or ''))}")
                     webpush(
                         subscription_info=info,
                         data=payload,
