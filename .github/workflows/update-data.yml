@@ -124,6 +124,7 @@ jobs:
           VAPID_PRIVATE_KEY_B64: ${{ secrets.VAPID_PRIVATE_KEY_B64 }}
           VAPID_SUBJECT: https://petrol-piyasasi-takip.vercel.app
           TEST_PUSH: ${{ contains(github.event.head_commit.message, '[test-push]') }}
+          CLEANUP_PUSH_BEFORE: ${{ contains(github.event.head_commit.message, '[cleanup-push]') && '2026-09-22T11:40:00+00:00' || '' }}
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SECRET_KEY" ] || [ -z "$VAPID_PRIVATE_KEY_B64" ]; then
             echo "Web Push secrets are not configured yet; skipping."

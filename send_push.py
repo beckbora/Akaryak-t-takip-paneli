@@ -81,7 +81,7 @@ def subscriptions(base_url, secret):
     url = base_url.rstrip('/') + '/rest/v1/push_subscriptions'
     params = {
         'enabled': 'eq.true',
-        'select': 'endpoint_hash,endpoint,p256dh,auth',
+        'select': 'endpoint_hash,endpoint,p256dh,auth,updated_at',
     }
     r = requests.get(url, headers=supabase_headers(secret), params=params, timeout=12)
     r.raise_for_status()
@@ -233,6 +233,13 @@ def main():
     # when there is no new fuel event. This makes configuration problems visible
     # before the first real alert is needed.
     subs = subscriptions(base_url, secret)
+    cleanup_before = env_value('CLEANUP_PUSH_BEFORE')
+    if cleanup_before:
+        stale = [x for x in subs if str(x.get('updated_at') or '') < cleanup_before]
+        for sub in stale:
+            delete_subscription(base_url, secret, sub.get('endpoint_hash'))
+        print(f'Push rotation cleanup: removed_stale_subscriptions={len(stale)}')
+        subs = subscriptions(base_url, secret)
     print(f'Web Push backend ready: active_subscriptions={len(subs)}')
 
     if not events:
