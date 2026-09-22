@@ -67,9 +67,9 @@ jobs:
           import os, requests
           base=os.environ['SUPABASE_URL'].strip()
           secret=os.environ['SUPABASE_SECRET_KEY'].strip()
-          if '=' in base and base.startswith('SUPABASE_'):
+          if '=' in base:
               base=base.split('=',1)[1].strip()
-          if '=' in secret and secret.startswith('SUPABASE_'):
+          if '=' in secret:
               secret=secret.split('=',1)[1].strip()
           base=base.rstrip('/')
           headers={'apikey':secret,'Authorization':'Bearer '+secret}
