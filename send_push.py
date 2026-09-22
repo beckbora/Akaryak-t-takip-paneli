@@ -1,12 +1,10 @@
 import argparse
-# one-off push test trigger: 2026-09-22 14:18 TR
 import base64
 import json
 import os
 import tempfile
 from pathlib import Path
 
-from cryptography.hazmat.primitives import serialization
 import requests
 from pywebpush import WebPushException, webpush
 
@@ -64,8 +62,6 @@ def message_for(item):
         return fuel, '⏸️ BEKLENEN İNDİRİM İPTAL EDİLDİ'
     if status == 'cancel_up':
         return fuel, '⏸️ BEKLENEN ZAM İPTAL EDİLDİ'
-    if status == 'test':
-        return fuel, 'Petrol Piyasası Takip arka plan push testi. Bu gerçek bir zam/indirim bildirimi değildir.'
     return fuel, 'FİYAT DURUMU GÜNCELLENDİ'
 
 
@@ -81,7 +77,7 @@ def subscriptions(base_url, secret):
     url = base_url.rstrip('/') + '/rest/v1/push_subscriptions'
     params = {
         'enabled': 'eq.true',
-        'select': 'endpoint_hash,endpoint,p256dh,auth,updated_at',
+        'select': 'endpoint_hash,endpoint,p256dh,auth',
     }
     r = requests.get(url, headers=supabase_headers(secret), params=params, timeout=12)
     r.raise_for_status()
@@ -101,110 +97,16 @@ def delete_subscription(base_url, secret, endpoint_hash):
     )
 
 
-def _b64url_decode(value):
-    raw = (value or '').encode('ascii')
-    raw += b'=' * ((4 - len(raw) % 4) % 4)
-    return base64.urlsafe_b64decode(raw)
-
-
-def recover_vapid_pem(encoded_secret, expected_public_key):
-    decoded = base64.b64decode(encoded_secret.encode('ascii'))
-    try:
-        serialization.load_pem_private_key(decoded, password=None)
-        return decoded
-    except Exception:
-        pass
-
-    text = decoded.decode('ascii', errors='ignore')
-    if '-----BEGIN' not in text or not expected_public_key:
-        return decoded
-
-    body = ''.join(
-        line.strip() for line in text.splitlines()
-        if line.strip() and not line.startswith('-----')
-    )
-    core = body.rstrip('=')
-    expected = _b64url_decode(expected_public_key)
-
-    # A valid Base64 payload can never have non-padding length mod 4 == 1.
-    # The stored secret currently has exactly this shape, so try repairing one
-    # missing Base64 character and accept only the candidate whose EC public
-    # key matches the already-published VAPID public key.
-    if len(core) % 4 != 1:
-        return decoded
-
-    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-    valid_candidates = []
-    for pos in range(len(core) + 1):
-        for ch in alphabet:
-            candidate_core = core[:pos] + ch + core[pos:]
-            candidate_body = candidate_core + ('=' * ((4 - len(candidate_core) % 4) % 4))
-            try:
-                der = base64.b64decode(candidate_body.encode('ascii'), validate=True)
-                key = serialization.load_der_private_key(der, password=None)
-                public_raw = key.public_key().public_bytes(
-                    encoding=serialization.Encoding.X962,
-                    format=serialization.PublicFormat.UncompressedPoint,
-                )
-                public_b64 = base64.urlsafe_b64encode(public_raw).rstrip(b'=').decode('ascii')
-                valid_candidates.append((pos, ch, key, public_b64))
-                if public_raw != expected:
-                    continue
-                print(f'VAPID private key repaired in memory: inserted_one_base64_char_at={pos}; matches_published_public_key=true')
-                return key.private_bytes(
-                    encoding=serialization.Encoding.PEM,
-                    format=serialization.PrivateFormat.PKCS8,
-                    encryption_algorithm=serialization.NoEncryption(),
-                )
-            except Exception:
-                continue
-
-    if len(valid_candidates) == 1:
-        pos, _, key, public_b64 = valid_candidates[0]
-        print(f'VAPID private key has one unique recoverable candidate: inserted_at={pos}')
-        print(f'RECOVERED_VAPID_PUBLIC_KEY={public_b64}')
-        return key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption(),
-        )
-    print(f'VAPID private key auto-repair failed: valid_candidate_count={len(valid_candidates)}; none matched published public key.')
-    return decoded
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--previous', required=True)
     parser.add_argument('--current', required=True)
-    parser.add_argument('--test', action='store_true', help='Send a one-off push test without changing price data')
     args = parser.parse_args()
 
     base_url = env_value('SUPABASE_URL')
     secret = env_value('SUPABASE_SECRET_KEY')
     private_b64 = env_value('VAPID_PRIVATE_KEY_B64')
-    public_key = env_value('VAPID_PUBLIC_KEY') or 'BH8eJYsPtJXs6mPZyfE-bT3QiK4RQ88C5Ckvj-Zthb1xjL7oeEoIkUqm7ZgdmMLjkBtDjxY9xevjaDZ1oWOYWV0'
     subject = env_value('VAPID_SUBJECT') or 'https://petrol-piyasasi-takip.vercel.app'
-
-    # Structural diagnostics only: never print key material.
-    try:
-        decoded_probe = base64.b64decode(private_b64.encode('ascii'))
-        probe_text = decoded_probe.decode('ascii', errors='ignore')
-        pem_marker = '-----BEGIN' in probe_text
-        compact_probe = ''.join(probe_text.split())
-        print(
-            'VAPID key diagnostics: '
-            f'env_len={len(private_b64)} decoded_len={len(decoded_probe)} '
-            f'pem_marker={pem_marker} decoded_text_len={len(probe_text)} '
-            f'decoded_compact_mod4={len(compact_probe) % 4}'
-        )
-        if pem_marker:
-            body = ''.join(
-                line.strip() for line in probe_text.splitlines()
-                if line.strip() and not line.startswith('-----')
-            )
-            print(f'VAPID PEM diagnostics: body_len={len(body)} body_mod4={len(body) % 4}')
-    except Exception as probe_exc:
-        print(f'VAPID key diagnostics failed before send: {type(probe_exc).__name__}: {str(probe_exc)[:160]}')
 
     if not (base_url and secret and private_b64):
         print('Web Push not configured; skipping sender.')
@@ -220,26 +122,10 @@ def main():
             continue
         events.append(item)
 
-    if args.test:
-        events = [{
-            'fuel_key': 'test',
-            'fuel': '🧪 TEST BİLDİRİMİ',
-            'status': 'test',
-            'amount': None,
-        }]
-        print('One-off TEST push requested; price data is not modified.')
-
     # Validate the Supabase sender connection on every scheduled run, even
     # when there is no new fuel event. This makes configuration problems visible
     # before the first real alert is needed.
     subs = subscriptions(base_url, secret)
-    cleanup_before = env_value('CLEANUP_PUSH_BEFORE')
-    if cleanup_before:
-        stale = [x for x in subs if str(x.get('updated_at') or '') < cleanup_before]
-        for sub in stale:
-            delete_subscription(base_url, secret, sub.get('endpoint_hash'))
-        print(f'Push rotation cleanup: removed_stale_subscriptions={len(stale)}')
-        subs = subscriptions(base_url, secret)
     print(f'Web Push backend ready: active_subscriptions={len(subs)}')
 
     if not events:
@@ -250,7 +136,7 @@ def main():
         print('No active push subscriptions.')
         return
 
-    private_pem = recover_vapid_pem(private_b64, public_key)
+    private_pem = base64.b64decode(private_b64.encode('ascii'))
     with tempfile.NamedTemporaryFile('wb', suffix='.pem', delete=True) as keyfile:
         keyfile.write(private_pem)
         keyfile.flush()
@@ -277,7 +163,6 @@ def main():
                     },
                 }
                 try:
-                    print(f"Push key diagnostics: p256dh_len={len(str(sub.get('p256dh') or ''))} auth_len={len(str(sub.get('auth') or ''))}")
                     webpush(
                         subscription_info=info,
                         data=payload,
@@ -288,16 +173,12 @@ def main():
                     sent += 1
                 except WebPushException as exc:
                     code = getattr(getattr(exc, 'response', None), 'status_code', None)
-                    detail = str(exc).replace('\n', ' ')[:240]
-                    print(f'Web Push failure: type=WebPushException status={code} detail={detail}')
-                    if code in (404, 410):
+                    if code in (403, 404, 410):
                         delete_subscription(base_url, secret, sub.get('endpoint_hash'))
                         removed += 1
                     else:
                         failed += 1
-                except Exception as exc:
-                    detail = str(exc).replace('\n', ' ')[:240]
-                    print(f'Web Push failure: type={type(exc).__name__} detail={detail}')
+                except Exception:
                     failed += 1
 
     print(f'Web Push: events={len(events)} subscriptions={len(subs)} sent={sent} removed={removed} failed={failed}')
