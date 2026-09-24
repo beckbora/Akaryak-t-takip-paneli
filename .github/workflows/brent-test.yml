@@ -1,0 +1,31 @@
+name: Brent data smoke test
+
+on:
+  push:
+    branches: [feature/brent-tahmin]
+    paths:
+      - 'brent_scan.py'
+      - 'update_brent.py'
+      - '.github/workflows/brent-test.yml'
+
+jobs:
+  brent-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5
+      - name: Fetch Brent and USDTRY
+        run: |
+          python update_brent.py
+          python - <<'PY'
+          import json
+          d=json.load(open('brent.json',encoding='utf-8'))
+          assert d.get('live_ok') is True, d
+          assert (d.get('brent') or {}).get('price_usd_bbl'), d
+          assert (d.get('usdtry') or {}).get('rate'), d
+          print('BRENT_TEST_OK', d['brent']['price_usd_bbl'], d['usdtry']['rate'], d['turkey_model']['estimated_pump_impact_tl_l'])
+          PY
