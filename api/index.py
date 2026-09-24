@@ -109,7 +109,7 @@ def prices_html():
     if '.expectationBox{' not in html:
         html = html.replace('</style>', expectation_css + '</style>', 1)
 
-    expectation_box = '''<section id="priceExpectation" class="expectationBox" aria-live="polite"><div class="expectationTitle">Güncel zam / indirim durumu</div><div id="expectationRows"><div class="expectationRow none">Motorin ve benzin beklentisi kontrol ediliyor…</div></div></section>'''
+    expectation_box = '''<section id="priceExpectation" class="expectationBox" aria-live="polite"><div class="expectationTitle">Haber kaynaklarına göre güncel beklenti</div><div id="expectationRows"><div class="expectationRow none">Motorin ve benzin beklentisi kontrol ediliyor…</div></div></section>'''
     if 'id="priceExpectation"' not in html:
         html = html.replace('<div class="filters">', expectation_box + '<div class="filters">', 1)
 
@@ -167,25 +167,40 @@ async function refreshPriceExpectation(forceLive=false){
     const d=await r.json();
     if(!r.ok)throw new Error(d.error||'Beklenti taraması başarısız');
     const items=Array.isArray(d.items)?d.items:[];
-    box.innerHTML='';
+    const priority=s=>String(s).startsWith('realized')||String(s).startsWith('cancel')?4:(s==='up'||s==='down'?3:1);
+    const byFuel=new Map();
     for(const item of items){
+      const key=item.fuel_key||item.fuel||'other';
+      const prev=byFuel.get(key);
+      if(!prev||priority(item.status)>priority(prev.status))byFuel.set(key,item);
+      else if(prev&&priority(item.status)===priority(prev.status)){
+        const a=new Date(item.published_at||item.checked_at||0),b=new Date(prev.published_at||prev.checked_at||0);
+        if(a>b)byFuel.set(key,item);
+      }
+    }
+    const visible=[...byFuel.values()].sort((a,b)=>priority(b.status)-priority(a.status));
+    box.innerHTML='';
+    for(const item of visible){
       const row=document.createElement('div');row.className='expectationRow '+expectationClass(item.status);
-      const badge=document.createElement('span');badge.className='expLabel';badge.textContent=expectationLabel(item.status);
+      const badge=document.createElement('span');badge.className='expLabel';badge.textContent=(item.fuel||item.fuel_key||'YAKIT').toUpperCase();
       row.appendChild(badge);
-      if(item.url){
-        const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener';a.textContent=item.line||'';row.appendChild(a);
+      const displayLine=item.status==='none'
+        ?'Zam/indirim beklentisi yok'
+        :(item.line||((item.status==='up'?'🔺 ZAM BEKLENİYOR':item.status==='down'?'🔻 İNDİRİM BEKLENİYOR':'Durum güncellendi')));
+      if(item.url&&item.status!=='none'){
+        const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener';a.textContent=displayLine;row.appendChild(a);
       }else{
-        const text=document.createElement('strong');text.textContent=item.line||'';row.appendChild(text);
+        const text=document.createElement('strong');text.textContent=displayLine;row.appendChild(text);
       }
       const src=document.createElement('span');src.className='expSource';
       const confirmations=Number(item.confirmation_count||0);
       const confirmText=confirmations>1?' · '+confirmations+' kaynak doğruladı':'';
       const timing=item.effective_date?' · geçerlilik '+new Date(item.effective_date+'T12:00:00').toLocaleDateString('tr-TR',{day:'2-digit',month:'short'}):'';
-      src.textContent=item.source?'· '+item.source+confirmText+timing+(item.official?'':' · haber beklentisi'):'· 12:00 günlük kontrol';
+      src.textContent=item.source?'· '+item.source+confirmText+timing+(item.official?'':' · haber beklentisi'):'· güncel kontrol';
       row.appendChild(src);box.appendChild(row);
     }
-    if(!items.length)box.innerHTML='<div class="expectationRow none">Motorin ve benzin için ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR</div>';
-    maybeNotifyFuelChanges(items);
+    if(!visible.length)box.innerHTML='<div class="expectationRow none">Motorin ve benzin için güncel zam/indirim beklentisi bulunmuyor.</div>';
+    maybeNotifyFuelChanges(visible);
   }catch(e){
     box.innerHTML='<div class="expectationRow none">Beklenti bilgisi geçici olarak alınamadı.</div>';
   }
