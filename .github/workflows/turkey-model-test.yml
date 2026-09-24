@@ -45,6 +45,6 @@ jobs:
           print('BRENT_SOURCES',d.get('sources'))
           for key in ('diesel','gasoline'):
               m=d['fuel_models'][key]
-              print('MODEL_RESULT',key,'impact=',m['estimated_impact_tl_l'],'baseline=',m['baseline_at'],'product_pct=',m['product_change_percent'],'fx_pct=',m['fx_change_percent'],'compare=',m['comparison'])
+              print('MODEL_RESULT',key,'impact=',m['estimated_impact_tl_l'],'baseline=',m['baseline_at'],'cif=',m.get('cif_med_price_usd_mt'),'cif_nowcast=',m.get('cif_med_nowcast_usd_mt'),'brent_pct=',m.get('brent_change_percent_since_cif'),'fx_pct=',m.get('fx_change_percent_since_cif'),'compare=',m['comparison'])
           print('BRENT_CONTEXT',d['brent']['price_usd_bbl'],d['brent_only_context'])
           PY

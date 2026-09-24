@@ -22,8 +22,18 @@ HEADERS = {
     "Accept": "text/html,application/json,text/plain,*/*",
 }
 MONTHS = {
-    "january": 1, "february": 2, "march": 3, "april": 4, "may": 5, "june": 6,
-    "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12,
+    "january": 1, "jan": 1,
+    "february": 2, "feb": 2,
+    "march": 3, "mar": 3,
+    "april": 4, "apr": 4,
+    "may": 5,
+    "june": 6, "jun": 6,
+    "july": 7, "jul": 7,
+    "august": 8, "aug": 8,
+    "september": 9, "sept": 9, "sep": 9,
+    "october": 10, "oct": 10,
+    "november": 11, "nov": 11,
+    "december": 12, "dec": 12,
 }
 
 
@@ -81,13 +91,16 @@ def _fetch_chart(symbol, range_name="1mo", interval="1d"):
 
 
 def _parse_english_date(value):
-    m = re.search(r"(\d{1,2})\s+([A-Za-z]+)\s+(20\d{2})", value or "", re.I)
-    if not m:
-        return None
-    month = MONTHS.get(m.group(2).casefold())
-    if not month:
-        return None
-    return datetime(int(m.group(3)), month, int(m.group(1)), 23, 59, tzinfo=timezone.utc)
+    raw = (value or "").strip()
+    m = re.search(r"(\d{1,2})\s+([A-Za-z]+)\s+(20\d{2})", raw, re.I)
+    if m:
+        month = MONTHS.get(m.group(2).casefold())
+        if month:
+            return datetime(int(m.group(3)), month, int(m.group(1)), 23, 59, tzinfo=timezone.utc)
+    m = re.search(r"(20\d{2})[-/](\d{1,2})[-/](\d{1,2})", raw)
+    if m:
+        return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), 23, 59, tzinfo=timezone.utc)
+    return None
 
 
 def _fetch_cif_med(fuel_key):
@@ -118,7 +131,7 @@ def _fetch_cif_med(fuel_key):
     price = float(price_match.group(1).replace(",", ""))
     at = _parse_english_date(date_match.group(1))
     if not at:
-        raise ValueError("CIF Med tarihi ayrıştırılamadı")
+        raise ValueError(f"CIF Med tarihi ayrıştırılamadı: {date_match.group(1)!r}")
     return {
         "fuel_key": fuel_key,
         "price_usd_mt": price,
