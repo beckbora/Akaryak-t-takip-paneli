@@ -14,6 +14,7 @@ PRICE_DASHBOARD = ROOT / 'prices.html'
 DEPOSIT_DASHBOARD = ROOT / 'deposit.html'
 PRICE_DATA = ROOT / 'prices.json'
 EXPECTATION_DATA = ROOT / 'price_expectation.json'
+BRENT_DATA = ROOT / 'brent.json'
 PUSH_CONFIG_FILE = ROOT / 'push-config.json'
 PWA_MANIFEST = ROOT / 'manifest.webmanifest'
 PWA_SW = ROOT / 'sw.js'
@@ -250,6 +251,26 @@ def expectation_data_file():
     return _snapshot_response('price_expectation.json', EXPECTATION_DATA)
 
 
+@app.get('/brent.json')
+def brent_data_file():
+    return _snapshot_response('brent.json', BRENT_DATA)
+
+
+@app.get('/api/brent')
+def brent_data(live: int = 0):
+    saved, snapshot_source = _snapshot_json('brent.json', BRENT_DATA)
+    if not live and saved:
+        return JSONResponse(content=saved, headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source})
+    try:
+        from brent_scan import scan_brent
+        data = scan_brent(saved=saved)
+        return JSONResponse(content=data, headers={'Cache-Control': 'no-store, max-age=0'})
+    except Exception as exc:
+        if saved:
+            return JSONResponse(content=saved, headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source})
+        return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
+
+
 @app.get('/api/push-config')
 def push_config():
     return _snapshot_response('push-config.json', PUSH_CONFIG_FILE)
@@ -275,7 +296,7 @@ def api_root():
     return {
         'status': 'ready',
         'service': 'Petrol Piyasasi Takip live scan',
-        'modules': ['sector', 'prices', 'price_expectation', 'deposit'],
+        'modules': ['sector', 'prices', 'price_expectation', 'brent', 'deposit'],
     }
 
 

@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths:
       - 'price_scan.py'
+      - 'brent.json'
+      - 'update_brent.py'
+      - 'brent_scan.py'
       - 'price_expectation.py'
       - 'price_expectation_state.py'
       - 'live_scan.py'
@@ -63,7 +66,7 @@ jobs:
         run: |
           set -u
           BASE="https://beckbora.github.io/Akaryak-t-takip-paneli"
-          for FILE in data.json prices.json price_expectation.json; do
+          for FILE in data.json prices.json price_expectation.json brent.json; do
             TMP="/tmp/${FILE}"
             URL="${BASE}/${FILE}?t=$(date +%s)"
             if curl -fL --retry 2 --retry-delay 2 --connect-timeout 5 --max-time 20 "$URL" -o "$TMP"               && python -m json.tool "$TMP" >/dev/null 2>&1; then
@@ -86,6 +89,9 @@ jobs:
 
       - name: Scan fuel price expectations
         run: python update_expectation.py
+
+      - name: Scan Brent and USD/TRY
+        run: python update_brent.py
 
       - name: Generate public push config
         env:
