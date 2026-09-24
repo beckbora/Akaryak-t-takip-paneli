@@ -1,0 +1,37 @@
+name: Turkey fuel model v2 smoke test
+
+on:
+  push:
+    branches: [feature/turkiye-yakit-model-v2]
+    paths:
+      - 'brent_scan.py'
+      - 'update_brent.py'
+      - '.github/workflows/turkey-model-test.yml'
+
+jobs:
+  model-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5
+      - name: Restore live snapshots
+        run: |
+          BASE="https://beckbora.github.io/Akaryak-t-takip-paneli"
+          for FILE in prices.json price_expectation.json brent.json; do
+            curl -fL --retry 2 "$BASE/$FILE?t=$(date +%s)" -o "$FILE"
+          done
+      - name: Run Turkey model
+        run: |
+          python update_brent.py
+          python - <<'PY'
+          import json
+          d=json.load(open('brent.json',encoding='utf-8'))
+          for key in ('diesel','gasoline'):
+              m=d['fuel_models'][key]
+              print('MODEL_RESULT',key,'impact=',m['estimated_impact_tl_l'],'baseline=',m['baseline_at'],'product_pct=',m['product_change_percent'],'fx_pct=',m['fx_change_percent'],'compare=',m['comparison'])
+          print('BRENT_CONTEXT',d['brent']['price_usd_bbl'],d['brent_only_context'])
+          PY
