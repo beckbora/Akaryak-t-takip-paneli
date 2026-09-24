@@ -40,6 +40,9 @@ jobs:
                   material.append((x.get('detected_at'),x.get('location'),x.get('fuel'),delta,x.get('old_price'),x.get('new_price')))
           print('MATERIAL_CHANGES',material[:30])
           d=json.load(open('brent.json',encoding='utf-8'))
+          print('BRENT_JSON_KEYS',list(d.keys()))
+          print('BRENT_ERROR',d.get('error'))
+          print('BRENT_SOURCES',d.get('sources'))
           for key in ('diesel','gasoline'):
               m=d['fuel_models'][key]
               print('MODEL_RESULT',key,'impact=',m['estimated_impact_tl_l'],'baseline=',m['baseline_at'],'product_pct=',m['product_change_percent'],'fx_pct=',m['fx_change_percent'],'compare=',m['comparison'])
