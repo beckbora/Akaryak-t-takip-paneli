@@ -231,12 +231,36 @@ def _cif_nowcast_model(fuel_key, fuel_label, cif, brent, fx, expectation):
     pump_impact = (nowcast_tl_l - baseline_tl_l) * (1.0 + VAT_RATE)
     status, label = _pressure_label(pump_impact)
 
+    comparison = _compare_model(pump_impact, expectation)
+    if expectation:
+        confirmations = int(expectation.get("confirmation_count") or 0)
+        consensus_weight = 1.0 if confirmations >= 3 else (0.80 if confirmations == 2 else 0.60)
+        expected_signed = float(expectation.get("signed_amount") or 0)
+        market_estimate = expected_signed * consensus_weight + pump_impact * (1.0 - consensus_weight)
+        estimate_basis = (
+            f"{confirmations} kaynaklı haber konsensüsü"
+            if confirmations >= 3
+            else f"haber konsensüsü %{int(consensus_weight*100)} + CIF/Brent %{int((1-consensus_weight)*100)}"
+        )
+    else:
+        confirmations = 0
+        consensus_weight = 0.0
+        market_estimate = pump_impact
+        estimate_basis = "haber beklentisi yok · CIF Med + Brent/kur modeli"
+
+    estimate_status, estimate_label = _pressure_label(market_estimate)
+
     return {
         "fuel_key": fuel_key,
         "fuel": fuel_label,
-        "status": status,
-        "label": label,
-        "estimated_impact_tl_l": round(pump_impact, 2),
+        "status": estimate_status,
+        "label": estimate_label,
+        "market_estimate_tl_l": round(market_estimate, 2),
+        "estimated_impact_tl_l": round(market_estimate, 2),
+        "cif_brent_signal_tl_l": round(pump_impact, 2),
+        "consensus_weight": consensus_weight,
+        "confirmation_count": confirmations,
+        "estimate_basis": estimate_basis,
         "basis": f"CIF Med {cif['assessment_date']} → 10 dk Brent/kur nowcast",
         "baseline_at": at.isoformat(),
         "cif_med_price_usd_mt": round(float(cif["price_usd_mt"]), 2),
@@ -249,13 +273,13 @@ def _cif_nowcast_model(fuel_key, fuel_label, cif, brent, fx, expectation):
         "fx_change_percent_since_cif": round(((fx_now / fx_base) - 1.0) * 100.0, 2) if fx_base else 0,
         "baseline_product_cost_tl_l": round(baseline_tl_l, 3),
         "nowcast_product_cost_tl_l": round(nowcast_tl_l, 3),
-        "comparison": _compare_model(pump_impact, expectation),
+        "comparison": comparison,
         "source": cif["source"],
         "source_url": cif["url"],
         "note": (
-            "EPDK'nın referans sınıfı olan CIF Med'e yakın ücretsiz günlük indicative veri kullanılır. "
-            "Gün içi 10 dakikalık nowcast, son yayımlanan CIF Med seviyesini Brent ve USD/TL hareketiyle taşır. "
-            "Platts lisanslı verisinin birebir yerine geçmez."
+            "Güçlü haber konsensüsü varsa beklenen tutar ana tahmin olarak kullanılır; "
+            "CIF Med + Brent + USD/TL sinyali ayrı kontrol göstergesidir. "
+            "Haber beklentisi yoksa model yalnız CIF Med + Brent + kurdan tahmin üretir."
         ),
     }
 
@@ -353,7 +377,7 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
             "fuel_key": active_model["fuel_key"],
             "basis": active_model["basis"],
             "formula": "CIF Med baz × Brent nowcast × USD/TL × yoğunluk × KDV",
-            "note": "Türkiye tahmini, son günlük CIF Med ürün seviyesinin Brent ve kurla 10 dakikalık nowcast'idir.",
+            "note": "Güçlü haber konsensüsü varsa tutar ana tahmindir; CIF Med + Brent + kur sinyali beklentinin piyasa yönünü kontrol eder. Haber yoksa CIF Med nowcast tahmini kullanılır.",
         },
         "brent_only_context": {
             "status": crude_status,
