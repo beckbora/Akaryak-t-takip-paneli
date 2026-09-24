@@ -107,7 +107,9 @@ def _fetch_cif_med(fuel_key):
     url = CIF_MED_URLS[fuel_key]
     r = requests.get(url, headers=HEADERS, timeout=10)
     r.raise_for_status()
-    text = BeautifulSoup(r.text, "html.parser").get_text(" ", strip=True)
+    soup = BeautifulSoup(r.text, "html.parser")
+    text = soup.get_text(" ", strip=True)
+
     price_match = re.search(
         r"latest indicative .*? assessment is\s*([\d,.]+)\s*USD/mt",
         text,
@@ -115,7 +117,6 @@ def _fetch_cif_med(fuel_key):
     )
     date_match = re.search(r"dated\s+(\d{1,2}\s+[A-Za-z]+\s+20\d{2})", text, re.I)
     if not price_match or not date_match:
-        # Fallback to the headline blocks used by the site.
         price_match = price_match or re.search(
             r"(?:Assessed Mid \(mt\)|CommodityScope Assessment)\s*\$?([\d,.]+)",
             text,
@@ -128,15 +129,57 @@ def _fetch_cif_med(fuel_key):
         )
     if not price_match or not date_match:
         raise ValueError("CIF Med fiyatı veya tarihi ayrıştırılamadı")
+
     price = float(price_match.group(1).replace(",", ""))
     at = _parse_english_date(date_match.group(1))
     if not at:
         raise ValueError(f"CIF Med tarihi ayrıştırılamadı: {date_match.group(1)!r}")
+
+    daily = []
+    for tr in soup.find_all("tr"):
+        cells = [re.sub(r"\s+", " ", x.get_text(" ", strip=True)).strip() for x in tr.find_all(["th", "td"])]
+        if len(cells) < 4 or not re.fullmatch(r"20\d{2}-\d{2}-\d{2}", cells[0]):
+            continue
+        try:
+            mid = float(cells[3].replace("$", "").replace(",", ""))
+            dt = datetime.fromisoformat(cells[0] + "T23:59:00+00:00")
+            daily.append((dt, mid))
+        except Exception:
+            continue
+    daily.sort(key=lambda x: x[0], reverse=True)
+
+    previous_at = None
+    previous_price = None
+    for dt, mid in daily:
+        if dt.date() < at.date():
+            previous_at = dt
+            previous_price = mid
+            break
+
+    # Fallback to the headline's stated daily change when table parsing changes.
+    if previous_price is None:
+        move = re.search(
+            r"dated\s+\d{1,2}\s+[A-Za-z]+\s+20\d{2}\s*,\s*(up|down)\s*\$?([\d,.]+)\s+from the previous daily assessment\s*\(([^)]+)\)",
+            text,
+            re.I,
+        )
+        if move:
+            delta = float(move.group(2).replace(",", ""))
+            previous_price = price - delta if move.group(1).casefold() == "up" else price + delta
+            previous_at = _parse_english_date(move.group(3))
+
+    if previous_price is None or previous_at is None:
+        raise ValueError("Önceki CIF Med günlük değerlendirmesi bulunamadı")
+
     return {
         "fuel_key": fuel_key,
         "price_usd_mt": price,
         "assessment_at": at,
         "assessment_date": at.date().isoformat(),
+        "previous_price_usd_mt": round(previous_price, 4),
+        "previous_assessment_at": previous_at,
+        "previous_assessment_date": previous_at.date().isoformat(),
+        "daily_change_usd_mt": round(price - previous_price, 4),
         "url": url,
         "source": "CommodityScope · CIF Med indicative",
     }
@@ -214,59 +257,63 @@ def _compare_model(model_value, expectation):
 
 def _cif_nowcast_model(fuel_key, fuel_label, cif, brent, fx, expectation):
     at = cif["assessment_at"]
-    brent_base = _price_at_or_before(brent, at) or float(brent.get("previous_close") or brent["price"])
-    fx_base = _price_at_or_before(fx, at) or float(fx.get("previous_close") or fx["price"])
+    previous_at = cif["previous_assessment_at"]
+    current_cif = float(cif["price_usd_mt"])
+    previous_cif = float(cif["previous_price_usd_mt"])
+    density = DENSITY[fuel_key]
+
+    fx_current_assessment = _price_at_or_before(fx, at) or float(fx.get("previous_close") or fx["price"])
+    fx_previous_assessment = _price_at_or_before(fx, previous_at) or float(fx.get("previous_close") or fx["price"])
+
+    current_product_cost = current_cif * fx_current_assessment * density / 1000.0
+    previous_product_cost = previous_cif * fx_previous_assessment * density / 1000.0
+    calculated_impact = (current_product_cost - previous_product_cost) * (1.0 + VAT_RATE)
+    estimate_status, estimate_label = _pressure_label(calculated_impact)
+
+    # Brent is not allowed to rewrite the already-published CIF daily estimate.
+    # It is used only to show pressure for the NEXT still-unpublished pricing cycle.
+    brent_at_assessment = _price_at_or_before(brent, at) or float(brent.get("previous_close") or brent["price"])
     brent_now = float(brent["price"])
     fx_now = float(fx["price"])
+    brent_ratio = brent_now / brent_at_assessment if brent_at_assessment else 1.0
+    next_cif_nowcast = current_cif * brent_ratio
+    next_product_cost = next_cif_nowcast * fx_now * density / 1000.0
+    next_cycle_signal = (next_product_cost - current_product_cost) * (1.0 + VAT_RATE)
+    next_status, next_label = _pressure_label(next_cycle_signal)
 
-    # CIF Med is the correct market basis class, but free indicative data is daily.
-    # Nowcast today's still-unpublished product level by carrying forward the Brent
-    # percentage move since the latest CIF Med assessment.
-    brent_ratio = brent_now / brent_base if brent_base else 1.0
-    cif_nowcast = float(cif["price_usd_mt"]) * brent_ratio
-
-    density = DENSITY[fuel_key]
-    baseline_tl_l = float(cif["price_usd_mt"]) * fx_base * density / 1000.0
-    nowcast_tl_l = cif_nowcast * fx_now * density / 1000.0
-    pump_impact = (nowcast_tl_l - baseline_tl_l) * (1.0 + VAT_RATE)
-    status, label = _pressure_label(pump_impact)
-
-    # The Turkey estimate is intentionally calculation-only.
-    # News expectations are NEVER used in the estimate. They are attached only
-    # as a separate comparison layer below.
-    comparison = _compare_model(pump_impact, expectation)
-    market_estimate = pump_impact
-    estimate_basis = "CIF Med + Brent + USD/TL hesabı"
-    estimate_status, estimate_label = _pressure_label(market_estimate)
+    comparison = _compare_model(calculated_impact, expectation)
 
     return {
         "fuel_key": fuel_key,
         "fuel": fuel_label,
         "status": estimate_status,
         "label": estimate_label,
-        "market_estimate_tl_l": round(market_estimate, 2),
-        "estimated_impact_tl_l": round(market_estimate, 2),
-        "cif_brent_signal_tl_l": round(pump_impact, 2),
-        "calculated_estimate_tl_l": round(pump_impact, 2),
-        "estimate_basis": estimate_basis,
-        "basis": f"CIF Med {cif['assessment_date']} → 10 dk Brent/kur nowcast",
-        "baseline_at": at.isoformat(),
-        "cif_med_price_usd_mt": round(float(cif["price_usd_mt"]), 2),
-        "cif_med_nowcast_usd_mt": round(cif_nowcast, 2),
-        "brent_base_usd_bbl": round(brent_base, 4),
+        "market_estimate_tl_l": round(calculated_impact, 2),
+        "estimated_impact_tl_l": round(calculated_impact, 2),
+        "calculated_estimate_tl_l": round(calculated_impact, 2),
+        "cif_daily_change_usd_mt": round(current_cif - previous_cif, 2),
+        "estimate_basis": f"CIF Med {cif['previous_assessment_date']} → {cif['assessment_date']} + USD/TL",
+        "basis": f"son iki yayımlanmış CIF Med değerlendirmesi",
+        "baseline_at": previous_at.isoformat(),
+        "cif_med_previous_usd_mt": round(previous_cif, 2),
+        "cif_med_price_usd_mt": round(current_cif, 2),
+        "fx_previous_assessment": round(fx_previous_assessment, 4),
+        "fx_current_assessment": round(fx_current_assessment, 4),
+        "previous_product_cost_tl_l": round(previous_product_cost, 3),
+        "current_product_cost_tl_l": round(current_product_cost, 3),
+        "next_cycle_signal_tl_l": round(next_cycle_signal, 2),
+        "next_cycle_status": next_status,
+        "next_cycle_label": next_label,
+        "next_cif_nowcast_usd_mt": round(next_cif_nowcast, 2),
+        "brent_at_assessment_usd_bbl": round(brent_at_assessment, 4),
         "brent_now_usd_bbl": round(brent_now, 4),
-        "brent_change_percent_since_cif": round((brent_ratio - 1.0) * 100.0, 2),
-        "fx_base": round(fx_base, 4),
-        "fx_now": round(fx_now, 4),
-        "fx_change_percent_since_cif": round(((fx_now / fx_base) - 1.0) * 100.0, 2) if fx_base else 0,
-        "baseline_product_cost_tl_l": round(baseline_tl_l, 3),
-        "nowcast_product_cost_tl_l": round(nowcast_tl_l, 3),
         "comparison": comparison,
         "source": cif["source"],
         "source_url": cif["url"],
         "note": (
-            "Türkiye tahmini yalnız CIF Med + Brent + USD/TL hesabından üretilir. "
-            "Haber beklentisi hesaplamaya dahil edilmez; yalnız ayrı karşılaştırma amacıyla kullanılır."
+            "Ana Türkiye tahmini son iki gerçek CIF Med günlük değerlendirmesinin USD/TL ile TL/litreye çevrilmiş farkıdır. "
+            "Brent'in 10 dakikalık hareketi ana tahmini değiştirmez; yalnız bir sonraki fiyatlama dönemi baskısını gösterir. "
+            "Haber beklentisi de yalnız karşılaştırma amacıyla kullanılır."
         ),
     }
 
@@ -353,8 +400,8 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
             "symbol": "TRY=X",
         },
         "cif_med": {
-            "diesel": {k: v for k, v in cif["diesel"].items() if k != "assessment_at"},
-            "gasoline": {k: v for k, v in cif["gasoline"].items() if k != "assessment_at"},
+            "diesel": {k: v for k, v in cif["diesel"].items() if k not in {"assessment_at", "previous_assessment_at"}},
+            "gasoline": {k: v for k, v in cif["gasoline"].items() if k not in {"assessment_at", "previous_assessment_at"}},
         },
         "fuel_models": {"diesel": diesel_model, "gasoline": gasoline_model},
         "turkey_model": {
@@ -363,8 +410,8 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
             "estimated_pump_impact_tl_l": active_model["estimated_impact_tl_l"],
             "fuel_key": active_model["fuel_key"],
             "basis": active_model["basis"],
-            "formula": "CIF Med baz × Brent nowcast × USD/TL × yoğunluk × KDV",
-            "note": "Türkiye tahmini yalnız CIF Med + Brent + USD/TL hesabıdır. Haber beklentileri bu rakama dahil edilmez; sadece ayrı karşılaştırma katmanında gösterilir.",
+            "formula": "(güncel CIF Med × güncel değerlendirme kuru − önceki CIF Med × önceki değerlendirme kuru) × yoğunluk × KDV",
+            "note": "Ana tahmin son iki yayımlanmış CIF Med günlük ürün fiyatı ve USD/TL farkından hesaplanır. Brent yalnız sonraki fiyatlama baskısını 10 dakikada bir gösterir; haber beklentisi ana tahmine dahil edilmez.",
         },
         "brent_only_context": {
             "status": crude_status,
@@ -373,7 +420,7 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
         },
         "history": history,
         "sources": sources,
-        "version": 4,
+        "version": 5,
     }
 
 
