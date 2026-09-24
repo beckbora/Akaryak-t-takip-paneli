@@ -278,7 +278,11 @@ def brent_data(live: int = 0):
         return JSONResponse(content=saved, headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source})
     try:
         from brent_scan import scan_brent
-        data = scan_brent(saved=saved)
+        data = scan_brent(
+            saved=saved,
+            price_data=_snapshot_json('prices.json', PRICE_DATA)[0],
+            expectation_data=_snapshot_json('price_expectation.json', EXPECTATION_DATA)[0],
+        )
         return JSONResponse(content=data, headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         if saved:
