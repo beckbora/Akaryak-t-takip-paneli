@@ -400,8 +400,8 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
             "symbol": "TRY=X",
         },
         "cif_med": {
-            "diesel": {k: v for k, v in cif["diesel"].items() if k != "assessment_at"},
-            "gasoline": {k: v for k, v in cif["gasoline"].items() if k != "assessment_at"},
+            "diesel": {k: v for k, v in cif["diesel"].items() if k not in {"assessment_at", "previous_assessment_at"}},
+            "gasoline": {k: v for k, v in cif["gasoline"].items() if k not in {"assessment_at", "previous_assessment_at"}},
         },
         "fuel_models": {"diesel": diesel_model, "gasoline": gasoline_model},
         "turkey_model": {
