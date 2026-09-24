@@ -108,10 +108,30 @@ def _last_material_change(price_data, fuel_label):
         dt = _parse_dt(row.get("detected_at"))
         if not dt:
             continue
-        rows.append((dt, delta))
+        rows.append({
+            "dt": dt,
+            "delta": delta,
+            "location": str(row.get("location") or row.get("location_key") or ""),
+        })
     if not rows:
         return None
-    return max(rows, key=lambda x: x[0])[0]
+
+    rows.sort(key=lambda x: x["dt"], reverse=True)
+
+    # A Turkey-wide pump reset should appear in several cities in the same scan
+    # window. Do not let a one-city/local adjustment reset the market baseline.
+    for candidate in rows:
+        direction = 1 if candidate["delta"] > 0 else -1
+        cohort = [
+            x for x in rows
+            if (1 if x["delta"] > 0 else -1) == direction
+            and abs((candidate["dt"] - x["dt"]).total_seconds()) <= 45 * 60
+        ]
+        locations = {x["location"] for x in cohort if x["location"]}
+        if len(locations) >= 3:
+            return max(x["dt"] for x in cohort)
+
+    return None
 
 
 def _history_price_at_or_before(quote, target_dt):
