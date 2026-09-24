@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests==2.32.5
+      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
       - name: Restore live snapshots
         run: |
           BASE="https://beckbora.github.io/Akaryak-t-takip-paneli"
