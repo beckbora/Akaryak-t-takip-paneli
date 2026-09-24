@@ -231,23 +231,12 @@ def _cif_nowcast_model(fuel_key, fuel_label, cif, brent, fx, expectation):
     pump_impact = (nowcast_tl_l - baseline_tl_l) * (1.0 + VAT_RATE)
     status, label = _pressure_label(pump_impact)
 
+    # The Turkey estimate is intentionally calculation-only.
+    # News expectations are NEVER used in the estimate. They are attached only
+    # as a separate comparison layer below.
     comparison = _compare_model(pump_impact, expectation)
-    if expectation:
-        confirmations = int(expectation.get("confirmation_count") or 0)
-        consensus_weight = 1.0 if confirmations >= 3 else (0.80 if confirmations == 2 else 0.60)
-        expected_signed = float(expectation.get("signed_amount") or 0)
-        market_estimate = expected_signed * consensus_weight + pump_impact * (1.0 - consensus_weight)
-        estimate_basis = (
-            f"{confirmations} kaynaklı haber konsensüsü"
-            if confirmations >= 3
-            else f"haber konsensüsü %{int(consensus_weight*100)} + CIF/Brent %{int((1-consensus_weight)*100)}"
-        )
-    else:
-        confirmations = 0
-        consensus_weight = 0.0
-        market_estimate = pump_impact
-        estimate_basis = "haber beklentisi yok · CIF Med + Brent/kur modeli"
-
+    market_estimate = pump_impact
+    estimate_basis = "CIF Med + Brent + USD/TL hesabı"
     estimate_status, estimate_label = _pressure_label(market_estimate)
 
     return {
@@ -258,8 +247,7 @@ def _cif_nowcast_model(fuel_key, fuel_label, cif, brent, fx, expectation):
         "market_estimate_tl_l": round(market_estimate, 2),
         "estimated_impact_tl_l": round(market_estimate, 2),
         "cif_brent_signal_tl_l": round(pump_impact, 2),
-        "consensus_weight": consensus_weight,
-        "confirmation_count": confirmations,
+        "calculated_estimate_tl_l": round(pump_impact, 2),
         "estimate_basis": estimate_basis,
         "basis": f"CIF Med {cif['assessment_date']} → 10 dk Brent/kur nowcast",
         "baseline_at": at.isoformat(),
@@ -277,9 +265,8 @@ def _cif_nowcast_model(fuel_key, fuel_label, cif, brent, fx, expectation):
         "source": cif["source"],
         "source_url": cif["url"],
         "note": (
-            "Güçlü haber konsensüsü varsa beklenen tutar ana tahmin olarak kullanılır; "
-            "CIF Med + Brent + USD/TL sinyali ayrı kontrol göstergesidir. "
-            "Haber beklentisi yoksa model yalnız CIF Med + Brent + kurdan tahmin üretir."
+            "Türkiye tahmini yalnız CIF Med + Brent + USD/TL hesabından üretilir. "
+            "Haber beklentisi hesaplamaya dahil edilmez; yalnız ayrı karşılaştırma amacıyla kullanılır."
         ),
     }
 
@@ -324,10 +311,10 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
     diesel_model = _cif_nowcast_model("diesel", "MOTORİN", cif["diesel"], brent, fx, diesel_exp)
     gasoline_model = _cif_nowcast_model("gasoline", "BENZİN", cif["gasoline"], brent, fx, gasoline_exp)
 
-    active_model = diesel_model if diesel_exp else (gasoline_model if gasoline_exp else max(
+    active_model = max(
         [diesel_model, gasoline_model],
         key=lambda x: abs(float(x.get("estimated_impact_tl_l") or 0)),
-    ))
+    )
 
     brent_now = float(brent["price"])
     brent_prev = float(brent.get("previous_close") or brent_now)
@@ -377,7 +364,7 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
             "fuel_key": active_model["fuel_key"],
             "basis": active_model["basis"],
             "formula": "CIF Med baz × Brent nowcast × USD/TL × yoğunluk × KDV",
-            "note": "Güçlü haber konsensüsü varsa tutar ana tahmindir; CIF Med + Brent + kur sinyali beklentinin piyasa yönünü kontrol eder. Haber yoksa CIF Med nowcast tahmini kullanılır.",
+            "note": "Türkiye tahmini yalnız CIF Med + Brent + USD/TL hesabıdır. Haber beklentileri bu rakama dahil edilmez; sadece ayrı karşılaştırma katmanında gösterilir.",
         },
         "brent_only_context": {
             "status": crude_status,
@@ -386,7 +373,7 @@ def scan_brent(saved=None, price_data=None, expectation_data=None):
         },
         "history": history,
         "sources": sources,
-        "version": 3,
+        "version": 4,
     }
 
 
