@@ -1,0 +1,17 @@
+{
+  "updated_at": null,
+  "live_ok": false,
+  "brent": {},
+  "usdtry": {},
+  "turkey_model": {
+    "status": "flat",
+    "label": "Brent verisi hazırlanıyor",
+    "estimated_pump_impact_tl_l": 0,
+    "basis": "önceki piyasa kapanışı",
+    "formula": "((Brent×USD/TL)/158.987 farkı) × 1.20 KDV",
+    "note": "Bu resmi zam/indirim tutarı değildir. Sadece Brent ve USD/TL kaynaklı teorik pompa fiyatı baskısını gösterir."
+  },
+  "history": [],
+  "sources": [],
+  "version": 1
+}
