@@ -1,0 +1,40 @@
+name: CIF daily primary estimate test
+
+on:
+  push:
+    branches: [feature/cif-daily-primary-estimate]
+    paths:
+      - 'brent_scan.py'
+      - '.github/workflows/cif-daily-test.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
+      - name: Restore live snapshots
+        run: |
+          BASE="https://beckbora.github.io/Akaryak-t-takip-paneli"
+          for FILE in prices.json price_expectation.json brent.json; do
+            curl -fL --retry 2 "$BASE/$FILE?t=$(date +%s)" -o "$FILE"
+          done
+      - name: Verify daily CIF estimate
+        run: |
+          python update_brent.py
+          python - <<'PY'
+          import json
+          d=json.load(open('brent.json',encoding='utf-8'))
+          assert d.get('version') == 5, d.get('version')
+          for key in ('diesel','gasoline'):
+              m=d['fuel_models'][key]
+              print('CIF_DAILY',key,'prev=',m['cif_med_previous_usd_mt'],'cur=',m['cif_med_price_usd_mt'],'delta=',m['cif_daily_change_usd_mt'],'calc=',m['calculated_estimate_tl_l'],'next=',m['next_cycle_signal_tl_l'],'news=',(m.get('comparison') or {}).get('expectation_tl_l'),'cmp=',(m.get('comparison') or {}).get('label'))
+          dm=d['fuel_models']['diesel']
+          assert dm['cif_med_price_usd_mt'] != dm['cif_med_previous_usd_mt']
+          assert abs(dm['calculated_estimate_tl_l'] - dm['estimated_impact_tl_l']) < 1e-9
+          print('CIF_DAILY_OK')
+          PY
