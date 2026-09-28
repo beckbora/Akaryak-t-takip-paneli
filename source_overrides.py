@@ -304,6 +304,65 @@ def fetch_utts_portal(existing):
 
 
 
+REPORT_MONTHS = {
+    'ocak': 1, 'şubat': 2, 'subat': 2, 'mart': 3, 'nisan': 4,
+    'mayıs': 5, 'mayis': 5, 'haziran': 6, 'temmuz': 7,
+    'ağustos': 8, 'agustos': 8, 'eylül': 9, 'eylul': 9,
+    'ekim': 10, 'kasım': 11, 'kasim': 11, 'aralık': 12, 'aralik': 12,
+}
+
+
+def _report_period_from_text(value):
+    text = _norm(value)
+    year = re.search(r'\b(20\d{2})\b', text)
+    if not year:
+        return None
+    month = None
+    for name, number in REPORT_MONTHS.items():
+        if re.search(r'(?<!\w)' + re.escape(name) + r'(?!\w)', text, re.UNICODE):
+            month = number
+            break
+    return f"{year.group(1)}-{month:02d}" if month else None
+
+
+def _epdk_sector_report_announcements(raw_items):
+    found = {}
+    for raw in raw_items or []:
+        if raw.get('source_key') != 'epdk' and raw.get('source_name') != 'EPDK Duyurular':
+            continue
+        title = clean(raw.get('title') or '')
+        low = _norm(title)
+        if not (
+            ('sektör rapor' in low or 'sektor rapor' in low)
+            and ('yayımlan' in low or 'yayimlan' in low or 'yayınlan' in low or 'yayinlan' in low)
+        ):
+            continue
+        url = clean(raw.get('url') or '')
+        if not url or '/Detay/Icerik/' not in url or '/4-0-1/' in url:
+            continue
+        period = _report_period_from_text(title)
+        if period:
+            found[period] = url
+    return found
+
+
+def _apply_epdk_sector_report_landing_pages(items, raw_items):
+    announcements = _epdk_sector_report_announcements(raw_items)
+    if not announcements:
+        return items
+    for item in items:
+        if item.get('source') != 'EPDK' or item.get('record_type') != 'Sektör Raporu':
+            continue
+        period = item.get('report_period') or _report_period_from_text(item.get('title') or '')
+        landing = announcements.get(period)
+        if not landing:
+            continue
+        item['url'] = landing
+        item['report_landing_url'] = landing
+        item['source_host'] = _host(landing)
+    return items
+
+
 DEDICATED_EPDK_TITLES = {
     'epdk_petrol_istatistik': 'sektör raporu',
     'epdk_lpg_istatistik': 'sektör raporu',
@@ -416,12 +475,15 @@ def _dedicated_epdk_record(raw):
 
 def normalize_sector_data(data):
     cleaned = []
-    for raw in data.get('items') or []:
+    raw_items = data.get('items') or []
+    for raw in raw_items:
         if _old(raw) or not _dedicated_epdk_record(raw):
             continue
         item = _sanitize(raw)
         if _sector_item(item):
             cleaned.append(item)
+
+    cleaned = _apply_epdk_sector_report_landing_pages(cleaned, raw_items)
 
     existing = {i.get('id'): i for i in cleaned if i.get('id')}
     d_items, d_status = fetch_darphane_utts(existing)

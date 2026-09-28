@@ -34,7 +34,8 @@ KEYWORDS = [
     "pos","pompa","tabanca","lisans","epdk","kurul kararı","kurul karari","tebliğ","teblig",
     "yönetmelik","yonetmelik","ceza","tarife","ötv","otv","zorunlu petrol stoku","sıfır atık","sifir atik",
     "petrol ürünleri","petrol urunleri","sorumlu müdür","sorumlu mudur","ulusal marker","gelir payı",
-    "asgari mesafe","analiz ve muayene","izleme sistemi","dağıtıcılar arası","dagiticilar arasi"
+    "asgari mesafe","analiz ve muayene","izleme sistemi","dağıtıcılar arası","dagiticilar arasi",
+    "sektör raporu","sektör raporları","sektor raporu","sektor raporlari"
 ]
 
 CRITICAL_WORDS = [
