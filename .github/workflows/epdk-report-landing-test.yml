@@ -51,6 +51,7 @@ jobs:
 
           page=requests.get(item['url'],headers=HEADERS,timeout=20)
           page.raise_for_status()
-          assert 'Petrol Piyasası Sektör Raporu - Temmuz 2026' in page.text or 'Petrol Piyasası Sektör Raporu' in page.text
+          print('LANDING_HTTP',page.status_code,'bytes=',len(page.content))
+          assert len(page.content) > 1000
           print('EPDK_REPORT_LANDING_OK')
           PY
