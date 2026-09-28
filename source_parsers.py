@@ -80,6 +80,31 @@ def _report_period(title):
     return f'{m.group(1)}-{month:02d}' if month else None
 
 
+def _preferred_report_href(source, node, title):
+    """Return the most specific document/detail URL for an EPDK report row."""
+    own = None
+    if getattr(node, 'name', None) == 'a' and node.get('href'):
+        own = node.get('href')
+    else:
+        parent_a = node.find_parent('a', href=True) if hasattr(node, 'find_parent') else None
+        if parent_a:
+            own = parent_a.get('href')
+
+    # EPDK monthly report headings are often plain text. The actual report is the
+    # immediately following "Genel Görünüm" download link.
+    for a in node.find_all_next('a', href=True, limit=12):
+        label = clean(a.get_text(' ', strip=True))
+        low = label.casefold()
+        if 'genel görünüm' in low or 'genel gorunum' in low:
+            return canonical_url(urljoin(source['url'], a.get('href')))
+        # Do not cross into the next report entry while searching.
+        if 'sektör raporu' in low and label.casefold() != (title or '').casefold():
+            break
+
+    if own:
+        return canonical_url(urljoin(source['url'], own))
+    return canonical_url(source['url'])
+
 def _item_from_node(source, node, title, href=None, context=None):
     context = clean(context or _small_context(node))
     href = canonical_url(urljoin(source['url'], href or source['url']))
@@ -105,7 +130,7 @@ def parse_epdk_report(source, html):
             continue
         if market_term not in low and not (market_term == 'lpg' and 'sıvılaştırılmış petrol gaz' in low):
             continue
-        href = node.get('href') if getattr(node, 'name', None) == 'a' else None
+        href = _preferred_report_href(source, node, title)
         context = _small_context(node, 2200)
         item = _item_from_node(source, node, title, href=href, context=context)
         item['epdk_focus'] = True
@@ -122,7 +147,7 @@ def parse_epdk_pricing(source, html):
         title = clean(node.get_text(' ', strip=True))
         if len(title) < 18 or 'fiyatlandırma raporu' not in title.casefold():
             continue
-        href = node.get('href') if getattr(node, 'name', None) == 'a' else None
+        href = _preferred_report_href(source, node, title)
         item = _item_from_node(source, node, title, href=href, context=_small_context(node, 1500))
         item['epdk_focus'] = True
         item['record_type'] = 'Fiyatlandırma Raporu'

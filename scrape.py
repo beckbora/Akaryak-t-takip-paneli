@@ -251,7 +251,15 @@ def resmi_gazete_candidates(days=10):
 
 def uid(item):
     url = canonical_url(item.get("url") or "")
-    if url and url != canonical_url(item.get("source_url") or ""):
+    # EPDK report pages used to fall back to the generic source URL. Preserve
+    # their existing IDs when upgrading url -> direct report document.
+    if (
+        item.get("source") == "EPDK"
+        and item.get("record_type") in {"Sektör Raporu", "Fiyatlandırma Raporu"}
+        and item.get("date")
+    ):
+        base = f"{item.get('source')}|{item.get('title')}|{item.get('date')}"
+    elif url and url != canonical_url(item.get("source_url") or ""):
         base = f"{item.get('source')}|{url}"
     else:
         base = f"{item.get('source')}|{item.get('title')}|{item.get('date')}"
