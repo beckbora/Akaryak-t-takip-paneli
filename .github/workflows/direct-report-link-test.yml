@@ -1,0 +1,49 @@
+name: Direct EPDK report link test
+
+on:
+  push:
+    branches: [fix/direct-sector-report-links]
+    paths:
+      - 'source_parsers.py'
+      - 'scrape.py'
+      - '.github/workflows/direct-report-link-test.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
+      - name: Parse live EPDK report page
+        run: |
+          python - <<'PY'
+          import requests
+          from source_parsers import parse_epdk_report
+          from scrape import HEADERS, uid
+
+          source={
+            "key":"epdk_petrol_istatistik",
+            "name":"EPDK Petrol Piyasası Resmî İstatistikleri",
+            "url":"https://www.epdk.gov.tr/Detay/Icerik/3-0-168/resmi-istatistikleri",
+            "group":"EPDK",
+            "official":True,
+            "market":"Petrol",
+            "record_type":"Sektör Raporu",
+            "epdk_focus":True,
+            "parser":"epdk_report",
+          }
+          r=requests.get(source["url"],headers=HEADERS,timeout=20)
+          r.raise_for_status()
+          items=parse_epdk_report(source,r.text)
+          item=next(x for x in items if x["title"].startswith("Temmuz 2026 Petrol Piyasası Sektör Raporu"))
+          print("TEMMUZ_REPORT",item["title"],item["url"],item.get("date"),uid(item))
+          assert item["url"] != source["url"], item
+          assert "DownloadDocument" in item["url"] or "/Detay/Icerik/" in item["url"], item["url"]
+          assert item["url"].startswith("https://www.epdk.gov.tr/"), item["url"]
+          assert item.get("date") == "2026-09-15", item.get("date")
+          print("DIRECT_REPORT_LINK_OK")
+          PY
