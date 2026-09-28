@@ -347,10 +347,45 @@ def _consensus_event(fuel_rows):
 
 def _fuel(text):
     low = _norm(text)
-    if 'motorin' in low or 'mazot' in low or 'dizel' in low:
-        return 'diesel'
-    if 'benzin' in low:
+    if not low:
+        return None
+
+    gasoline_terms = ('benzine', 'benzinin', 'benzin fiyat', 'benzin zamm', 'benzin')
+    diesel_terms = ('motorine', 'motorinin', 'motorin fiyat', 'motorin zamm', 'motorin', 'mazot', 'dizel')
+
+    gas_positions = [low.find(x) for x in gasoline_terms if low.find(x) >= 0]
+    diesel_positions = [low.find(x) for x in diesel_terms if low.find(x) >= 0]
+
+    if gas_positions and not diesel_positions:
         return 'gasoline'
+    if diesel_positions and not gas_positions:
+        return 'diesel'
+    if not gas_positions and not diesel_positions:
+        return None
+
+    # If both fuels are mentioned, choose the one nearest the actual price-event
+    # wording rather than whichever fuel name happens to appear first in a generic
+    # "benzin, motorin, LPG fiyatları" list.
+    event_positions = []
+    for token in (
+        'zam beklen', 'indirim beklen', 'zam gelecek', 'indirim gelecek',
+        'zam geliyor', 'indirim geliyor', 'zam geldi', 'indirim geldi',
+        'zam yapıldı', 'indirim yapıldı', 'artış', 'artis', 'düşüş', 'dusus',
+    ):
+        pos = low.find(token)
+        if pos >= 0:
+            event_positions.append(pos)
+
+    if event_positions:
+        event_pos = min(event_positions)
+        gas_distance = min(abs(p - event_pos) for p in gas_positions)
+        diesel_distance = min(abs(p - event_pos) for p in diesel_positions)
+        if gas_distance < diesel_distance:
+            return 'gasoline'
+        if diesel_distance < gas_distance:
+            return 'diesel'
+
+    # Ambiguous generic text should not be force-classified.
     return None
 
 
@@ -479,9 +514,6 @@ def scan_price_expectation(saved=None, price_data=None):
     seen = set()
     for row in candidates:
         text = row['title'] + '. ' + row['description']
-        fuel_key = _fuel(text)
-        if not fuel_key:
-            continue
         published = row.get('published')
         # Undated search-index results are allowed only when they contain today's
         # Turkish date; this avoids reviving old expectations.
@@ -506,6 +538,14 @@ def scan_price_expectation(saved=None, price_data=None):
                     amount = amount or _amount(sentence) or _amount(article_text)
                     text = enriched_text
         if not status:
+            continue
+
+        # Classify the fuel from the sentence that actually describes the
+        # zam/indirim event. This prevents generic title tails such as
+        # "LPG, motorin ve benzin fiyatları" from hijacking the classification.
+        event_sentence = _event_sentence(text, status)
+        fuel_key = _fuel(event_sentence) or _fuel(row['title'])
+        if not fuel_key:
             continue
         if status in {'up', 'down'} and amount is None:
             # Amount-less reports can still corroborate an event when the publisher is trusted.
