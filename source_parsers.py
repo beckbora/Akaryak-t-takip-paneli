@@ -69,15 +69,22 @@ def _published_date(context):
 
 
 def _report_period(title):
-    m = re.search(
+    text = title or ''
+    patterns = (
         r'\b(20\d{2})(?:\s+Yılı)?\s+(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)\b',
-        title or '',
-        flags=re.I,
+        r'\b(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)\s+(20\d{2})\b',
     )
-    if not m:
-        return None
-    month = MONTH_NAMES.get(m.group(2).casefold())
-    return f'{m.group(1)}-{month:02d}' if month else None
+    for idx, pattern in enumerate(patterns):
+        m = re.search(pattern, text, flags=re.I)
+        if not m:
+            continue
+        if idx == 0:
+            year, month_name = m.group(1), m.group(2)
+        else:
+            month_name, year = m.group(1), m.group(2)
+        month = MONTH_NAMES.get(month_name.casefold())
+        return f'{year}-{month:02d}' if month else None
+    return None
 
 
 def _preferred_report_href(source, node, title):
