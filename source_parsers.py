@@ -69,19 +69,26 @@ def _published_date(context):
 
 
 def _report_period(title):
-    m = re.search(
+    text = title or ''
+    patterns = (
         r'\b(20\d{2})(?:\s+Yılı)?\s+(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)\b',
-        title or '',
-        flags=re.I,
+        r'\b(Ocak|Şubat|Subat|Mart|Nisan|Mayıs|Mayis|Haziran|Temmuz|Ağustos|Agustos|Eylül|Eylul|Ekim|Kasım|Kasim|Aralık|Aralik)\s+(20\d{2})\b',
     )
-    if not m:
-        return None
-    month = MONTH_NAMES.get(m.group(2).casefold())
-    return f'{m.group(1)}-{month:02d}' if month else None
+    for idx, pattern in enumerate(patterns):
+        m = re.search(pattern, text, flags=re.I)
+        if not m:
+            continue
+        if idx == 0:
+            year, month_name = m.group(1), m.group(2)
+        else:
+            month_name, year = m.group(1), m.group(2)
+        month = MONTH_NAMES.get(month_name.casefold())
+        return f'{year}-{month:02d}' if month else None
+    return None
 
 
 def _preferred_report_href(source, node, title):
-    """Return the most specific document/detail URL for an EPDK report row."""
+    """Return a safe EPDK landing/detail URL, never a raw DownloadDocument URL."""
     own = None
     if getattr(node, 'name', None) == 'a' and node.get('href'):
         own = node.get('href')
@@ -90,19 +97,13 @@ def _preferred_report_href(source, node, title):
         if parent_a:
             own = parent_a.get('href')
 
-    # EPDK monthly report headings are often plain text. The actual report is the
-    # immediately following "Genel Görünüm" download link.
-    for a in node.find_all_next('a', href=True, limit=12):
-        label = clean(a.get_text(' ', strip=True))
-        low = label.casefold()
-        if 'genel görünüm' in low or 'genel gorunum' in low:
-            return canonical_url(urljoin(source['url'], a.get('href')))
-        # Do not cross into the next report entry while searching.
-        if 'sektör raporu' in low and label.casefold() != (title or '').casefold():
-            break
-
     if own:
-        return canonical_url(urljoin(source['url'], own))
+        url = canonical_url(urljoin(source['url'], own))
+        if 'downloaddocument' not in url.casefold():
+            return url
+
+    # Plain-text report headings are later matched to EPDK's monthly
+    # "Sektör Raporları yayımlanmıştır" detail announcement.
     return canonical_url(source['url'])
 
 def _item_from_node(source, node, title, href=None, context=None):
