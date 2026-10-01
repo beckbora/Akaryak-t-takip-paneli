@@ -389,7 +389,7 @@ RG_FUEL_DECISION_OVERRIDES = {
             'uygulanacak ÖTV tutarları yeniden belirlendi. Karar 1 Ekim 2026 tarihli '
             've 33387 sayılı Resmî Gazete’de yayımlandı.'
         ),
-        'landing_url': 'https://resmigazete.gov.tr/01.10.2026',
+        'issue_url': 'https://resmigazete.gov.tr/01.10.2026',
     },
 }
 
@@ -417,8 +417,11 @@ def _apply_resmi_gazete_fuel_override(item):
     item['source_excerpt'] = override['summary']
     item['summary'] = override['summary']
     item['description_origin'] = 'verified_context'
+    # Keep the card's main source link on the exact official decision document.
+    # Store the daily issue page only as a fallback/reference URL.
     item['document_url'] = item.get('url')
-    item['url'] = override['landing_url']
+    item['issue_url'] = override['issue_url']
+    item['url'] = item['document_url']
     item['source_host'] = _host(item['url'])
     item['source_location'] = 'Resmî Gazete'
     return item
