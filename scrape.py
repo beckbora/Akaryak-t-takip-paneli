@@ -103,7 +103,7 @@ def severity(text):
 
 def category(text):
     t = norm(text)
-    utts_token = re.search(r'(?<!\\w)(?:utts|tto|tim|ttb)(?!\\w)', t, re.UNICODE)
+    utts_token = re.search(r'(?<!\w)(?:utts|tto|tim|ttb)(?!\w)', t, re.UNICODE)
     if utts_token or any(k in t for k in ["ulusal taşıt tanıma","ulusal tasit tanima"]):
         return "UTTS"
     if any(k in t for k in ["okc","ödeme kaydedici","odeme kaydedici","yn ökc","pos"]):
