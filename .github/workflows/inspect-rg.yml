@@ -15,23 +15,27 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5 pypdf==6.1.1
-      - name: Inspect 11822
+      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
+      - name: Inspect official and mirror context
         run: |
           python - <<'PY'
-          from live_scan import resmi_gazete_live
+          import requests
+          from bs4 import BeautifulSoup
+          from live_scan import resmi_gazete_live, RG_HEADERS
+
           items,status=resmi_gazete_live(days=1)
           print("RG_STATUS",status)
           for x in items:
-              if "11822" in (x.get("title") or "") or "Özel Tüketim Vergisi" in (x.get("title") or ""):
+              if "11822" in (x.get("title") or ""):
                   print("RG_ITEM",x)
-                  import io, requests
-                  from pypdf import PdfReader
-                  r=requests.get(x["url"],timeout=20)
-                  r.raise_for_status()
-                  text=" ".join((p.extract_text() or "") for p in PdfReader(io.BytesIO(r.content)).pages)
-                  low=text.casefold()
-                  terms=[t for t in ("benzin","motorin","lpg","otogaz","kurşunsuz","2710","özel tüketim vergisi") if t in low]
-                  print("RG_PDF_TERMS",terms)
-                  print("RG_PDF_SNIPPET",text[:3500].replace("\n"," "))
+
+          url="https://www.resmigazeteozeti.com/tarih/2026-10-01"
+          r=requests.get(url,headers=RG_HEADERS,timeout=12)
+          print("MIRROR_STATUS",r.status_code,len(r.text))
+          soup=BeautifulSoup(r.text,"html.parser")
+          for node in soup.find_all(["article","section","div","h3","h4"]):
+              text=" ".join(node.get_text(" ",strip=True).split())
+              if "11822" in text:
+                  print("MIRROR_CONTEXT",text[:3500])
+                  break
           PY
