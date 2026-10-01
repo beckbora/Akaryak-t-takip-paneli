@@ -1,0 +1,28 @@
+name: Inspect today's Resmi Gazete item
+
+on:
+  push:
+    branches: [fix/resmi-gazete-akaryakit-otv]
+    paths:
+      - '.github/workflows/inspect-rg.yml'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
+      - name: Inspect 11822
+        run: |
+          python - <<'PY'
+          from live_scan import resmi_gazete_live
+          items,status=resmi_gazete_live(days=1)
+          print("RG_STATUS",status)
+          for x in items:
+              if "11822" in (x.get("title") or "") or "Özel Tüketim Vergisi" in (x.get("title") or ""):
+                  print("RG_ITEM",x)
+          PY
