@@ -1,0 +1,37 @@
+name: Resmi Gazete direct source link test
+
+on:
+  push:
+    branches: [fix/resmi-gazete-direct-source-link]
+    paths:
+      - 'source_overrides.py'
+      - '.github/workflows/resmi-gazete-link-test.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
+      - name: Verify exact official document link
+        run: |
+          python - <<'PY'
+          from live_scan import resmi_gazete_live
+          from source_overrides import _sanitize, _apply_resmi_gazete_fuel_override
+
+          items,status=resmi_gazete_live(days=1)
+          raw=next(x for x in items if "11822" in (x.get("title") or ""))
+          item=_apply_resmi_gazete_fuel_override(_sanitize(raw))
+
+          print("DIRECT_URL",item["url"])
+          print("ISSUE_URL",item.get("issue_url"))
+          assert item["url"] == "https://www.resmigazete.gov.tr/eskiler/2026/10/20261001-3-3.pdf", item["url"]
+          assert item.get("document_url") == item["url"]
+          assert item.get("issue_url") == "https://resmigazete.gov.tr/01.10.2026"
+          assert "resmigazete.gov.tr" in item["url"]
+          print("RESMI_GAZETE_DIRECT_LINK_OK")
+          PY
