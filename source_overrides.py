@@ -125,6 +125,8 @@ def _old(item):
 
 
 def _sector_item(item):
+    if item.get('rg_fuel_related'):
+        return True
     if item.get('source_key') in {'darphane_utts', 'utts_portal'} or item.get('source') in {DARPHANE_GROUP, PORTAL_GROUP} or item.get('epdk_focus'):
         return True
     if item.get('source') in {'PÜİS', 'TABGİS', 'PETDER', 'LPG Derneği'}:
@@ -372,6 +374,55 @@ DEDICATED_EPDK_TITLES = {
 }
 DETAIL_TEXT_TERMS = ('süre uzat', 'sure uzat', 'yükümlülük', 'yukumluluk', 'son tarih', 'tebliğ', 'teblig')
 
+# Some Resmî Gazete decisions have generic titles ("Bazı Mallara...") even
+# though their annex directly regulates fuel. Keep a small verified mapping for
+# such ambiguous official decisions; direct fuel titles still flow automatically.
+RG_FUEL_DECISION_OVERRIDES = {
+    '11822': {
+        'date': '2026-10-01',
+        'category': 'Vergi / ÖTV',
+        'market': 'Petrol/LPG',
+        'record_type': 'Cumhurbaşkanı Kararı',
+        'severity': 'critical',
+        'summary': (
+            'Akaryakıt ÖTV düzenlemesi: 95 ve 98 oktan kurşunsuz benzin ile LPG türlerinde '
+            'uygulanacak ÖTV tutarları yeniden belirlendi. Karar 1 Ekim 2026 tarihli '
+            've 33387 sayılı Resmî Gazete’de yayımlandı.'
+        ),
+        'landing_url': 'https://resmigazete.gov.tr/01.10.2026',
+    },
+}
+
+
+def _rg_decision_number(title):
+    m = re.search(r'Karar\s+Say(?:ısı|isi)\s*[:：]?\s*(\d+)', clean(title or ''), re.I)
+    return m.group(1) if m else None
+
+
+def _apply_resmi_gazete_fuel_override(item):
+    if item.get('source') != 'Resmî Gazete' and item.get('source_name') != 'Resmî Gazete':
+        return item
+    decision_no = _rg_decision_number(item.get('title') or '')
+    override = RG_FUEL_DECISION_OVERRIDES.get(decision_no)
+    if not override:
+        return item
+
+    item['rg_fuel_related'] = True
+    item['decision_number'] = decision_no
+    item['category'] = override['category']
+    item['market'] = override['market']
+    item['record_type'] = override['record_type']
+    item['severity'] = override['severity']
+    item['date'] = item.get('date') or override['date']
+    item['source_excerpt'] = override['summary']
+    item['summary'] = override['summary']
+    item['description_origin'] = 'verified_context'
+    item['document_url'] = item.get('url')
+    item['url'] = override['landing_url']
+    item['source_host'] = _host(item['url'])
+    item['source_location'] = 'Resmî Gazete'
+    return item
+
 
 def _detail_page_text(url, title=''):
     try:
@@ -480,6 +531,7 @@ def normalize_sector_data(data):
         if _old(raw) or not _dedicated_epdk_record(raw):
             continue
         item = _sanitize(raw)
+        item = _apply_resmi_gazete_fuel_override(item)
         if _sector_item(item):
             cleaned.append(item)
 
