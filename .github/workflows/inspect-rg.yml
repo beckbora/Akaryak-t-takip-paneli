@@ -1,4 +1,4 @@
-name: Inspect today's Resmi Gazete item
+name: Resmi Gazete fuel tax regression test
 
 on:
   push:
@@ -16,26 +16,28 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests==2.32.5 beautifulsoup4==4.13.5
-      - name: Inspect official and mirror context
+      - name: Verify 11822 reaches sector radar
         run: |
           python - <<'PY'
-          import requests
-          from bs4 import BeautifulSoup
-          from live_scan import resmi_gazete_live, RG_HEADERS
+          from live_scan import resmi_gazete_live
+          from scrape import category
+          from source_overrides import _sanitize, _apply_resmi_gazete_fuel_override, _sector_item
+
+          assert category("Bazı Mallara Uygulanan Özel Tüketim Vergisi Tutarlarının Yeniden Belirlenmesi") == "Vergi / ÖTV"
 
           items,status=resmi_gazete_live(days=1)
-          print("RG_STATUS",status)
-          for x in items:
-              if "11822" in (x.get("title") or ""):
-                  print("RG_ITEM",x)
+          raw=next(x for x in items if "11822" in (x.get("title") or ""))
+          item=_apply_resmi_gazete_fuel_override(_sanitize(raw))
 
-          url="https://www.resmigazeteozeti.com/tarih/2026-10-01"
-          r=requests.get(url,headers=RG_HEADERS,timeout=12)
-          print("MIRROR_STATUS",r.status_code,len(r.text))
-          soup=BeautifulSoup(r.text,"html.parser")
-          for node in soup.find_all(["article","section","div","h3","h4"]):
-              text=" ".join(node.get_text(" ",strip=True).split())
-              if "11822" in text:
-                  print("MIRROR_CONTEXT",text[:3500])
-                  break
+          print("RG_11822",item)
+          assert item["category"] == "Vergi / ÖTV", item
+          assert item["market"] == "Petrol/LPG", item
+          assert item["record_type"] == "Cumhurbaşkanı Kararı", item
+          assert item["severity"] == "critical", item
+          assert item["rg_fuel_related"] is True
+          assert _sector_item(item) is True
+          assert item["url"] == "https://resmigazete.gov.tr/01.10.2026"
+          assert "benzin" in item["summary"].casefold()
+          assert "lpg" in item["summary"].casefold()
+          print("RG_FUEL_TAX_RADAR_OK")
           PY
