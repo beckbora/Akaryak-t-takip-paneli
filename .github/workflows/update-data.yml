@@ -1,4 +1,5 @@
 name: Update sector data
+# Pages deployment is intentionally split into upload and deploy jobs.
 
 on:
   workflow_dispatch:
