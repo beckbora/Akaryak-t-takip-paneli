@@ -28,6 +28,11 @@ class FuelPriceAlertTests(unittest.TestCase):
         self.assertEqual(_fuel('Benzin ve LPG fiyatları: otogaza zam geldi'), 'lpg')
         self.assertEqual(_fuel('Motorin ve LPG fiyatları: motorine indirim geldi'), 'diesel')
 
+    def test_generic_discount_with_price_list_has_no_fuel(self):
+        headline = ('Akaryakıt fiyatlarına 4,30 TL indirim geldi! '
+                    'Güncel LPG, motorin ve benzin fiyatları ne kadar?')
+        self.assertIsNone(_fuel(headline))
+
     def test_benzin_down_motorin_unchanged(self):
         result = enrich_with_pump_realization({'items': items()},
                     {'changes': [change('Benzin 95', -1.25)]})
