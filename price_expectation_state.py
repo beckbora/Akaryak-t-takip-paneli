@@ -75,6 +75,7 @@ def enrich_with_pump_realization(data, price_data=None):
         movement = 'ZAM GERÇEKLEŞTİ' if mid > 0 else 'İNDİRİM GERÇEKLEŞTİ'
         sample = cohort[0][2]
         item.update({
+            'pump_verified': True,
             'status': realized_status,
             'amount': abs(mid),
             'line': f'✅ {label} · {_fmt(abs(mid))} TL {movement}',
@@ -88,9 +89,10 @@ def enrich_with_pump_realization(data, price_data=None):
     # Headlines never constitute proof of a realized pump movement.
     # A realized news claim without matching price evidence is unverified.
     for item in items:
-        if item.get('status') in ('realized_up', 'realized_down') and item.get('label') != 'Gerçekleşen fiyat hareketi':
+        if item.get('status') in ('realized_up', 'realized_down') and not item.get('pump_verified'):
             direction = 'up' if item['status'] == 'realized_up' else 'down'
             item['status'] = direction
+            item['pump_verified'] = False
             item['label'] = 'Haber bildirimi · pompa doğrulaması bekleniyor'
             item['line'] = ('🔺 ' if direction == 'up' else '🔻 ') + item.get('fuel', '') + ' · POMPA DOĞRULAMASI BEKLENİYOR'
     data['items'] = items

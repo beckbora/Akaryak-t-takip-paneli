@@ -1,5 +1,5 @@
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from unittest.mock import patch
 
 from price_expectation import _fuel, _pump_realized
@@ -24,11 +24,16 @@ class FuelPriceAlertTests(unittest.TestCase):
                                    ('Otogaza zam geldi', 'lpg')]:
             self.assertEqual(_fuel(sentence), expected)
 
+    def test_mixed_headline_with_lpg_does_not_crash(self):
+        self.assertEqual(_fuel('Benzin ve LPG fiyatları: otogaza zam geldi'), 'lpg')
+        self.assertEqual(_fuel('Motorin ve LPG fiyatları: motorine indirim geldi'), 'diesel')
+
     def test_benzin_down_motorin_unchanged(self):
         result = enrich_with_pump_realization({'items': items()},
                     {'changes': [change('Benzin 95', -1.25)]})
         by_key = {x['fuel_key']: x for x in result['items']}
         self.assertEqual(by_key['gasoline']['status'], 'realized_down')
+        self.assertTrue(by_key['gasoline']['pump_verified'])
         self.assertEqual(by_key['diesel']['status'], 'none')
         self.assertEqual(by_key['lpg']['status'], 'none')
 
@@ -40,7 +45,7 @@ class FuelPriceAlertTests(unittest.TestCase):
 
     def test_news_only_does_not_become_realized(self):
         data = {'items': [{'fuel_key':'diesel','fuel':'MOTORİN',
-                 'status':'realized_down','label':'Sektör beklentisi'}]}
+                 'status':'realized_down','label':'Gerçekleşen fiyat hareketi'}]}
         result = enrich_with_pump_realization(data, {'changes': []})
         self.assertEqual(result['items'][0]['status'], 'down')
         self.assertIn('BEKLENİYOR', result['items'][0]['line'])
@@ -48,6 +53,12 @@ class FuelPriceAlertTests(unittest.TestCase):
     def test_change_must_match_fuel(self):
         changes = {'changes':[change('Benzin 95', -1.0)]}
         self.assertIsNone(_pump_realized('diesel', 'down', None, changes))
+
+    def test_small_or_old_change_is_not_realization(self):
+        old = change('Motorin', -1.0)
+        old['detected_at'] = (datetime.now(timezone.utc) - timedelta(days=3)).isoformat()
+        self.assertIsNone(_pump_realized('diesel', 'down', None,
+                          {'changes': [old, change('Motorin', -0.1)]}))
 
     def test_conflicting_pump_prices_do_not_confirm(self):
         result = enrich_with_pump_realization({'items': items()},
