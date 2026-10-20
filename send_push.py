@@ -6,7 +6,6 @@ import tempfile
 from pathlib import Path
 
 import requests
-from pywebpush import WebPushException, webpush
 
 
 def env_value(name):
@@ -41,7 +40,7 @@ def signature(item):
 
 
 def message_for(item):
-    fuel = item.get('fuel') or ('MOTORİN' if item.get('fuel_key') == 'diesel' else 'BENZİN')
+    fuel = item.get('fuel') or {'diesel': 'MOTORİN', 'gasoline': 'BENZİN', 'lpg': 'LPG'}.get(item.get('fuel_key'), 'YAKIT')
     status = item.get('status') or ''
     amount = item.get('amount')
     amount_text = ''
@@ -116,9 +115,12 @@ def main():
     current = item_map(read_json(args.current))
     events = []
     for fuel_key, item in current.items():
-        if item.get('status') == 'none':
+        if fuel_key not in {'diesel', 'gasoline', 'lpg'} or item.get('status') == 'none':
             continue
         if signature(item) == signature(previous.get(fuel_key)):
+            continue
+        # Realized alerts require a verified pump-price source, not a news claim.
+        if item.get('status') in {'realized_up', 'realized_down'} and not item.get('pump_verified'):
             continue
         events.append(item)
 
@@ -136,6 +138,7 @@ def main():
         print('No active push subscriptions.')
         return
 
+    from pywebpush import WebPushException, webpush
     private_pem = base64.b64decode(private_b64.encode('ascii'))
     with tempfile.NamedTemporaryFile('wb', suffix='.pem', delete=True) as keyfile:
         keyfile.write(private_pem)

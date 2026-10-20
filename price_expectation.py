@@ -79,6 +79,8 @@ GOOGLE_NEWS_QUERIES = (
     'benzin indirim',
     'benzine zam',
     'benzin zam',
+    'lpg otogaza indirim',
+    'lpg otogaza zam',
     'akaryakıta indirim',
     'akaryakıt zam',
 )
@@ -353,14 +355,18 @@ def _fuel(text):
     gasoline_terms = ('benzine', 'benzinin', 'benzin fiyat', 'benzin zamm', 'benzin')
     diesel_terms = ('motorine', 'motorinin', 'motorin fiyat', 'motorin zamm', 'motorin', 'mazot', 'dizel')
 
+    lpg_terms = ('lpg', 'otogaz', 'otogaza', 'otogazda')
+    lpg_positions = [low.find(x) for x in lpg_terms if low.find(x) >= 0]
     gas_positions = [low.find(x) for x in gasoline_terms if low.find(x) >= 0]
     diesel_positions = [low.find(x) for x in diesel_terms if low.find(x) >= 0]
 
-    if gas_positions and not diesel_positions:
+    if lpg_positions and not gas_positions and not diesel_positions:
+        return 'lpg'
+    if gas_positions and not diesel_positions and not lpg_positions:
         return 'gasoline'
-    if diesel_positions and not gas_positions:
+    if diesel_positions and not gas_positions and not lpg_positions:
         return 'diesel'
-    if not gas_positions and not diesel_positions:
+    if not gas_positions and not diesel_positions and not lpg_positions:
         return None
 
     # If both fuels are mentioned, choose the one nearest the actual price-event
@@ -378,12 +384,15 @@ def _fuel(text):
 
     if event_positions:
         event_pos = min(event_positions)
-        gas_distance = min(abs(p - event_pos) for p in gas_positions)
-        diesel_distance = min(abs(p - event_pos) for p in diesel_positions)
-        if gas_distance < diesel_distance:
+        gas_distance = min((abs(p - event_pos) for p in gas_positions), default=float('inf'))
+        diesel_distance = min((abs(p - event_pos) for p in diesel_positions), default=float('inf'))
+        lpg_distance = min((abs(p - event_pos) for p in lpg_positions), default=float('inf'))
+        if gas_distance < diesel_distance and gas_distance < lpg_distance:
             return 'gasoline'
-        if diesel_distance < gas_distance:
+        if diesel_distance < gas_distance and diesel_distance < lpg_distance:
             return 'diesel'
+        if lpg_distance < min(gas_distance, diesel_distance):
+            return 'lpg'
 
     # Ambiguous generic text should not be force-classified.
     return None
@@ -480,17 +489,25 @@ def _read_json(path):
 
 
 def _pump_realized(fuel_key, expected_status, published, price_data):
-    label = 'Motorin' if fuel_key == 'diesel' else 'Benzin 95'
+    label = {'diesel': 'Motorin', 'gasoline': 'Benzin 95', 'lpg': 'LPG/Otogaz'}[fuel_key]
     direction = 1 if expected_status == 'up' else -1
-    after = published.isoformat() if published else ''
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=30)
+    if published and published.tzinfo is None:
+        published = published.replace(tzinfo=timezone.utc)
     candidates = []
     for c in price_data.get('changes') or []:
         if c.get('fuel') != label:
             continue
-        if after and c.get('detected_at', '') < after:
+        try:
+            detected = datetime.fromisoformat(c.get('detected_at'))
+            delta = float(c.get('delta') or 0)
+        except (TypeError, ValueError):
             continue
-        delta = float(c.get('delta') or 0)
-        if delta * direction <= 0:
+        if detected.tzinfo is None:
+            detected = detected.replace(tzinfo=timezone.utc)
+        if detected < cutoff or (published and detected < published):
+            continue
+        if delta * direction < 0.50:
             continue
         candidates.append(c)
     candidates.sort(key=lambda x: x.get('detected_at', ''), reverse=True)
@@ -577,17 +594,22 @@ def scan_price_expectation(saved=None, price_data=None):
     ), reverse=True)
 
     items = []
-    for fuel_key, fuel_label in [('diesel', 'MOTORİN'), ('gasoline', 'BENZİN')]:
+    for fuel_key, fuel_label in [('diesel', 'MOTORİN'), ('gasoline', 'BENZİN'), ('lpg', 'LPG')]:
         fuel_rows = [x for x in rows if x['fuel_key'] == fuel_key]
         item, supporting_rows = _consensus_event(fuel_rows)
 
         # If a stored expectation has subsequently appeared in pump-change history,
         # upgrade it even when the news search index has not yet refreshed.
         previous = next((x for x in (saved.get('items') or []) if x.get('fuel_key') == fuel_key), None)
+        if item and item['status'] in {'realized_up', 'realized_down'}:
+            # A media claim cannot assert realization without pump data.
+            item = dict(item)
+            item['status'] = 'up' if item['status'] == 'realized_up' else 'down'
         if item and item['status'] in {'up', 'down'}:
             realized = _pump_realized(fuel_key, item['status'], item.get('published'), price_data)
             if realized:
                 item = dict(item)
+                item['pump_verified'] = True
                 item['status'] = 'realized_up' if float(realized.get('delta') or 0) > 0 else 'realized_down'
                 item['amount'] = abs(float(realized.get('delta') or 0))
                 item['source'] = realized.get('source') or 'Pompa fiyat takibi'
@@ -601,6 +623,7 @@ def scan_price_expectation(saved=None, price_data=None):
             realized = _pump_realized(fuel_key, previous['status'], prev_dt, price_data)
             if realized:
                 item = {
+                    'pump_verified': True,
                     'status': 'realized_up' if float(realized.get('delta') or 0) > 0 else 'realized_down',
                     'amount': abs(float(realized.get('delta') or 0)),
                     'published': datetime.fromisoformat(realized['detected_at']),
@@ -633,6 +656,7 @@ def scan_price_expectation(saved=None, price_data=None):
             'fuel_key': fuel_key,
             'fuel': fuel_label,
             'status': item['status'],
+            'pump_verified': bool(item.get('pump_verified')),
             'line': _line(fuel_label, item['status'], item.get('amount'), item.get('effective_date')),
             'amount': item.get('amount'),
             'source': source,
