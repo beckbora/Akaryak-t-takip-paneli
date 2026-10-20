@@ -384,6 +384,12 @@ def _fuel(text):
 
     if event_positions:
         event_pos = min(event_positions)
+        mentioned_fuels = sum(bool(x) for x in (gas_positions, diesel_positions, lpg_positions))
+        first_fuel_pos = min(gas_positions + diesel_positions + lpg_positions)
+        # Generic discount headlines often end with a list of current fuel prices.
+        # The list is not evidence that every listed fuel changed.
+        if mentioned_fuels > 1 and event_pos < first_fuel_pos and 'akaryakıt' in low:
+            return None
         gas_distance = min((abs(p - event_pos) for p in gas_positions), default=float('inf'))
         diesel_distance = min((abs(p - event_pos) for p in diesel_positions), default=float('inf'))
         lpg_distance = min((abs(p - event_pos) for p in lpg_positions), default=float('inf'))
