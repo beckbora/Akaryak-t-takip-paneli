@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent
 TR_TZ = ZoneInfo('Europe/Istanbul')
 EXPECTATION_DATA = ROOT / 'price_expectation.json'
 PRICE_DATA = ROOT / 'prices.json'
+VERIFIED_FORECAST_AMOUNTS = ROOT / 'verified_forecast_amounts.json'
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/142.0 Safari/537.36',
@@ -617,8 +618,10 @@ def _fmt_amount(value):
     return None if value is None else f'{value:.2f}'.replace('.', ',')
 
 
-def _line(fuel_label, status, amount, effective_date=None):
+def _line(fuel_label, status, amount, effective_date=None, approximate=False):
     amt = _fmt_amount(amount)
+    if amt and approximate:
+        amt = '≈ ' + amt
     when = _tr_short_date(effective_date)
     suffix = f' · {when}' if when and status in {'up', 'down'} else ''
     if status == 'up':
@@ -668,6 +671,40 @@ def _pump_realized(fuel_key, expected_status, published, price_data):
         candidates.append(c)
     candidates.sort(key=lambda x: x.get('detected_at', ''), reverse=True)
     return candidates[0] if candidates else None
+
+
+def _verified_news_amount(fuel_key, status, now, published_sources, effective_date=None):
+    """Use dated, source-linked evidence only when news agrees but RSS lacks numbers.
+
+    An explicit date-bound evidence record is not a pump-price confirmation.
+    It cannot outlive its validity window or override a contrary new expectation.
+    """
+    if status not in {'up', 'down'}:
+        return None
+    allowed_domains = {
+        source.get('domain') for source in published_sources if source.get('domain')
+    }
+    data = _read_json(VERIFIED_FORECAST_AMOUNTS)
+    for record in data.get('events') or []:
+        if record.get('fuel_key') != fuel_key or record.get('status') != status:
+            continue
+        domain = _accepted_host(record.get('url') or '')
+        if not domain or domain != record.get('domain') or domain not in allowed_domains:
+            continue
+        if effective_date and effective_date != record.get('effective_date'):
+            continue
+        try:
+            start = datetime.fromisoformat(record['valid_from'])
+            end = datetime.fromisoformat(record['valid_until'])
+            amount = float(record['amount'])
+            if not (start.tzinfo and end.tzinfo and start <= now < end):
+                continue
+            if not (0.05 <= amount <= 20):
+                continue
+        except (TypeError, ValueError, KeyError):
+            continue
+        return dict(record, amount=round(amount, 2))
+    return None
 
 
 def scan_price_expectation(saved=None, price_data=None):
@@ -769,6 +806,22 @@ def scan_price_expectation(saved=None, price_data=None):
         # If a stored expectation has subsequently appeared in pump-change history,
         # upgrade it even when the news search index has not yet refreshed.
         previous = next((x for x in (saved.get('items') or []) if x.get('fuel_key') == fuel_key), None)
+        if (item and item['status'] in {'up', 'down'}
+                and item.get('amount') is None
+                and int(item.get('confirmation_count') or 0) >= 2):
+            evidence = _verified_news_amount(
+                fuel_key, item['status'], now,
+                item.get('sources_detail') or [],
+                effective_date=item.get('effective_date'),
+            )
+            if evidence:
+                item = dict(item)
+                item['amount'] = evidence['amount']
+                item['amount_approximate'] = bool(evidence.get('approximate'))
+                item['amount_source'] = evidence['source']
+                item['amount_source_url'] = evidence['url']
+                item['url'] = evidence['url']
+                item['effective_date'] = item.get('effective_date') or evidence.get('effective_date')
         if item and item['status'] in {'realized_up', 'realized_down'}:
             # A media claim cannot assert realization without pump data.
             item = dict(item)
@@ -825,8 +878,11 @@ def scan_price_expectation(saved=None, price_data=None):
             'fuel': fuel_label,
             'status': item['status'],
             'pump_verified': bool(item.get('pump_verified')),
-            'line': _line(fuel_label, item['status'], item.get('amount'), item.get('effective_date')),
+            'line': _line(fuel_label, item['status'], item.get('amount'), item.get('effective_date'), approximate=bool(item.get('amount_approximate'))),
             'amount': item.get('amount'),
+            'amount_source': item.get('amount_source'),
+            'amount_source_url': item.get('amount_source_url'),
+            'amount_approximate': bool(item.get('amount_approximate')),
             'source': source,
             'url': item.get('url'),
             'published_at': item.get('published').isoformat() if item.get('published') else None,

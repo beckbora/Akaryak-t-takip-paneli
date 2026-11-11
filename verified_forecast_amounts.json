@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "purpose": "Time-limited journalistically verified forecast amounts; never pump confirmations",
+  "events": [
+    {
+      "fuel_key": "gasoline",
+      "status": "down",
+      "amount": 3,
+      "approximate": true,
+      "effective_date": "2026-11-12",
+      "source": "Dünya",
+      "domain": "dunya.com",
+      "url": "https://www.dunya.com/enerji/akaryakit-fiyatlarinda-son-durum-benzin-motorin-ve-lpgye-zam-indirim-var-mi-11-kasim-2026-haberi-847189",
+      "published_at": "2026-11-11T07:23:00+03:00",
+      "valid_from": "2026-11-11T07:23:00+03:00",
+      "valid_until": "2026-11-12T00:00:00+03:00"
+    },
+    {
+      "fuel_key": "diesel",
+      "status": "down",
+      "amount": 4,
+      "approximate": true,
+      "effective_date": "2026-11-14",
+      "source": "Dünya",
+      "domain": "dunya.com",
+      "url": "https://www.dunya.com/enerji/akaryakit-fiyatlarinda-son-durum-benzin-motorin-ve-lpgye-zam-indirim-var-mi-11-kasim-2026-haberi-847189",
+      "published_at": "2026-11-11T07:23:00+03:00",
+      "valid_from": "2026-11-11T07:23:00+03:00",
+      "valid_until": "2026-11-14T00:00:00+03:00"
+    }
+  ]
+}
