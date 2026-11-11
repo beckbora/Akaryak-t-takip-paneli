@@ -90,12 +90,20 @@ UP_PATTERNS = (
     'artış beklen', 'artis beklen', 'zam ihtimali', 'zam yolda',
     'artış yolda', 'artis yolda', 'zam gelecek', 'zam geliyor',
     'zam öngörül', 'zam ongorul', 'zam uygulanacak', 'zam yapılacak',
+    'zam yapılması öngörül', 'zam yapilmasi ongorul',
+    'zam geleceği', 'zam gelecegi', 'zam gelmesi beklen',
+    'fiyatlar artacak', 'fiyatlar yükselecek', 'fiyatlar yukselecek',
+    'artış öngörül', 'artis ongorul',
 )
 DOWN_PATTERNS = (
     'indirim beklen', 'indirim yapılması beklen', 'indirim yapilmasi beklen',
     'düşüş beklen', 'dusus beklen', 'indirim yolda', 'indirim gelecek', 'indirim geliyor',
     'indirim öngörül', 'indirim ongorul', 'düşüş öngörül', 'dusus ongorul',
     'indirim uygulanacak', 'indirim yapılacak', 'indirim yapilacak',
+    'indirim yapılması öngörül', 'indirim yapilmasi ongorul',
+    'indirim geleceği', 'indirim gelecegi', 'indirim gelmesi beklen',
+    'fiyatlar düşecek', 'fiyatlar dusecek', 'fiyatları düşecek',
+    'fiyatlar gerileyecek', 'fiyatları gerileyecek',
 )
 CANCEL_PATTERNS = (
     'iptal edildi', 'iptal oldu', 'uygulanmayacak', 'uygulanmadı', 'uygulanmadi',
@@ -428,16 +436,16 @@ def _fuel_keys_for_event(text, status):
     low = _norm(text)
     if not status:
         return []
-    terms = r'(?:benzin(?:e|in)?|motorin(?:e|in)?|mazot(?:a)?|dizel|lpg|otogaz(?:a)?)'
+    terms = r'(?:benzin(?:e|de|in)?|motorin(?:e|de|in)?|mazot(?:a|ta)?|dizel|lpg|otogaz(?:a|da)?)'
     matcher = re.compile(rf'\b({terms}(?:\s*(?:,|ve|ile)\s*{terms})+)\b')
-    direction = 'indirim' if status in {'down', 'realized_down', 'cancel_down'} else 'zam'
+    direction = ('indirim', 'düşüş', 'düşecek', 'gerileyecek', 'azalacak') if status in {'down', 'realized_down', 'cancel_down'} else ('zam', 'artış', 'artacak', 'yükselecek')
     for match in matcher.finditer(low):
         tail = low[match.end():match.end() + 65]
         # Fuel names in generic price lists are not evidence of any change.
         if any(q in tail for q in ('fiyatları ne kadar', 'fiyatları kaç', 'ne kadar?',
                                     'kaç tl', 'fiyat listesi')):
             continue
-        if direction not in tail or ('zam' in tail and 'indirim' in tail):
+        if not any(token in tail for token in direction) or ('zam' in tail and 'indirim' in tail):
             continue
         keys = []
         for fuel in re.findall(rf'\b{terms}\b', match.group(1)):
