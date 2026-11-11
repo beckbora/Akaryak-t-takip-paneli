@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from unittest.mock import patch
 
-from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status, _amount_for_fuel, _line, scan_price_expectation
+from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status, _amount_for_fuel, _line, scan_price_expectation, _verified_news_amount
 from price_expectation_state import enrich_with_pump_realization
 from send_push import message_for
 
@@ -175,6 +175,48 @@ class FuelPriceAlertTests(unittest.TestCase):
         self.assertIn('3,00 TL', items['gasoline']['line'])
         self.assertIn('4,00 TL', items['diesel']['line'])
         self.assertEqual(items['lpg']['status'], 'none')
+
+
+    def test_dated_verified_amount_is_fuel_specific(self):
+        checked_at = datetime(2026, 11, 11, 10, 0, tzinfo=timezone.utc)
+        source = [{'domain': 'dunya.com'}]
+        motorin = _verified_news_amount('diesel', 'down', checked_at, source)
+        benzin = _verified_news_amount('gasoline', 'down', checked_at, source)
+        self.assertEqual(motorin['amount'], 4.0)
+        self.assertEqual(benzin['amount'], 3.0)
+        self.assertEqual(motorin['effective_date'], '2026-11-14')
+        self.assertEqual(benzin['effective_date'], '2026-11-12')
+        self.assertIsNone(_verified_news_amount('lpg', 'down', checked_at, source))
+        self.assertIsNone(_verified_news_amount('diesel', 'up', checked_at, source))
+        self.assertIsNone(_verified_news_amount('diesel', 'down', checked_at, [{'domain':'sozcu.com.tr'}]))
+
+    def test_verified_amount_automatically_expires(self):
+        after = datetime(2026, 11, 14, 0, 5, tzinfo=timezone.utc)
+        self.assertIsNone(_verified_news_amount('diesel', 'down', after, [{'domain':'dunya.com'}]))
+        self.assertIsNone(_verified_news_amount('gasoline', 'down', after, [{'domain':'dunya.com'}]))
+
+    def test_headline_without_number_uses_verified_amount_only_with_consensus(self):
+        now = datetime.now(timezone.utc)
+        first = {'title': 'Benzin ve motorine indirim bekleniyor',
+                 'description': '', 'domain': 'dunya.com',
+                 'url': 'https://news.google.com/rss/articles/example1',
+                 'published': now, 'source': 'Dünya'}
+        second = dict(first, domain='sozcu.com.tr',
+                      url='https://news.google.com/rss/articles/example2',
+                      source='Sözcü')
+        evidence = {'amount': 4.0, 'approximate': True,
+                    'source': 'Dünya', 'url':'https://www.dunya.com/test',
+                    'effective_date': '2026-11-14'}
+        with patch('price_expectation._rss', return_value=[first, second]), \
+             patch('price_expectation._google_news_rss', return_value=[]), \
+             patch('price_expectation._article_text', return_value=''), \
+             patch('price_expectation._verified_news_amount', return_value=evidence):
+            data = scan_price_expectation(saved={'items': []}, price_data={'changes': []})
+        by_fuel = {row['fuel_key']: row for row in data['items']}
+        self.assertIn('≈ 4,00 TL İNDİRİM BEKLENİYOR', by_fuel['diesel']['line'])
+        self.assertTrue(by_fuel['diesel']['amount_approximate'])
+        self.assertEqual(by_fuel['diesel']['amount_source'], 'Dünya')
+        self.assertEqual(by_fuel['lpg']['status'], 'none')
 
     def test_lpg_push_name(self):
         self.assertEqual(message_for({'fuel_key':'lpg','status':'down'})[0], 'LPG')
