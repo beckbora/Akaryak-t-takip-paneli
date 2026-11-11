@@ -57,7 +57,7 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r push-requirements.txt
 
       - name: Test fuel alert classification and pump verification
         run: python -m unittest discover -s tests -v
