@@ -82,6 +82,20 @@ class FuelPriceAlertTests(unittest.TestCase):
         line = 'LPG, motorin ve benzin fiyatları ne kadar? İndirim bekleniyor'
         self.assertEqual(_fuel_keys_for_event(line, 'down'), [])
 
+    def test_real_november_discount_headlines(self):
+        examples = [
+            ('Benzin ve motorine indirim geleceği tarih açıklandı', ['gasoline', 'diesel']),
+            ('Akaryakıtta indirim beklentisi: Benzin ve motorinde fiyatlar düşecek', ['gasoline', 'diesel']),
+            ('Benzin ve motorinde farklı tarihlerde indirim yapılması bekleniyor', ['gasoline', 'diesel']),
+            ('Motorine 4 TL indirim yapılması öngörülüyor', ['diesel']),
+            ('Motorinin litre fiyatında 4 TL düşüş öngörülüyor', ['diesel']),
+        ]
+        for headline, expected in examples:
+            with self.subTest(headline=headline):
+                status = _status(headline)
+                self.assertEqual(status, 'down')
+                self.assertEqual(_fuel_keys_for_event(headline, status), expected)
+
     def test_forecast_wording_ongoruluyor(self):
         self.assertEqual(_status('Motorine 4 TL indirim öngörülüyor'), 'down')
         self.assertEqual(_status('Benzine 3 TL zam öngörülüyor'), 'up')
