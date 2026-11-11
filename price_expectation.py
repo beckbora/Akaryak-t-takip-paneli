@@ -89,10 +89,13 @@ UP_PATTERNS = (
     'zam beklen', 'zam yapılması beklen', 'zam yapilmasi beklen',
     'artış beklen', 'artis beklen', 'zam ihtimali', 'zam yolda',
     'artış yolda', 'artis yolda', 'zam gelecek', 'zam geliyor',
+    'zam öngörül', 'zam ongorul', 'zam uygulanacak', 'zam yapılacak',
 )
 DOWN_PATTERNS = (
     'indirim beklen', 'indirim yapılması beklen', 'indirim yapilmasi beklen',
     'düşüş beklen', 'dusus beklen', 'indirim yolda', 'indirim gelecek', 'indirim geliyor',
+    'indirim öngörül', 'indirim ongorul', 'düşüş öngörül', 'dusus ongorul',
+    'indirim uygulanacak', 'indirim yapılacak', 'indirim yapilacak',
 )
 CANCEL_PATTERNS = (
     'iptal edildi', 'iptal oldu', 'uygulanmayacak', 'uygulanmadı', 'uygulanmadi',
@@ -300,50 +303,66 @@ def _tr_short_date(value):
 
 
 def _consensus_event(fuel_rows):
+    """Choose a fuel-specific direction by independent recent publishers, not one headline."""
     if not fuel_rows:
         return None, []
-    latest = fuel_rows[0]
-    status = latest.get('status')
-    latest_dt = latest.get('published')
-    group = []
-    for row in fuel_rows:
-        if row.get('status') != status:
-            continue
-        published = row.get('published')
-        if latest_dt and published and abs((latest_dt - published).total_seconds()) > 18 * 3600:
-            continue
-        if latest.get('amount') is not None and row.get('amount') is not None:
-            if abs(float(latest['amount']) - float(row['amount'])) > 0.20:
-                continue
-        group.append(row)
 
-    domains = []
-    sources = []
-    for row in group:
-        domain = row.get('domain') or ''
-        if not domain or domain in domains:
-            continue
-        domains.append(domain)
-        sources.append({
-            'name': row.get('source') or SOURCE_NAMES.get(domain) or domain,
-            'domain': domain,
-            'url': row.get('url'),
-            'published_at': row.get('published').isoformat() if row.get('published') else None,
-        })
+    latest_dt = max((x.get('published') for x in fuel_rows if x.get('published')), default=None)
+    if not latest_dt:
+        return None, []
+    recent = [r for r in fuel_rows if r.get('published')
+              and latest_dt - r['published'] <= timedelta(hours=36)]
 
+    # Multiple articles from the same publisher count as one vote. A report
+    # describing a past completed movement must not win over current forecasts.
+    by_domain = {}
+    for row in sorted(recent, key=lambda x: x['published'], reverse=True):
+        domain = row.get('domain')
+        if domain and domain not in by_domain:
+            normalized = dict(row)
+            if normalized.get('status') == 'realized_up':
+                normalized['status'] = 'up'
+            elif normalized.get('status') == 'realized_down':
+                normalized['status'] = 'down'
+            by_domain[domain] = normalized
+
+    groups = {}
+    for row in by_domain.values():
+        groups.setdefault(row['status'], []).append(row)
+    if not groups:
+        return None, []
+
+    ranked = sorted(groups.items(), key=lambda x: (
+        len(x[1]),
+        max(r['published'] for r in x[1]),
+        max(SOURCE_PRIORITY.get(r['domain'], 0) for r in x[1]),
+    ), reverse=True)
+    status, group = ranked[0]
+    if len(ranked) > 1:
+        other = ranked[1][1]
+        # Conflicting directions with equal coverage are inconclusive.
+        # One recent report against another must not generate a confident alert.
+        if len(group) == len(other):
+            return None, []
+
+    chosen = max(group, key=lambda x: (x['published'], SOURCE_PRIORITY.get(x['domain'], 0)))
     amounts = [float(r['amount']) for r in group if r.get('amount') is not None]
     effective_dates = [r.get('effective_date') for r in group if r.get('effective_date')]
-    amount = round(float(median(amounts)), 2) if amounts else latest.get('amount')
-    effective_date = None
-    if effective_dates:
-        effective_date = max(set(effective_dates), key=lambda x: effective_dates.count(x))
-
-    merged = dict(latest)
-    merged['amount'] = amount
-    merged['effective_date'] = effective_date or latest.get('effective_date')
-    merged['confirmation_count'] = len(domains)
-    merged['sources_detail'] = sources
-    merged['confidence'] = 'high' if len(domains) >= 3 else ('medium' if len(domains) >= 2 else 'single')
+    date = (max(set(effective_dates), key=effective_dates.count)
+            if effective_dates else chosen.get('effective_date'))
+    merged = dict(chosen)
+    merged['status'] = status
+    merged['amount'] = round(float(median(amounts)), 2) if amounts else None
+    merged['effective_date'] = date
+    merged['confirmation_count'] = len(group)
+    merged['sources_detail'] = [
+        {'name': r.get('source') or SOURCE_NAMES.get(r['domain']) or r['domain'],
+         'domain': r['domain'], 'url': r.get('url'),
+         'published_at': r['published'].isoformat()}
+        for r in group
+    ]
+    merged['confidence'] = 'high' if len(group) >= 3 else (
+        'medium' if len(group) >= 2 else 'single')
     return merged, group
 
 
@@ -402,6 +421,33 @@ def _fuel(text):
 
     # Ambiguous generic text should not be force-classified.
     return None
+
+
+def _fuel_keys_for_event(text, status):
+    """Handle 'benzin ve motorine indirim' as two independent fuel reports."""
+    low = _norm(text)
+    if not status:
+        return []
+    terms = r'(?:benzin(?:e|in)?|motorin(?:e|in)?|mazot(?:a)?|dizel|lpg|otogaz(?:a)?)'
+    matcher = re.compile(rf'\b({terms}(?:\s*(?:,|ve|ile)\s*{terms})+)\b')
+    direction = 'indirim' if status in {'down', 'realized_down', 'cancel_down'} else 'zam'
+    for match in matcher.finditer(low):
+        tail = low[match.end():match.end() + 65]
+        # Fuel names in generic price lists are not evidence of any change.
+        if any(q in tail for q in ('fiyatları ne kadar', 'fiyatları kaç', 'ne kadar?',
+                                    'kaç tl', 'fiyat listesi')):
+            continue
+        if direction not in tail or ('zam' in tail and 'indirim' in tail):
+            continue
+        keys = []
+        for fuel in re.findall(rf'\b{terms}\b', match.group(1)):
+            key = _fuel(fuel)
+            if key and key not in keys:
+                keys.append(key)
+        if len(keys) > 1:
+            return keys
+    key = _fuel(text)
+    return [key] if key else []
 
 
 def _amount(text):
@@ -567,8 +613,10 @@ def scan_price_expectation(saved=None, price_data=None):
         # zam/indirim event. This prevents generic title tails such as
         # "LPG, motorin ve benzin fiyatları" from hijacking the classification.
         event_sentence = _event_sentence(text, status)
-        fuel_key = _fuel(event_sentence) or _fuel(row['title'])
-        if not fuel_key:
+        fuel_keys = _fuel_keys_for_event(event_sentence, status)
+        if not fuel_keys:
+            fuel_keys = _fuel_keys_for_event(row['title'], status)
+        if not fuel_keys:
             continue
         if status in {'up', 'down'} and amount is None:
             # Amount-less reports can still corroborate an event when the publisher is trusted.
@@ -576,17 +624,20 @@ def scan_price_expectation(saved=None, price_data=None):
                 continue
         effective_date = _effective_date(text, published)
         dedup_title = re.sub(r'\s+-\s+[^-]{2,40}$', '', row['title']).casefold()
-        key = (row['domain'], dedup_title, fuel_key, status)
-        if key in seen:
-            continue
-        seen.add(key)
-        rows.append({
-            **row,
-            'fuel_key': fuel_key,
-            'status': status,
-            'amount': amount,
-            'effective_date': effective_date,
-        })
+        for fuel_key in fuel_keys:
+            key = (row['domain'], dedup_title, fuel_key, status)
+            if key in seen:
+                continue
+            seen.add(key)
+            rows.append({
+                **row,
+                'fuel_key': fuel_key,
+                'status': status,
+                # Do not assign a single article-wide price or date to both
+                # fuels when the headline refers to separate adjustments.
+                'amount': amount if len(fuel_keys) == 1 else None,
+                'effective_date': effective_date if len(fuel_keys) == 1 else None,
+            })
 
     status_rank = {
         'realized_up': 5, 'realized_down': 5,
