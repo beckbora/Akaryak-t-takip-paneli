@@ -448,9 +448,9 @@ def _fuel_keys_for_event(text, status):
             return keys
     # Fuel-price lists in search snippets are not actionable price events.
     mentioned = sum(bool(re.search(pattern, low)) for pattern in
-                    (r'\\bbenzin(?:e|in)?\\b', r'\\bmotorin(?:e|in)?\\b',
-                     r'\\blpg\\b|\\botogaz(?:a)?\\b'))
-    if mentioned > 1 and re.search(r'fiyatlar[ıi] (?:ne kadar|kaç)|ne kadar\\?', low):
+                    (r'\bbenzin(?:e|in)?\b', r'\bmotorin(?:e|in)?\b',
+                     r'\blpg\b|\botogaz(?:a)?\b'))
+    if mentioned > 1 and re.search(r'fiyatlar[ıi] (?:ne kadar|kaç)|ne kadar\?', low):
         return []
     key = _fuel(text)
     return [key] if key else []
