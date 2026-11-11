@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from unittest.mock import patch
 
-from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status
+from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status, _amount_for_fuel, _line, scan_price_expectation
 from price_expectation_state import enrich_with_pump_realization
 from send_push import message_for
 
@@ -123,6 +123,58 @@ class FuelPriceAlertTests(unittest.TestCase):
                  'published':now-timedelta(minutes=30),'amount':2.0}]
         selected, _ = _consensus_event(rows)
         self.assertIsNone(selected)
+
+    def test_independent_amounts_in_same_article(self):
+        headline = 'Benzine 3 TL, motorine 4 TL indirim bekleniyor'
+        self.assertEqual(_fuel_keys_for_event(headline, 'down'),
+                         ['gasoline', 'diesel'])
+        self.assertEqual(_amount_for_fuel(headline, 'gasoline'), 3.0)
+        self.assertEqual(_amount_for_fuel(headline, 'diesel'), 4.0)
+        self.assertIsNone(_amount_for_fuel(headline, 'lpg'))
+
+    def test_amount_before_fuel_and_lpg(self):
+        self.assertEqual(_amount_for_fuel('4 TL motorine, 3 TL benzine indirim', 'diesel'), 4.0)
+        self.assertEqual(_amount_for_fuel('4 TL motorine, 3 TL benzine indirim', 'gasoline'), 3.0)
+        self.assertEqual(_amount_for_fuel('Otogaza 85 kuruş zam bekleniyor', 'lpg'), 0.85)
+
+    def test_explicitly_shared_amount(self):
+        headline = 'Benzin ve motorine 4 TL indirim bekleniyor'
+        self.assertEqual(_amount_for_fuel(headline, 'gasoline'), 4.0)
+        self.assertEqual(_amount_for_fuel(headline, 'diesel'), 4.0)
+
+    def test_no_amount_leak_between_fuels(self):
+        headline = 'Benzin ve motorine indirim bekleniyor; motorine 4 TL indirim uygulanacak'
+        self.assertIsNone(_amount_for_fuel(headline, 'gasoline'))
+        self.assertEqual(_amount_for_fuel(headline, 'diesel'), 4.0)
+        self.assertIsNone(_amount_for_fuel('Benzin 55 TL, motorine 4 TL indirim', 'gasoline'))
+
+    def test_line_renders_only_known_amount(self):
+        self.assertIn('3,00 TL İNDİRİM BEKLENİYOR',
+                      _line('BENZİN', 'down', 3.0))
+        self.assertIn('4,00 TL ZAM BEKLENİYOR',
+                      _line('MOTORİN', 'up', 4.0))
+        self.assertIn('0,85 TL İNDİRİM BEKLENİYOR',
+                      _line('LPG', 'down', 0.85))
+        self.assertNotIn('TL', _line('LPG', 'none', None))
+
+    def test_scan_keeps_amounts_separate_for_each_fuel(self):
+        row = {
+            'title': 'Benzine 3 TL, motorine 4 TL indirim bekleniyor',
+            'description': '', 'domain': 'ekonomim.com',
+            'url': 'https://www.ekonomim.com/ekonomi/ornek-haber',
+            'published': datetime.now(timezone.utc), 'source': 'Ekonomim',
+        }
+        with patch('price_expectation._rss', return_value=[row]), \
+             patch('price_expectation._google_news_rss', return_value=[]), \
+             patch('price_expectation._article_text', return_value=''):
+            data = scan_price_expectation(saved={'items': []},
+                                          price_data={'changes': []})
+        items = {item['fuel_key']: item for item in data['items']}
+        self.assertEqual(items['gasoline']['amount'], 3.0)
+        self.assertEqual(items['diesel']['amount'], 4.0)
+        self.assertIn('3,00 TL', items['gasoline']['line'])
+        self.assertIn('4,00 TL', items['diesel']['line'])
+        self.assertEqual(items['lpg']['status'], 'none')
 
     def test_lpg_push_name(self):
         self.assertEqual(message_for({'fuel_key':'lpg','status':'down'})[0], 'LPG')
