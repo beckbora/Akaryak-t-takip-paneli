@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from unittest.mock import patch
 
-from price_expectation import _fuel, _pump_realized
+from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status
 from price_expectation_state import enrich_with_pump_realization
 from send_push import message_for
 
@@ -69,6 +69,46 @@ class FuelPriceAlertTests(unittest.TestCase):
         result = enrich_with_pump_realization({'items': items()},
                 {'changes':[change('Motorin', 1.0), change('Motorin', -1.0)]})
         self.assertEqual(result['items'][0]['status'], 'none')
+
+    def test_two_fuels_share_discount_forecast(self):
+        self.assertEqual(
+            _fuel_keys_for_event('Benzin ve motorine dev indirim bekleniyor', 'down'),
+            ['gasoline', 'diesel'])
+        self.assertEqual(
+            _fuel_keys_for_event('Motorin ve benzine zam bekleniyor', 'up'),
+            ['diesel', 'gasoline'])
+
+    def test_generic_price_list_is_not_independent_evidence(self):
+        line = 'LPG, motorin ve benzin fiyatları ne kadar? İndirim bekleniyor'
+        self.assertEqual(_fuel_keys_for_event(line, 'down'), [])
+
+    def test_forecast_wording_ongoruluyor(self):
+        self.assertEqual(_status('Motorine 4 TL indirim öngörülüyor'), 'down')
+        self.assertEqual(_status('Benzine 3 TL zam öngörülüyor'), 'up')
+
+    def test_discount_majority_beats_lone_latest_increase(self):
+        now = datetime.now(timezone.utc)
+        def article(domain, status, minutes_ago):
+            return {'domain':domain, 'source':domain, 'status':status, 'amount':4.0,
+                    'published':now - timedelta(minutes=minutes_ago),
+                    'url':'https://'+domain+'/article'}
+        rows = [
+            article('older-zam.example', 'up', 0),
+            article('indirim1.example', 'down', 20),
+            article('indirim2.example', 'down', 40),
+            article('indirim3.example', 'down', 60),
+        ]
+        selected, group = _consensus_event(rows)
+        self.assertEqual(selected['status'], 'down')
+        self.assertEqual(selected['confirmation_count'], 3)
+
+    def test_conflicting_single_reports_not_decided(self):
+        now = datetime.now(timezone.utc)
+        rows = [{'domain':'a.example','status':'up','published':now,'amount':2.0},
+                {'domain':'b.example','status':'down',
+                 'published':now-timedelta(minutes=30),'amount':2.0}]
+        selected, _ = _consensus_event(rows)
+        self.assertIsNone(selected)
 
     def test_lpg_push_name(self):
         self.assertEqual(message_for({'fuel_key':'lpg','status':'down'})[0], 'LPG')

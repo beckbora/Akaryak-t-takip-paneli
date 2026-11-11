@@ -1,0 +1,23 @@
+name: Fuel news direction regression
+on:
+  push:
+    branches:
+      - fix/fuel-news-direction-consensus-20261111
+  pull_request:
+    paths:
+      - 'price_expectation.py'
+      - 'tests/**'
+      - '.github/workflows/test-fuel-news.yml'
+jobs:
+  fuel-news-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fuel test dependencies
+        run: pip install -r requirements.txt -r push-requirements.txt
+      - name: Test fuel-specific news consensus and pump verification
+        run: python -m unittest discover -s tests -v
