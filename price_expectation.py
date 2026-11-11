@@ -460,6 +460,16 @@ def _fuel_keys_for_event(text, status):
                      r'\blpg\b|\botogaz(?:a)?\b'))
     if mentioned > 1 and re.search(r'fiyatlar[ıi] (?:ne kadar|kaç)|ne kadar\?', low):
         return []
+    # Separately priced clauses, such as "Benzine 3 TL, motorine 4 TL
+    # indirim bekleniyor", describe both fuels without a shared conjunction.
+    if not ('zam' in low and 'indirim' in low):
+        priced = [
+            (re.search(pattern, low).start(), fuel_key)
+            for fuel_key, pattern in FUEL_AMOUNT_TERMS.items()
+            if re.search(pattern, low) and _amount_for_fuel(text, fuel_key) is not None
+        ]
+        if len(priced) > 1:
+            return [key for _, key in sorted(priced)]
     key = _fuel(text)
     return [key] if key else []
 
@@ -477,6 +487,82 @@ def _amount(text):
         if 0.05 <= value <= 20:
             matches.append(value)
     return round(matches[0], 2) if matches else None
+
+
+FUEL_AMOUNT_TERMS = {
+    'gasoline': r'\bbenzin(?:e|de|in|i)?\b',
+    'diesel': r'\b(?:motorin(?:e|de|in|i)?|mazot(?:a|ta)?|dizel)\b',
+    'lpg': r'\b(?:lpg|otogaz(?:a|da)?)\b',
+}
+
+
+def _amount_for_fuel(text, fuel_key):
+    """Price-change amount mentioned for exactly this fuel; never reuse a rival fuel's price.
+
+    Multi-fuel stories may contain different TL amounts. An unqualified number
+    is not enough to label a particular fuel as having a known change amount.
+    """
+    pattern = FUEL_AMOUNT_TERMS.get(fuel_key)
+    if not pattern or not text:
+        return None
+    low = _norm(text)
+    mentions = sorted(
+        [(m.start(), m.end(), key) for key, token in FUEL_AMOUNT_TERMS.items()
+         for m in re.finditer(token, low)],
+        key=lambda m: m[0],
+    )
+    own = [m for m in mentions if m[2] == fuel_key]
+    if not own:
+        return None
+
+    amounts = []
+    for m in re.finditer(
+        r'(?<!\d)(\d{1,2}(?:[.,]\d{1,2})?)\s*(TL|₺|lira|liraya|kuruş|kurus)\b',
+        low, re.I,
+    ):
+        value = float(m.group(1).replace(',', '.'))
+        if m.group(2) in ('kuruş', 'kurus'):
+            value /= 100
+        if 0.05 <= value <= 20:
+            amounts.append((m.start(), m.end(), round(value, 2)))
+
+    candidates = []
+    for start, end, _ in own:
+        for amount_start, amount_end, value in amounts:
+            gap_start, gap_end = (
+                (end, amount_start) if end <= amount_start
+                else (amount_end, start) if amount_end <= start
+                else (start, start)
+            )
+            gap = low[gap_start:gap_end]
+            if len(gap) > 65 or re.search(r'[.!?;\n]', gap):
+                continue
+            if any(ms >= gap_start and me <= gap_end and key != fuel_key
+                   for ms, me, key in mentions):
+                continue
+            candidates.append((len(gap), amount_start, value))
+    if candidates:
+        candidates.sort()
+        return candidates[0][2]
+
+    # One explicitly shared adjustment, e.g. "Benzin ve motorine 4 TL indirim":
+    # it is safe to display the same amount for both. "Toplam 4 TL" is NOT.
+    if len(amounts) == 1 and not any(
+        word in low for word in ('toplam', 'kadar', 'varan', 'arasında', 'arasi')
+    ):
+        fuel_word = r'(?:benzin(?:e|de|in)?|motorin(?:e|de|in)?|mazot(?:a|ta)?|dizel|lpg|otogaz(?:a|da)?)'
+        joined = re.search(
+            rf'\b({fuel_word}(?:\s*(?:,|ve|ile)\s*{fuel_word})+)\b',
+            low,
+        )
+        if joined and re.search(pattern, joined.group(1)):
+            a_start, _, value = amounts[0]
+            if joined.end() <= a_start <= joined.end() + 60 and re.search(
+                r'\b(?:zam|indirim|artış|artis|düşüş|dusus)\b',
+                low[a_start:min(len(low), a_start + 75)],
+            ):
+                return value
+    return None
 
 
 def _status(text):
@@ -647,9 +733,16 @@ def scan_price_expectation(saved=None, price_data=None):
                 **row,
                 'fuel_key': fuel_key,
                 'status': status,
-                # Do not assign a single article-wide price or date to both
-                # fuels when the headline refers to separate adjustments.
-                'amount': amount if len(fuel_keys) == 1 else None,
+                # Read the amount from the fuel's own clause, not an article-wide
+                # first TL number that might belong to another product.
+                'amount': next((
+                    value for value in (
+                        _amount_for_fuel(event_sentence, fuel_key),
+                        _amount_for_fuel(row['title'], fuel_key),
+                        _amount_for_fuel(row['description'], fuel_key),
+                        _amount_for_fuel(article_text[:1800], fuel_key),
+                    ) if value is not None
+                ), None),
                 'effective_date': effective_date if len(fuel_keys) == 1 else None,
             })
 
