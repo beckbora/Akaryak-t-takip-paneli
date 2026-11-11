@@ -557,10 +557,14 @@ def _amount_for_fuel(text, fuel_key):
         )
         if joined and re.search(pattern, joined.group(1)):
             a_start, _, value = amounts[0]
-            if joined.end() <= a_start <= joined.end() + 60 and re.search(
-                r'\b(?:zam|indirim|artış|artis|düşüş|dusus)\b',
-                low[a_start:min(len(low), a_start + 75)],
-            ):
+            middle = low[joined.end():a_start]
+            if (joined.end() <= a_start <= joined.end() + 60
+                    and not re.search(r'[.!?;\n]', middle)
+                    and not any(re.search(term, middle) for term in FUEL_AMOUNT_TERMS.values())
+                    and re.search(
+                        r'\b(?:zam|indirim|artış|artis|düşüş|dusus)\b',
+                        low[a_start:min(len(low), a_start + 75)],
+                    )):
                 return value
     return None
 
