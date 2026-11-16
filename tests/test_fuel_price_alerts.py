@@ -107,10 +107,10 @@ class FuelPriceAlertTests(unittest.TestCase):
                     'published':now - timedelta(minutes=minutes_ago),
                     'url':'https://'+domain+'/article'}
         rows = [
-            article('older-zam.example', 'up', 0),
-            article('indirim1.example', 'down', 20),
-            article('indirim2.example', 'down', 40),
-            article('indirim3.example', 'down', 60),
+            article('haberturk.com', 'up', 0),
+            article('dunya.com', 'down', 20),
+            article('ekonomim.com', 'down', 40),
+            article('sozcu.com.tr', 'down', 60),
         ]
         selected, group = _consensus_event(rows)
         self.assertEqual(selected['status'], 'down')
