@@ -580,7 +580,8 @@ NON_ASSERTIVE_FORECAST = (
     r'gelecek\s*m[ıi]|bekleniyor\s*mu|olacak\s*m[ıi]|yapılacak\s*m[ıi])\b',
     r'\b(?:zam|indirim|artış|artis|düşüş|dusus)\s+'
     r'(?:beklenmiyor|beklenmedi|yok|olmayacak|gündemde\s+değil)\b',
-    r'\b(?:zam|indirim)\s+yapılması\s+beklenmiyor\b',
+    r'\b(?:zam|indirim)\s+(?:yapılması|gelmesi)\s+beklenmiyor\b',
+    r'\b(?:zam|indirim)\s+beklentisi\s+(?:yok|bulunmuyor)\b',
     r'\b(?:yeni|herhangi\s+bir)\s+(?:zam|indirim)\s+(?:kararı\s+)?'
     r'(?:yok|bulunmuyor|söz\s+konusu\s+değil)\b',
     r'\b(?:zam|indirim)\s+(?:gelmeyecek|uygulanmayacak)\b',
