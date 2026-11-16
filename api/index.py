@@ -395,11 +395,11 @@ def price_expectation(live: int = 0):
         from price_expectation_state import enrich_with_pump_realization
         scanned = scan_price_expectation(saved=saved_expectation, price_data=saved_prices)
         data = enrich_with_pump_realization(scanned, price_data=saved_prices)
-        return JSONResponse(content=data, headers={'Cache-Control': 'no-store, max-age=0'})
+        return JSONResponse(content=_safe_expectation_snapshot(data), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         if saved_expectation:
             return JSONResponse(
-                content=saved_expectation,
+                content=_safe_expectation_snapshot(saved_expectation),
                 headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source},
             )
         return JSONResponse(
