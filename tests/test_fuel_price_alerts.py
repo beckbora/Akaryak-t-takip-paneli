@@ -2,9 +2,9 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from unittest.mock import patch
 
-from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status, _amount_for_fuel, _line, scan_price_expectation, _verified_news_amount
+from price_expectation import _fuel, _pump_realized, _fuel_keys_for_event, _consensus_event, _status, _amount_for_fuel, _line, scan_price_expectation, _verified_news_amount, _explicit_news_event
 from price_expectation_state import enrich_with_pump_realization
-from send_push import message_for
+from send_push import message_for, is_push_eligible
 
 NOW = datetime.now(timezone.utc).isoformat()
 
@@ -164,7 +164,9 @@ class FuelPriceAlertTests(unittest.TestCase):
             'url': 'https://www.ekonomim.com/ekonomi/ornek-haber',
             'published': datetime.now(timezone.utc), 'source': 'Ekonomim',
         }
-        with patch('price_expectation._rss', return_value=[row]), \
+        independent = dict(row, domain='sozcu.com.tr',
+                           url='https://www.sozcu.com.tr/ornek-haber', source='Sözcü')
+        with patch('price_expectation._rss', return_value=[row, independent]), \
              patch('price_expectation._google_news_rss', return_value=[]), \
              patch('price_expectation._article_text', return_value=''):
             data = scan_price_expectation(saved={'items': []},
@@ -217,6 +219,97 @@ class FuelPriceAlertTests(unittest.TestCase):
         self.assertTrue(by_fuel['diesel']['amount_approximate'])
         self.assertEqual(by_fuel['diesel']['amount_source'], 'Dünya')
         self.assertEqual(by_fuel['lpg']['status'], 'none')
+
+    def test_haberturk_15_nov_price_list_is_not_a_zam_forecast(self):
+        article = {
+            'title': ('AKARYAKIT FİYATLARINDA SON DURUM 15 KASIM 2026: '
+                      'Benzin LPG Motorin indirim veya zam geldi mi ne kadar oldu?'),
+            'description': ('12 Kasım günü benzine 3,54 TL indirim yapıldı. '
+                            '15 Kasım itibarıyla benzin, motorin ve LPG fiyatlarında '
+                            'yeni bir zam ya da indirim kararı yok.'),
+            'domain': 'haberturk.com'
+        }
+        self.assertEqual(_explicit_news_event(article), (None, [], ''))
+
+    def test_question_and_negative_forecast_never_trigger(self):
+        for title in (
+            'Motorine zam bekleniyor mu?',
+            'Motorine zam gelmesi beklenmiyor',
+            'Motorine zam yapılması beklenmiyor',
+            'Motorine zam yok, fiyatlarda değişiklik olmayacak',
+            'Motorine zam gelecek mi? Güncel fiyatlar',
+            'Motorine zam vardı; yeni zam gelmeyecek',
+        ):
+            with self.subTest(title=title):
+                self.assertEqual(
+                    _explicit_news_event({'title': title, 'description': ''})[0],
+                    None
+                )
+
+    def test_realized_headline_never_becomes_new_forecast(self):
+        self.assertIsNone(
+            _explicit_news_event({
+                'title': 'Motorine 5,40 TL indirim geldi',
+                'description': '7 Kasım tarihinde gerçekleşti'
+            })[0]
+        )
+
+    def test_single_source_cannot_be_published(self):
+        now = datetime.now(timezone.utc)
+        row = {'title':'Motorine 2 TL zam bekleniyor',
+               'description':'', 'domain':'haberturk.com',
+               'url':'https://www.haberturk.com/yenizam',
+               'published':now, 'source':'Habertürk'}
+        with patch('price_expectation._rss', return_value=[row]), \
+             patch('price_expectation._google_news_rss', return_value=[]), \
+             patch('price_expectation._article_text', return_value=''):
+            data = scan_price_expectation(saved={'items': []},
+                                          price_data={'changes': []})
+        diesel = next(x for x in data['items'] if x['fuel_key'] == 'diesel')
+        self.assertEqual(diesel['status'], 'none')
+        self.assertEqual(diesel['confirmation_count'], 0)
+
+    def test_two_separate_sources_can_confirm_explicit_forecast(self):
+        now = datetime.now(timezone.utc)
+        row = {'title':'Motorine 2 TL zam bekleniyor',
+               'description':'', 'domain':'haberturk.com',
+               'url':'https://www.haberturk.com/yenizam',
+               'published':now, 'source':'Habertürk'}
+        distinct = dict(row, domain='ekonomim.com',
+                        url='https://www.ekonomim.com/yenizam', source='Ekonomim')
+        with patch('price_expectation._rss', return_value=[row, distinct]), \
+             patch('price_expectation._google_news_rss', return_value=[]), \
+             patch('price_expectation._article_text', return_value=''):
+            data = scan_price_expectation(saved={'items': []},
+                                          price_data={'changes': []})
+        diesel = next(x for x in data['items'] if x['fuel_key'] == 'diesel')
+        self.assertEqual(diesel['status'], 'up')
+        self.assertEqual(diesel['confirmation_count'], 2)
+        self.assertEqual(diesel['confidence'], 'medium')
+
+    def test_same_publisher_repeated_is_not_independent_confirmation(self):
+        now = datetime.now(timezone.utc)
+        rows = [
+            {'domain':'haberturk.com','status':'up','published':now, 'amount':2.0,
+             'url':'https://www.haberturk.com/a'},
+            {'domain':'haberturk.com','status':'up','published':now, 'amount':2.0,
+             'url':'https://www.haberturk.com/b'},
+        ]
+        selected, _ = _consensus_event(rows)
+        self.assertIsNone(selected)
+
+    def test_single_source_push_blocked_but_two_sources_allowed(self):
+        item = {'fuel_key':'diesel','status':'up','confirmation_count':1,
+                'confidence':'single','sources_detail':[{'domain':'haberturk.com'}]}
+        self.assertFalse(is_push_eligible(item))
+        item.update(confirmation_count=2, confidence='medium',
+                    sources_detail=[{'domain':'haberturk.com'},
+                                    {'domain':'ekonomim.com'}])
+        self.assertTrue(is_push_eligible(item))
+        item['sources_detail'] = [{'domain':'haberturk.com'}, {'domain':'haberturk.com'}]
+        self.assertFalse(is_push_eligible(item))
+        self.assertFalse(is_push_eligible({'status':'realized_up','pump_verified':False}))
+        self.assertTrue(is_push_eligible({'status':'realized_up','pump_verified':True}))
 
     def test_lpg_push_name(self):
         self.assertEqual(message_for({'fuel_key':'lpg','status':'down'})[0], 'LPG')
