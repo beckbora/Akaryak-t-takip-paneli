@@ -39,6 +39,24 @@ def signature(item):
     ])
 
 
+
+def is_push_eligible(item):
+    """Never notify a news expectation without two distinct publisher sources."""
+    status = (item or {}).get('status')
+    if status in {'up', 'down', 'cancel_up', 'cancel_down'}:
+        domains = {
+            source.get('domain') for source in item.get('sources_detail') or []
+            if isinstance(source, dict) and source.get('domain')
+        }
+        return (len(domains) >= 2
+                and int(item.get('confirmation_count') or 0) >= 2
+                and item.get('confidence') in {'medium', 'high'})
+    if status in {'realized_up', 'realized_down'}:
+        return item.get('pump_verified') is True
+    return False
+
+
+
 def message_for(item):
     fuel = item.get('fuel') or {'diesel': 'MOTORİN', 'gasoline': 'BENZİN', 'lpg': 'LPG'}.get(item.get('fuel_key'), 'YAKIT')
     status = item.get('status') or ''
@@ -115,12 +133,9 @@ def main():
     current = item_map(read_json(args.current))
     events = []
     for fuel_key, item in current.items():
-        if fuel_key not in {'diesel', 'gasoline', 'lpg'} or item.get('status') == 'none':
+        if fuel_key not in {'diesel', 'gasoline', 'lpg'} or not is_push_eligible(item):
             continue
         if signature(item) == signature(previous.get(fuel_key)):
-            continue
-        # Realized alerts require a verified pump-price source, not a news claim.
-        if item.get('status') in {'realized_up', 'realized_down'} and not item.get('pump_verified'):
             continue
         events.append(item)
 
