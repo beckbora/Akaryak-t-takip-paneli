@@ -298,6 +298,25 @@ class FuelPriceAlertTests(unittest.TestCase):
         selected, _ = _consensus_event(rows)
         self.assertIsNone(selected)
 
+    def test_confirmed_cancellation_remains_supported(self):
+        now = datetime.now(timezone.utc)
+        title = 'Motorine beklenen zam iptal edildi'
+        self.assertEqual(_explicit_news_event({'title': title, 'description': ''})[0],
+                         'cancel_up')
+        original = {'title': title, 'description': '',
+                    'domain': 'haberturk.com',
+                    'url': 'https://www.haberturk.com/cancel',
+                    'published': now, 'source': 'Habertürk'}
+        second = dict(original, domain='ekonomim.com',
+                      url='https://www.ekonomim.com/cancel', source='Ekonomim')
+        with patch('price_expectation._rss', return_value=[original, second]), \
+             patch('price_expectation._google_news_rss', return_value=[]):
+            result = scan_price_expectation(saved={'items': []},
+                                            price_data={'changes': []})
+        motorin = next(x for x in result['items'] if x['fuel_key'] == 'diesel')
+        self.assertEqual(motorin['status'], 'cancel_up')
+        self.assertEqual(motorin['confirmation_count'], 2)
+
     def test_single_source_push_blocked_but_two_sources_allowed(self):
         item = {'fuel_key':'diesel','status':'up','confirmation_count':1,
                 'confidence':'single','sources_detail':[{'domain':'haberturk.com'}]}
