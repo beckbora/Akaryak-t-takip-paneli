@@ -322,23 +322,24 @@ def _consensus_event(fuel_rows):
     recent = [r for r in fuel_rows if r.get('published')
               and latest_dt - r['published'] <= timedelta(hours=36)]
 
-    # Multiple articles from the same publisher count as one vote. A report
-    # describing a past completed movement must not win over current forecasts.
+    # Multiple articles from one publisher count as one vote. Completed changes
+    # are never reused as fresh forecasts.
     by_domain = {}
     for row in sorted(recent, key=lambda x: x['published'], reverse=True):
         domain = row.get('domain')
-        if domain and domain not in by_domain:
-            normalized = dict(row)
-            if normalized.get('status') == 'realized_up':
-                normalized['status'] = 'up'
-            elif normalized.get('status') == 'realized_down':
-                normalized['status'] = 'down'
-            by_domain[domain] = normalized
+        if (domain and domain not in by_domain
+                and row.get('status') in {'up', 'down', 'cancel_up', 'cancel_down'}
+                and SOURCE_PRIORITY.get(domain, 0) >= 5):
+            by_domain[domain] = dict(row)
 
     groups = {}
     for row in by_domain.values():
         groups.setdefault(row['status'], []).append(row)
     if not groups:
+        return None, []
+    # Reject single-source reports even when there is no contradictory news.
+    # This is the safety barrier for the Haberturk false positive of 15 Nov.
+    if max(len(group) for group in groups.values()) < 2:
         return None, []
 
     ranked = sorted(groups.items(), key=lambda x: (
@@ -570,6 +571,51 @@ def _amount_for_fuel(text, fuel_key):
     return None
 
 
+
+# Generic fuel price articles, questions and negative statements are not
+# evidence of an upcoming price move. Evaluate the headline and the snippet
+# sentence by sentence, never use article-wide keyword search as proof.
+NON_ASSERTIVE_FORECAST = (
+    r'\b(?:zam|indirim|artış|artis|düşüş|dusus)\s+(?:var\s*m[ıi]|gelir\s*m[ıi]|'
+    r'gelecek\s*m[ıi]|bekleniyor\s*mu|olacak\s*m[ıi]|yapılacak\s*m[ıi])\b',
+    r'\b(?:zam|indirim|artış|artis|düşüş|dusus)\s+'
+    r'(?:beklenmiyor|beklenmedi|yok|olmayacak|gündemde\s+değil)\b',
+    r'\b(?:zam|indirim)\s+(?:yapılması|gelmesi)\s+beklenmiyor\b',
+    r'\b(?:zam|indirim)\s+beklentisi\s+(?:yok|bulunmuyor)\b',
+    r'\b(?:yeni|herhangi\s+bir)\s+(?:zam|indirim)\s+(?:kararı\s+)?'
+    r'(?:yok|bulunmuyor|söz\s+konusu\s+değil)\b',
+    r'\b(?:zam|indirim)\s+(?:gelmeyecek|uygulanmayacak)\b',
+)
+
+
+def _explicit_news_event(row):
+    """Find a clear and fuel-specific forecast in a publisher's headline/snippet.
+
+    Never infer a forecast from generic price lists, historical changes,
+    questions, an article's sidebar, or text about a different fuel.
+    """
+    title = re.sub(r'\s+-\s+[^-]{2,40}$', '', row.get('title') or '')
+    snippet = re.sub(r'<[^>]+>', ' ', row.get('description') or '')
+    sentences = [title]
+    sentences.extend(
+        x.strip() for x in re.split(r'(?<=[.!?])\s+|\s+[|•]\s+', snippet) if x.strip()
+    )
+    for sentence in sentences:
+        low = _norm(sentence)
+        if not low or '?' in sentence or re.search(r'\b(?:var\s*m[ıi]|ne\s+kadar|kaç\s+tl)\b', low):
+            continue
+        if any(re.search(pattern, low) for pattern in NON_ASSERTIVE_FORECAST):
+            continue
+        # Do not turn last week's realized move into a future expectation.
+        status = _status(sentence)
+        if status not in {'up', 'down', 'cancel_up', 'cancel_down'}:
+            continue
+        keys = _fuel_keys_for_event(sentence, status)
+        if keys:
+            return status, keys, sentence
+    return None, [], ''
+
+
 def _status(text):
     low = _norm(text)
     cancelled = any(x in low for x in CANCEL_PATTERNS)
@@ -723,47 +769,33 @@ def scan_price_expectation(saved=None, price_data=None):
     rows = []
     seen = set()
     for row in candidates:
-        text = row['title'] + '. ' + row['description']
         published = row.get('published')
-        # Undated search-index results are allowed only when they contain today's
-        # Turkish date; this avoids reviving old expectations.
         if not published:
             continue
-        if published < cutoff:
-            continue
-        status = _status(text)
-        amount = None
-        article_text = ''
-        if status:
-            sentence = _event_sentence(text, status)
-            amount = _amount(sentence) or _amount(row['title']) or _amount(row['description'])
-        # If the search result is terse, inspect the original publisher page.
-        if (not status or amount is None) and _accepted_host(row.get('url') or ''):
-            article_text = _article_text(row)
-            if article_text:
-                enriched_text = text + '. ' + article_text
-                status = status or _status(enriched_text)
-                if status:
-                    sentence = _event_sentence(enriched_text, status)
-                    amount = amount or _amount(sentence) or _amount(article_text)
-                    text = enriched_text
-        if not status:
+        if published.tzinfo is None:
+            published = published.replace(tzinfo=timezone.utc)
+        if published < cutoff or published > now + timedelta(hours=1):
             continue
 
-        # Classify the fuel from the sentence that actually describes the
-        # zam/indirim event. This prevents generic title tails such as
-        # "LPG, motorin ve benzin fiyatları" from hijacking the classification.
-        event_sentence = _event_sentence(text, status)
-        fuel_keys = _fuel_keys_for_event(event_sentence, status)
-        if not fuel_keys:
-            fuel_keys = _fuel_keys_for_event(row['title'], status)
-        if not fuel_keys:
+        # A title asking "zam var mı?" and its generic price-list snippet
+        # must never be interpreted as a definite forecast.
+        status, fuel_keys, event_sentence = _explicit_news_event(row)
+        if not status or not fuel_keys:
             continue
-        if status in {'up', 'down'} and amount is None:
-            # Amount-less reports can still corroborate an event when the publisher is trusted.
-            if SOURCE_PRIORITY.get(row['domain'], 0) < 5:
-                continue
+        if SOURCE_PRIORITY.get(row.get('domain'), 0) < 5:
+            continue
+
+        # Original publisher pages are used for AMOUNT enrichment only, not
+        # for inferring forecast direction from an unrelated page fragment.
+        article_text = ''
+        if _accepted_host(row.get('url') or ''):
+            article_text = _article_text(row)
+        text = (row.get('title') or '') + '. ' + (row.get('description') or '')
         effective_date = _effective_date(text, published)
+        if effective_date and effective_date < now.astimezone(TR_TZ).date().isoformat():
+            # Old predictions whose date has already passed aren't new alerts.
+            continue
+
         dedup_title = re.sub(r'\s+-\s+[^-]{2,40}$', '', row['title']).casefold()
         for fuel_key in fuel_keys:
             key = (row['domain'], dedup_title, fuel_key, status)
@@ -772,15 +804,14 @@ def scan_price_expectation(saved=None, price_data=None):
             seen.add(key)
             rows.append({
                 **row,
+                'published': published,
                 'fuel_key': fuel_key,
                 'status': status,
-                # Read the amount from the fuel's own clause, not an article-wide
-                # first TL number that might belong to another product.
                 'amount': next((
                     value for value in (
                         _amount_for_fuel(event_sentence, fuel_key),
                         _amount_for_fuel(row['title'], fuel_key),
-                        _amount_for_fuel(row['description'], fuel_key),
+                        _amount_for_fuel(row.get('description'), fuel_key),
                         _amount_for_fuel(article_text[:1800], fuel_key),
                     ) if value is not None
                 ), None),
@@ -901,7 +932,8 @@ def scan_price_expectation(saved=None, price_data=None):
         'no_expectation_text': 'ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR',
         'next_daily_check': '12:00 Europe/Istanbul',
         'discovery': ['bing_rss', 'google_news_rss'],
-        'consensus_window_hours': 18,
+        'consensus_window_hours': 36,
+        'minimum_independent_sources': 2,
     }
 
 
