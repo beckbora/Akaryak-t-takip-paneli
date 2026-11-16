@@ -608,7 +608,7 @@ def _explicit_news_event(row):
             continue
         # Do not turn last week's realized move into a future expectation.
         status = _status(sentence)
-        if status not in {'up', 'down'}:
+        if status not in {'up', 'down', 'cancel_up', 'cancel_down'}:
             continue
         keys = _fuel_keys_for_event(sentence, status)
         if keys:
