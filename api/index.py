@@ -283,7 +283,7 @@ def brent_data(live: int = 0):
             price_data=_snapshot_json('prices.json', PRICE_DATA)[0],
             expectation_data=_snapshot_json('price_expectation.json', EXPECTATION_DATA)[0],
         )
-        return JSONResponse(content=data, headers={'Cache-Control': 'no-store, max-age=0'})
+        return JSONResponse(content=_safe_expectation_snapshot(data), headers={'Cache-Control': 'no-store, max-age=0'})
     except Exception as exc:
         if saved:
             return JSONResponse(content=saved, headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source})
@@ -338,6 +338,47 @@ def live_deposit_scan():
         return JSONResponse(status_code=500, content={'error': str(exc)[:300]}, headers={'Cache-Control': 'no-store, max-age=0'})
 
 
+def _safe_expectation_snapshot(data):
+    """Suppress legacy cached single-source and unverified price alerts."""
+    if not isinstance(data, dict):
+        return {'found': False, 'items': []}
+    clean = dict(data)
+    clean['items'] = []
+    for original in data.get('items') or []:
+        if not isinstance(original, dict):
+            continue
+        item = dict(original)
+        status = item.get('status')
+        sources = item.get('sources_detail') or []
+        domains = {
+            source.get('domain') for source in sources
+            if isinstance(source, dict) and source.get('domain')
+        }
+        unchecked_forecast = status in {'up', 'down', 'cancel_up', 'cancel_down'} and (
+            len(domains) < 2 or int(item.get('confirmation_count') or 0) < 2
+        )
+        unsupported_realization = (
+            status in {'realized_up', 'realized_down'}
+            and item.get('pump_verified') is not True
+        )
+        if unchecked_forecast or unsupported_realization:
+            fuel = item.get('fuel') or {
+                'diesel': 'MOTORİN', 'gasoline': 'BENZİN', 'lpg': 'LPG'
+            }.get(item.get('fuel_key'), 'YAKIT')
+            item.update({
+                'status': 'none',
+                'line': f'ℹ️ {fuel} · ZAM/İNDİRİM BEKLENTİSİ BULUNMUYOR',
+                'amount': None, 'source': None, 'url': None,
+                'published_at': None, 'effective_date': None,
+                'confirmation_count': 0, 'sources_detail': [],
+                'confidence': 'none', 'label': 'Güncel durum',
+                'pump_verified': False,
+            })
+        clean['items'].append(item)
+    clean['found'] = any(x.get('status') != 'none' for x in clean['items'])
+    return clean
+
+
 @app.get('/api/price-expectation')
 def price_expectation(live: int = 0):
     saved_expectation, snapshot_source = _snapshot_json('price_expectation.json', EXPECTATION_DATA)
@@ -345,7 +386,7 @@ def price_expectation(live: int = 0):
 
     if not live and saved_expectation:
         return JSONResponse(
-            content=saved_expectation,
+            content=_safe_expectation_snapshot(saved_expectation),
             headers={'Cache-Control': 'no-store, max-age=0', 'X-Snapshot-Source': snapshot_source},
         )
 
